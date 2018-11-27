@@ -19,6 +19,13 @@ import javafx.stage.Stage;
  */
 public class MyTunes extends Application {
     
+    int id;
+    String name;
+    public MyTunes()
+    {
+        this.id = 0;
+        
+    }
     @Override
     public void start(Stage primaryStage) {
         Button btn = new Button();
