@@ -1,11 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.MyTunesMainViewController">
-    
-</AnchorPane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.MyTunesMainViewController">
+   <left>
+      <VBox prefHeight="375.0" prefWidth="285.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextArea fx:id="txtTopleft" prefHeight="200.0" prefWidth="285.0" />
+            <HBox prefHeight="48.0" prefWidth="285.0">
+               <children>
+                  <Slider fx:id="sliderVol" blockIncrement="1.0" majorTickUnit="1.0" minorTickCount="1" onMouseDragged="#onHandleSliderVol" prefHeight="14.0" prefWidth="181.0" />
+                  <Button mnemonicParsing="false" onAction="#onHandleShuffe" text="Shuffle" />
+                  <Button mnemonicParsing="false" onAction="#onHandleRepeat" text="Repeat" />
+               </children>
+            </HBox>
+            <HBox prefHeight="25.0" prefWidth="216.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onHandlePrev" prefWidth="72.0" text="Prev" />
+                  <Button mnemonicParsing="false" onAction="#onHandlePlay" prefWidth="72.0" text="Play" />
+                  <Button mnemonicParsing="false" onAction="#onHandlePause" prefWidth="72.0" text="Pause" />
+                  <Button mnemonicParsing="false" onAction="#onHandleNext" prefWidth="72.0" text="Next" />
+               </children>
+            </HBox>
+            <ListView fx:id="listViewLibrary" prefHeight="347.0" prefWidth="285.0" />
+         </children>
+      </VBox>
+   </left>
+   <right>
+      <VBox prefHeight="540.0" prefWidth="539.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="284.0" prefWidth="476.0">
+               <children>
+                  <ListView fx:id="listViewSongInfo" prefHeight="200.0" prefWidth="199.0" />
+                  <VBox prefHeight="200.0" prefWidth="278.0">
+                     <children>
+                        <ListView fx:id="listViewQueue" prefHeight="250.0" prefWidth="280.0" />
+                        <HBox prefHeight="28.0" prefWidth="283.0">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#onHandleAdd" prefHeight="25.0" prefWidth="65.0" text="Add" />
+                              <Button mnemonicParsing="false" onAction="#onHandleRemove" prefWidth="65.0" text="Remove" />
+                              <ComboBox fx:id="comboBoxMisc" onAction="#onHandleMisc" prefWidth="150.0" promptText="Misc" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <TextField fx:id="txtFieldSearch" onKeyReleased="#onHandleSearch" />
+            <ListView fx:id="listViewAllSongs" prefHeight="330.0" prefWidth="476.0" />
+            <HBox prefHeight="14.0" prefWidth="476.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onHandlePlaylistEdit" text="Edit" />
+                  <Button mnemonicParsing="false" onAction="#onHandlePlaylistAdd" text="Add" />
+                  <Button mnemonicParsing="false" onAction="#onHandlePlaylistRemove" text="Remove" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </right>
+</BorderPane>
