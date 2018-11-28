@@ -53,7 +53,7 @@ public class MyTunesMainViewController implements Initializable {
 
     @FXML
     private void onHandleSliderVol(MouseEvent event) {
-        System.out.println("VOLUME!");
+        System.out.println(sliderVol.getValue());
     }
 
     @FXML
