@@ -107,9 +107,5 @@ public class MyTunesMainViewController implements Initializable {
     @FXML
     private void onHandlePlaylistRemove(ActionEvent event) {
     }
-
-    private void onHandleSliderVol(DragEvent event) {
-        System.out.println("hej");   
-    }
     
 }
