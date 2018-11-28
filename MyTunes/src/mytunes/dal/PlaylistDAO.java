@@ -40,5 +40,9 @@ public class PlaylistDAO {
     {
         
     }
+    public void renamePlaylist(String title)
+    {
+        
+    }
 
 }
