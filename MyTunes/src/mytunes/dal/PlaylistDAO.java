@@ -21,6 +21,12 @@ import mytunes.be.Song;
  * @author Wezzy Laptop
  */
 public class PlaylistDAO {
+DatabaseConnection dc;
+
+    public PlaylistDAO() throws IOException
+    {
+        this.dc = new DatabaseConnection();
+    }
 
     public Playlist addSelection() {
         
@@ -50,10 +56,24 @@ public class PlaylistDAO {
         return null;
     }
     
-    public void deletePlaylist()
-    {
-        
-    }
+    public void deletePlaylist(String title) throws IOException, SQLException
+        {
+        try (Connection con = dc.getConnection())
+        {
+           Statement statement = con.createStatement();
+           ResultSet rs = statement.executeQuery("Select * FROM Playlist;");
+             {
+                 {
+                     PreparedStatement pstmt = con.prepareStatement("DELETE FROM Playlist WHERE Title=()");
+                     pstmt.setString(1, title);
+                     pstmt.execute();
+                     pstmt.close();
+                 }
+             }
+            
+        } catch (SQLServerException ex)
+        {
+        }}
     public void renamePlaylist(String title, String newTitle ) throws SQLException, IOException
     {
         Playlist p = getPlaylist(title);
