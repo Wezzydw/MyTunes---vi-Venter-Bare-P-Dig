@@ -13,17 +13,37 @@ public class Song {
     
     String title;
     String author;
+    String album;
     int length;
+    int releaseYear;
     String categori;
     String filePath;
     
-    public Song(String title, String author, int length, String categori, String filePath)
+    public Song(String title, String author, int length, int releaseYear, String categori, String filePath, String album)
     {
         this.title = title;
         this.author = author;
         this.length = length;
         this.categori = categori;
         this.filePath = filePath;
+        this.album = album;
+        this.releaseYear = releaseYear;
+    }
+
+    public int getReleaseYear() {
+        return releaseYear;
+    }
+
+    public void setReleaseYear(int releaseYear) {
+        this.releaseYear = releaseYear;
+    }
+
+    public String getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(String album) {
+        this.album = album;
     }
 
     public String getTitle() {
