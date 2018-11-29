@@ -32,9 +32,9 @@ public class Playlist {
         this.playlist = playlist;
     }
 
-    public Playlist(String title, List<Song> playlist) {
+    public Playlist(String title) {
         this.title = title;
-        this.playlist = playlist;
+        //this.playlist = playlist;
     }
     
     public void addSong(Song song)
@@ -45,5 +45,15 @@ public class Playlist {
     public void deleteSong(Song song)
     {
         playlist.remove(song);
+    }
+    
+    public Song getSong(int i)
+    {
+        return playlist.get(i);
+    }
+    
+    public int getSize()
+    {
+        return playlist.size();
     }
 }
