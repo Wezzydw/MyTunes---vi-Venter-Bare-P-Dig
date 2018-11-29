@@ -42,4 +42,9 @@ public class SongDAO {
     {
         return null;   
     }
+    
+    public void writeChanges()
+    {
+        
+    }
 }

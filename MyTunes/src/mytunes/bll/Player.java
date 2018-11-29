@@ -15,12 +15,28 @@ import mytunes.be.Song;
  * @author Wezzy Laptop
  */
 public class Player {
-    
-    public void playSong()
-    {
-        String bip = "C:/Users/Wezzy Laptop/Desktop/Music/Sephyx   Save Me (Official Video Clip)[1].mp3";
-        Media hit = new Media(new File(bip).toURI().toString());
-        MediaPlayer mp = new MediaPlayer(hit);
+
+    String bip;
+    Media hit;
+    MediaPlayer mp;
+
+    public Player() {
+
+    }
+
+    public void playSong() {
+        bip = "C:/Users/Wezzy Laptop/Desktop/Music/Sephyx   Save Me (Official Video Clip)[1].mp3";
+        hit = new Media(new File(bip).toURI().toString());
+        mp = new MediaPlayer(hit);
+        
+        
         mp.play();
+        
+
+    }
+
+    public void pauseSong() {
+        mp.pause();
+        
     }
 }

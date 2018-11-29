@@ -78,6 +78,8 @@ public class MyTunesMainViewController implements Initializable {
 
     @FXML
     private void onHandlePause(ActionEvent event) {
+        Player p = new Player();
+        p.pauseSong();
     }
 
     @FXML
