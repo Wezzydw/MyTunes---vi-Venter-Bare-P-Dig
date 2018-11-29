@@ -25,7 +25,7 @@ public class Player {
     Status currentStatus;
 
     public Player() {
-
+        
     }
 
     public void addSong() {
@@ -40,5 +40,9 @@ public class Player {
 
     public void pauseSong() {
         mp.pause();
+    }
+    public void nextSong()
+    {
+        
     }
 }
