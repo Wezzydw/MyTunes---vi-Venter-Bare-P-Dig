@@ -36,4 +36,14 @@ public class Playlist {
         this.title = title;
         this.playlist = playlist;
     }
+    
+    public void addSong(Song song)
+    {
+        
+    }
+    
+    public void deleteSong(Song son)
+    {
+        
+    }
 }
