@@ -66,10 +66,10 @@ DatabaseConnection dc;
             ResultSet rs = statement.executeQuery("SELECT * FROM Playlists;");
             while(rs.next())
             {
-                List<Song> song = rs.getArray(columnLabel);
+                
                 String title = rs.getString("title");
                 Playlist playlist = new Playlist(title);
-                
+                playlists.add(playlist);
             }
 
         } catch (SQLException ex)
