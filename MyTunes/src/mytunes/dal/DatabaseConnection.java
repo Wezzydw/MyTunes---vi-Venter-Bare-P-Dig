@@ -5,12 +5,39 @@
  */
 package mytunes.dal;
 
+
+import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.sql.Connection;
+import java.util.Properties;
+
+
 /**
  *
  * @author Wezzy Laptop
  */
 public class DatabaseConnection {
     
+    private static final String PROP_FILE = "database.setttings";
+    private SQLServerDataSource ds;
     
+    public DatabaseConnection() throws IOException{
+    Properties databaseProperties = new Properties();
+        databaseProperties.load(new FileInputStream(PROP_FILE));
+        ds = new SQLServerDataSource();
+        ds.setServerName(databaseProperties.getProperty("Server"));
+        ds.setDatabaseName(databaseProperties.getProperty("Database"));
+        ds.setUser(databaseProperties.getProperty("User"));
+        ds.setPassword(databaseProperties.getProperty("Password"));
     
+    }
+    
+    public Connection getConnection() throws SQLServerException
+    {
+        return ds.getConnection();
+    }
+    
+
 }
