@@ -5,12 +5,17 @@
  */
 package mytunes.dal;
 
+import com.microsoft.sqlserver.jdbc.SQLServerException;
+import java.sql.Connection;
+
 /**
  *
  * @author Wezzy Laptop
  */
-public class DatabaseConnection {
-    
-    
-    
+public class DatabaseConnection 
+    {   
+        public Connection getConnection() throws SQLServerException{
+            Connection CON = null;
+        return CON;
+    }
 }

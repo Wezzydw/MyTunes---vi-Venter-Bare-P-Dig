@@ -5,6 +5,12 @@
  */
 package mytunes.dal;
 
+import com.microsoft.sqlserver.jdbc.SQLServerException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
@@ -40,11 +46,33 @@ public class PlaylistDAO {
     {
         
     }
-    public void renamePlaylist(String title, String newTitle )
+    public void renamePlaylist(String title, String newTitle ) throws SQLException
     {
         Playlist p = getPlaylist(title);
         p.setTitle(newTitle);
     
-    }
+        try
+        {
+            DatabaseConnection dc = new DatabaseConnection();
+            Connection con = dc.getConnection();
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery("Select * FROM Playlist;");
+             while (rs.next()) 
+             {
+                     PreparedStatement pstmt = con.prepareStatement("UPDATE Playlist SET Title = (?) WHERE movie = (?) AND [user] = (?)");
+                     pstmt.setString(1, newTitle);
+                     pstmt.execute();
+                     pstmt.close();
+                     System.out.println("Playlist found - and updated!"); 
+             }
+ 
+             }
+    
+        catch (SQLServerException ex)
+        {
+            ex.printStackTrace(); 
+        }
+           
+    }}
+    
 
-}
