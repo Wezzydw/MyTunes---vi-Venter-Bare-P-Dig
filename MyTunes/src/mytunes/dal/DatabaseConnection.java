@@ -5,30 +5,19 @@
  */
 package mytunes.dal;
 
-<<<<<<< HEAD
-import com.microsoft.sqlserver.jdbc.SQLServerException;
-import java.sql.Connection;
-=======
+
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.Properties;
->>>>>>> c9c5c363426421603a266fa405b317cf7f5ae2fd
+
 
 /**
  *
  * @author Wezzy Laptop
  */
-<<<<<<< HEAD
-public class DatabaseConnection 
-    {   
-        public Connection getConnection() throws SQLServerException{
-            Connection CON = null;
-        return CON;
-    }
-=======
 public class DatabaseConnection {
     
     private static final String PROP_FILE = "database.setttings";
@@ -50,5 +39,5 @@ public class DatabaseConnection {
         return ds.getConnection();
     }
     
->>>>>>> c9c5c363426421603a266fa405b317cf7f5ae2fd
+
 }

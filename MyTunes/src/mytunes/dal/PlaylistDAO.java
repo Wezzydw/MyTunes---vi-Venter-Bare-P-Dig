@@ -6,6 +6,7 @@
 package mytunes.dal;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -46,7 +47,7 @@ public class PlaylistDAO {
     {
         
     }
-    public void renamePlaylist(String title, String newTitle ) throws SQLException
+    public void renamePlaylist(String title, String newTitle ) throws SQLException, IOException
     {
         Playlist p = getPlaylist(title);
         p.setTitle(newTitle);
