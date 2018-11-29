@@ -6,6 +6,7 @@
 package mytunes.bll;
 
 import java.io.File;
+import javafx.collections.MapChangeListener;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
@@ -29,13 +30,26 @@ public class Player {
         
     }
 
+    public Player()
+    {
+        
+    }
+
     public void addSong() {
-        bip = "C:/Users/Wezzy Laptop/Desktop/Music/Sephyx   Save Me (Official Video Clip)[1].mp3";
+        bip = "C:\\Users\\Wezzy\\Desktop\\Test folder\\Sephyx   Save Me (Official Video Clip)[1].mp3";
         hit = new Media(new File(bip).toURI().toString());
         mp = new MediaPlayer(hit);
     }
 
     public void playSong() {
+        //String a = (String) mp.getMedia().getMetadata().get("album");
+        //Her er det gode shit.
+        hit.getMetadata().addListener((MapChangeListener<String, Object>) change -> {
+            String a = (String) mp.getMedia().getMetadata().get("album");
+            System.out.println(a);
+        });
+        
+        //System.out.println(a);
       mp.play();
     }
 
