@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
@@ -22,6 +23,8 @@ import mytunes.be.Song;
  */
 public class PlaylistDAO {
 
+    private DatabaseConnection conProvider;
+    
     public Playlist addSelection() {
         return null;
     }
@@ -40,8 +43,29 @@ public class PlaylistDAO {
     }
     public List<Playlist> getAllPlaylists()
     {
-        return null;
+        
+        List<Playlist> playlists = new ArrayList<>();
+        
+        try (Connection con = conProvider.getConnection())
+        {
+            
+            PreparedStatement statement = (PreparedStatement) con.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM Playlists;");
+            while(rs.next())
+            {
+                List<Song> song = rs.getArray(columnLabel);
+                String title = rs.getString("title");
+                Playlist playlist = new Playlist(title);
+                
+            }
+
+        } catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+        return playlists;
     }
+    
     
     public void deletePlaylist()
     {
@@ -74,6 +98,7 @@ public class PlaylistDAO {
             ex.printStackTrace(); 
         }
            
-    }}
+    }
+}
     
 

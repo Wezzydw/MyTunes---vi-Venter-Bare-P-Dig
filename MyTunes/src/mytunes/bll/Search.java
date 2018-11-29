@@ -31,7 +31,7 @@ public class Search {
         song = sdao.getAllSongs();
         
         for (Song song1 : song) {
-            String releaseYear = "" + song1.getReleaseYear();
+            String releaseYear = "" + song1.getReleaseYear(); //The only way we could get change an int to a String.
             if (song1.getTitle().toLowerCase().contains(query.toLowerCase())) {
                 searchResult.add(song1);
             }
