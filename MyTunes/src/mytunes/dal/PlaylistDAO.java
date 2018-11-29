@@ -40,9 +40,11 @@ public class PlaylistDAO {
     {
         
     }
-    public void renamePlaylist(String title)
+    public void renamePlaylist(String title, String newTitle )
     {
-        
+        Playlist p = getPlaylist(title);
+        p.setTitle(newTitle);
+    
     }
 
 }
