@@ -38,8 +38,8 @@ public class SongDAO {
         return null;
     }
     
-//    public Song getSong()
-//    {
-//        
-//    }
+    public Song getSongForPlayback()
+    {
+        return null;   
+    }
 }

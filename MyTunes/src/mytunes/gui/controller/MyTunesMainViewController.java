@@ -18,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import mytunes.bll.Player;
 
 /**
  * FXML Controller class
@@ -70,6 +71,9 @@ public class MyTunesMainViewController implements Initializable {
 
     @FXML
     private void onHandlePlay(ActionEvent event) {
+        System.out.println("tester");
+        Player p = new Player();
+        p.playSong();
     }
 
     @FXML
