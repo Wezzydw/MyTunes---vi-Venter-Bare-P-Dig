@@ -39,11 +39,11 @@ public class Playlist {
     
     public void addSong(Song song)
     {
-        
+        playlist.add(song);
     }
     
-    public void deleteSong(Song son)
+    public void deleteSong(Song song)
     {
-        
+        playlist.remove(song);
     }
 }
