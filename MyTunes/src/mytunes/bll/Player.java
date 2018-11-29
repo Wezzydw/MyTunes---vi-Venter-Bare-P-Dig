@@ -22,30 +22,23 @@ public class Player {
     Media hit;
     MediaPlayer mp;
     MediaPlayer currentPlayer;
+    Status currentStatus;
 
     public Player() {
 
     }
 
-    public void playSong() {
-        Status currentStatus = mp.getStatus();
-        if (currentStatus != Status.PAUSED) {
-            bip = "C:/Users/Wezzy Laptop/Desktop/Music/Sephyx   Save Me (Official Video Clip)[1].mp3";
-            hit = new Media(new File(bip).toURI().toString());
-            mp = new MediaPlayer(hit);
-            mp.play();
-        }
-        else
-        {
+    public void addSong() {
+        bip = "C:/Users/Wezzy Laptop/Desktop/Music/Sephyx   Save Me (Official Video Clip)[1].mp3";
+        hit = new Media(new File(bip).toURI().toString());
+        mp = new MediaPlayer(hit);
+    }
 
-        mp.play();
-        currentPlayer = mp;
-        }
+    public void playSong() {
+      mp.play();
     }
 
     public void pauseSong() {
-        mp.getCurrentTime();
-       
         mp.pause();
     }
 }

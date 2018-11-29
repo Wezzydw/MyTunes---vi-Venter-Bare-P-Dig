@@ -27,6 +27,7 @@ import mytunes.bll.Player;
  */
 public class MyTunesMainViewController implements Initializable {
     Player p = new Player();
+    int i = 0;
 
     @FXML
     private TextArea txtTopleft;
@@ -72,6 +73,13 @@ public class MyTunesMainViewController implements Initializable {
 
     @FXML
     private void onHandlePlay(ActionEvent event) {
+        
+        if (i == 0)
+        {
+            p.addSong();
+            i = 2;
+            System.out.println("tester");
+        }
         p.playSong();
     }
 
