@@ -23,11 +23,18 @@ import mytunes.be.Song;
 public class PlaylistDAO {
 
     public Playlist addSelection() {
+        
         return null;
     }
 
-    public Playlist mergePlaylist(Playlist p) {
-        return null;
+    public Playlist mergePlaylist(Playlist A, Playlist B, String Title) 
+    {
+        Playlist np = new Playlist(Title);
+        for(int i = 0; 1 < A.getSize(); i++)
+        {
+        np.addSong(A.getSong(i));
+        }
+        return np;
     }
     
     public Playlist getPlaylist(String title)
@@ -66,7 +73,7 @@ public class PlaylistDAO {
                      pstmt.close();
                      System.out.println("Playlist found - and updated!"); 
              }
- 
+            
              }
     
         catch (SQLServerException ex)
