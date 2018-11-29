@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
@@ -21,7 +22,15 @@ import mytunes.be.Song;
  * @author Wezzy Laptop
  */
 public class PlaylistDAO {
+DatabaseConnection dc;
 
+    public PlaylistDAO() throws IOException
+    {
+        this.dc = new DatabaseConnection();
+    }
+
+    private DatabaseConnection conProvider;
+    
     public Playlist addSelection() {
         
         return null;
@@ -47,13 +56,47 @@ public class PlaylistDAO {
     }
     public List<Playlist> getAllPlaylists()
     {
-        return null;
+        
+        List<Playlist> playlists = new ArrayList<>();
+        
+        try (Connection con = conProvider.getConnection())
+        {
+            
+            PreparedStatement statement = (PreparedStatement) con.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM Playlists;");
+            while(rs.next())
+            {
+                List<Song> song = rs.getArray(columnLabel);
+                String title = rs.getString("title");
+                Playlist playlist = new Playlist(title);
+                
+            }
+
+        } catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+        return playlists;
     }
     
-    public void deletePlaylist()
-    {
-        
-    }
+    public void deletePlaylist(String title) throws IOException, SQLException
+        {
+        try (Connection con = dc.getConnection())
+        {
+           Statement statement = con.createStatement();
+           ResultSet rs = statement.executeQuery("Select * FROM Playlist;");
+             {
+                 {
+                     PreparedStatement pstmt = con.prepareStatement("DELETE FROM Playlist WHERE Title=()");
+                     pstmt.setString(1, title);
+                     pstmt.execute();
+                     pstmt.close();
+                 }
+             }
+            
+        } catch (SQLServerException ex)
+        {
+        }}
     public void renamePlaylist(String title, String newTitle ) throws SQLException, IOException
     {
         Playlist p = getPlaylist(title);
@@ -81,6 +124,7 @@ public class PlaylistDAO {
             ex.printStackTrace(); 
         }
            
-    }}
+    }
+}
     
 
