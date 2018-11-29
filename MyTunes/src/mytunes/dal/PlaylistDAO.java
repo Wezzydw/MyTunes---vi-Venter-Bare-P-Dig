@@ -22,15 +22,28 @@ import mytunes.be.Song;
  * @author Wezzy Laptop
  */
 public class PlaylistDAO {
+DatabaseConnection dc;
+
+    public PlaylistDAO() throws IOException
+    {
+        this.dc = new DatabaseConnection();
+    }
 
     private DatabaseConnection conProvider;
     
     public Playlist addSelection() {
+        
         return null;
     }
 
-    public Playlist mergePlaylist(Playlist p) {
-        return null;
+    public Playlist mergePlaylist(Playlist A, Playlist B, String Title) 
+    {
+        Playlist np = new Playlist(Title);
+        for(int i = 0; 1 < A.getSize(); i++)
+        {
+        np.addSong(A.getSong(i));
+        }
+        return np;
     }
     
     public Playlist getPlaylist(String title)
@@ -66,11 +79,24 @@ public class PlaylistDAO {
         return playlists;
     }
     
-    
-    public void deletePlaylist()
-    {
-        
-    }
+    public void deletePlaylist(String title) throws IOException, SQLException
+        {
+        try (Connection con = dc.getConnection())
+        {
+           Statement statement = con.createStatement();
+           ResultSet rs = statement.executeQuery("Select * FROM Playlist;");
+             {
+                 {
+                     PreparedStatement pstmt = con.prepareStatement("DELETE FROM Playlist WHERE Title=()");
+                     pstmt.setString(1, title);
+                     pstmt.execute();
+                     pstmt.close();
+                 }
+             }
+            
+        } catch (SQLServerException ex)
+        {
+        }}
     public void renamePlaylist(String title, String newTitle ) throws SQLException, IOException
     {
         Playlist p = getPlaylist(title);
@@ -90,7 +116,7 @@ public class PlaylistDAO {
                      pstmt.close();
                      System.out.println("Playlist found - and updated!"); 
              }
- 
+            
              }
     
         catch (SQLServerException ex)

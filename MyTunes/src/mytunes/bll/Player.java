@@ -8,6 +8,8 @@ package mytunes.bll;
 import java.io.File;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaPlayer.Status;
+import javafx.util.Duration;
 import mytunes.be.Song;
 
 /**
@@ -20,22 +22,23 @@ public class Player {
     Media hit;
     MediaPlayer mp;
     MediaPlayer currentPlayer;
+    Status currentStatus;
+
     public Player() {
 
     }
 
-    public void playSong() {
+    public void addSong() {
         bip = "C:/Users/Wezzy Laptop/Desktop/Music/Sephyx   Save Me (Official Video Clip)[1].mp3";
         hit = new Media(new File(bip).toURI().toString());
         mp = new MediaPlayer(hit);
-        System.out.println(mp.getMedia().getMetadata().isEmpty());
-        mp.play();
-        //mp.getCurrentTime()
-        currentPlayer = mp;        
+    }
+
+    public void playSong() {
+      mp.play();
     }
 
     public void pauseSong() {
-        
         mp.pause();
     }
 }
