@@ -18,8 +18,9 @@ public class Song {
     int releaseYear;
     String categori;
     String filePath;
+    int id;
     
-    public Song(String title, String author, int length, int releaseYear, String categori, String filePath, String album)
+    public Song(String title, String author, int length, int releaseYear, String categori, String filePath, String album,int id)
     {
         this.title = title;
         this.author = author;
@@ -28,6 +29,7 @@ public class Song {
         this.filePath = filePath;
         this.album = album;
         this.releaseYear = releaseYear;
+        this.id = id;
     }
 
     public int getReleaseYear() {
@@ -85,5 +87,14 @@ public class Song {
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
-    
+
+    public int getId()
+    {
+        return 0;
+        
+    }
 }
+    
+    
+    
+
