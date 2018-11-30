@@ -71,6 +71,7 @@ public class MyTunesMainViewController implements Initializable {
 
     @FXML
     private void onHandlePrev(ActionEvent event) {
+        p.prevSong();
     }
 
     @FXML
@@ -86,6 +87,7 @@ public class MyTunesMainViewController implements Initializable {
 
     @FXML
     private void onHandleNext(ActionEvent event) {
+        p.playNextSong();
     }
 
     @FXML

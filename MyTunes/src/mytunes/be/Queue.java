@@ -33,4 +33,16 @@ public class Queue
     {
         return queue.get(index);
     }
+    
+    public boolean endOfQueue(int index)
+    {
+        if (queue.size()-1 == index)
+            return true;
+        else return false;
+    }
+    
+    public int queueSize()
+    {
+        return queue.size();
+    }
 }
