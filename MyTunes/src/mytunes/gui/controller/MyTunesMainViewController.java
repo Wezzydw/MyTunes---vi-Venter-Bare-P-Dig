@@ -75,13 +75,7 @@ public class MyTunesMainViewController implements Initializable {
 
     @FXML
     private void onHandlePlay(ActionEvent event) {
-        
-        if (i == 0)
-        {
-            p.addSong();
-            i = 2;
-            System.out.println("tester");
-        }
+
         p.playSong();
     }
 

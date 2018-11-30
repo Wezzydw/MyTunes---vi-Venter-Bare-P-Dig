@@ -15,8 +15,12 @@ import java.util.List;
 public class Queue
 {
     List<Song> queue = new ArrayList();
-    public void addSelection()
+    public void addSelection(List<Song> songs)
     {
+        for (Song s : songs)
+        {
+            queue.add(s);
+        }
         
     }
     

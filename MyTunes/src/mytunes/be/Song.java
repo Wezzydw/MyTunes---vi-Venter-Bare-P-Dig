@@ -29,6 +29,11 @@ public class Song {
         this.album = album;
         this.releaseYear = releaseYear;
     }
+    public Song(String title, String filePath)
+    {
+        this.title = title;
+        this.filePath = filePath;
+    }
 
     public int getReleaseYear() {
         return releaseYear;
