@@ -13,10 +13,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import static java.util.Collections.list;
 import java.util.List;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
 
+ 
 /**
  *
  * @author Wezzy Laptop
@@ -31,7 +33,8 @@ DatabaseConnection dc;
 
     private DatabaseConnection conProvider;
     
-    public Playlist addSelection() {
+    public Playlist addSelection(List<Song> songs) {
+        
         
         return null;
     }
@@ -50,10 +53,15 @@ DatabaseConnection dc;
     {
         return null;
     }
+    /**
+     * 
+     * @param toBeRemoved 
+     */
     public void removeSelection(List<Song> toBeRemoved)
     {
         
     }
+ 
     public List<Playlist> getAllPlaylists()
     {
         
@@ -78,7 +86,12 @@ DatabaseConnection dc;
         }
         return playlists;
     }
-    
+    /**
+     * 
+     * @param title
+     * @throws IOException
+     * @throws SQLException 
+     */
     public void deletePlaylist(String title) throws IOException, SQLException
         {
         try (Connection con = dc.getConnection())
@@ -97,6 +110,13 @@ DatabaseConnection dc;
         } catch (SQLServerException ex)
         {
         }}
+    /**
+     * 
+     * @param title
+     * @param newTitle
+     * @throws SQLException
+     * @throws IOException 
+     */
     public void renamePlaylist(String title, String newTitle ) throws SQLException, IOException
     {
         Playlist p = getPlaylist(title);
@@ -123,8 +143,8 @@ DatabaseConnection dc;
         {
             ex.printStackTrace(); 
         }
-           
-    }
+        
+    }   
 }
     
 
