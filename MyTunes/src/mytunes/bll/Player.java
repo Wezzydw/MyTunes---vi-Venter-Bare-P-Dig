@@ -50,8 +50,10 @@ public class Player {
 
         //Temp Testen code under here
         //
+        String path =  "C:\\Users\\Wezzy Laptop\\Desktop\\Music\\Coone  E Life   Riot (Official Music Video)[1].mp3";
         if (mp == null) {
             List<Song> songs = new ArrayList();
+            
             songs.add(new Song("Sang nummer 1", "C:\\Users\\Wezzy Laptop\\Desktop\\Music\\Coone  E Life   Riot (Official Music Video)[1].mp3"));
             songs.add(new Song("Sang nummer 2", "C:\\Users\\Wezzy Laptop\\Desktop\\Music\\Cyber   A New World (Official HQ Preview)[1].mp3"));
             songs.add(new Song("Sang nummer 3", "C:\\Users\\Wezzy Laptop\\Desktop\\Music\\Sephyx   Save Me (Official Video Clip)[1].mp3"));
@@ -64,11 +66,30 @@ public class Player {
         //String a = (String) mp.getMedia().getMetadata().get("album");
         //Her er det gode shit.
 //        hit.getMetadata().addListener((MapChangeListener<String, Object>) change -> {
-//            String a = (String) mp.getMedia().getMetadata().get("album");
-//            System.out.println(a);
+//            int a = (int) mp.getMedia().getMetadata().get("duration");
+//            //double b = hit.getDuration().toHours();
+//            Duration b = hit.getDuration();
+//            File file = new File(path);
+//            
+//            System.out.println(file.getPath());
+//            File test = new File(file.toString());
+//            System.out.println(test.toPath());
+//            
+           // System.out.println(a);
+//            
 //        });
 //        
         //System.out.println(a);
+        mp.setOnReady(new Runnable() {
+            @Override
+            public void run() {
+                
+                System.out.println(mp.getMedia().getDuration().toMinutes());
+        
+            }
+            });
+        
+        
         System.out.println(mp.getStatus());
         if (mp.getStatus() != Status.PLAYING) {
 
@@ -104,6 +125,7 @@ public class Player {
         bip = q.getFilePath();
         hit = new Media(new File(bip).toURI().toString());
         mp = new MediaPlayer(hit);
+        
 
         return mp;
     }
