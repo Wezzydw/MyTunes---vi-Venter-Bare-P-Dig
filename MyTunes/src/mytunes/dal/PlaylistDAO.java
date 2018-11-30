@@ -5,6 +5,7 @@
  */
 package mytunes.dal;
 
+import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
 import java.sql.Connection;
@@ -145,6 +146,30 @@ DatabaseConnection dc;
         }
         
     }   
+      public void writeChanges()throws IOException
+    {
+        List<Playlist> allPlaylists = new PlaylistDAO().getAllPlaylists();
+        SQLServerDataSource ds = new SQLServerDataSource();
+        ds.setServerName("10.176.111.31");
+        ds.setDatabaseName("MovieSys");
+        ds.setUser("CS2018A_20");
+        ds.setPassword("CS2018A_20");
+        try (Connection con = ds.getConnection())
+        {
+            for (Playlist playlist : allPlaylists)
+            {
+               try(PreparedStatement pstmt = con.prepareStatement("INSERT INTO Playlist (Title, SongId, FilePath ) VALUES (")){
+                    pstmt.setString(1, playlist.getTitle());
+                    pstmt.setString(2, playlist.getSongId());
+                    pstmt.execute();
+               }
+            }
+        } catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+
+    }
 }
     
 
