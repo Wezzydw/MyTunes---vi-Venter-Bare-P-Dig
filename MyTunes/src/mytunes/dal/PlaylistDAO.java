@@ -171,7 +171,7 @@ DatabaseConnection dc;
             {
                try(PreparedStatement pstmt = con.prepareStatement("INSERT INTO Playlist (Title, SongId, FilePath ) VALUES (")){
                     pstmt.setString(1, playlist.getTitle());
-                    pstmt.setInt(2, playlist.getSongId); //<-- Denne ved jeg ikke hvad jeg skal gøre ved.
+                    //pstmt.setInt(2, playlist.getSongId); //<-- Denne ved jeg ikke hvad jeg skal gøre ved.
                     pstmt.execute();
                }
             }

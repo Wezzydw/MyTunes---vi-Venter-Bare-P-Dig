@@ -18,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.MediaView;
 import mytunes.bll.Player;
 
 /**
@@ -28,6 +29,7 @@ import mytunes.bll.Player;
 public class MyTunesMainViewController implements Initializable {
     Player p = new Player();
     int i = 0;
+    
 
     @FXML
     private TextArea txtTopleft;
@@ -67,6 +69,7 @@ public class MyTunesMainViewController implements Initializable {
 
     @FXML
     private void onHandleRepeat(ActionEvent event) {
+        p.repeatHandler();
     }
 
     @FXML

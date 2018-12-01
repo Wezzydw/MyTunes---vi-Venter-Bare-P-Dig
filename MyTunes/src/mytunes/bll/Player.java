@@ -12,6 +12,7 @@ import javafx.collections.MapChangeListener;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
+import javafx.scene.media.MediaView;
 import javafx.util.Duration;
 import mytunes.be.Playlist;
 import mytunes.be.Queue;
@@ -21,7 +22,8 @@ import mytunes.be.Song;
  *
  * @author Wezzy Laptop
  */
-public class Player {
+public class Player
+{
 
     String FOLDER = "C:\\Users\\Wezzy\\Desktop\\Test folder\\";
     String bip;
@@ -31,37 +33,48 @@ public class Player {
     Status currentStatus;
     Queue queue;
     int songIndex;
+    boolean onRepeat = false;
 
-    public Player(Playlist play) {
-
+    public Player(Playlist play)
+    {
+       
     }
 
-    public Player() {
+    public Player()
+    {
         queue = new Queue();
+        
 
     }
+    
+    //MÅske skal der laves noget arbejde i constructor, så det hele ikke ligger i playSong()
+    //for så slipper vi for så mange checks, hvis f.eks. der bliver trykket på play knappen i træk
 
 //    public void addSong() {
 //        bip = "C:\\Users\\Wezzy\\Desktop\\Test folder\\Sephyx   Save Me (Official Video Clip)[1].mp3";
 //        hit = new Media(new File(bip).toURI().toString());
 //        mp = new MediaPlayer(hit);
 //    }
-    public void playSong() {
+    public void playSong()
+    {
 
         //Temp Testen code under here
         //
-        String path =  "C:\\Users\\Wezzy Laptop\\Desktop\\Music\\Coone  E Life   Riot (Official Music Video)[1].mp3";
-        if (mp == null) {
+        String path = "C:\\Users\\Wezzy Laptop\\Desktop\\Music\\Coone  E Life   Riot (Official Music Video)[1].mp3";
+        if (mp == null)
+        {
             List<Song> songs = new ArrayList();
-            
-            songs.add(new Song("Sang nummer 1", "C:\\Users\\Wezzy Laptop\\Desktop\\Music\\Coone  E Life   Riot (Official Music Video)[1].mp3"));
-            songs.add(new Song("Sang nummer 2", "C:\\Users\\Wezzy Laptop\\Desktop\\Music\\Cyber   A New World (Official HQ Preview)[1].mp3"));
-            songs.add(new Song("Sang nummer 3", "C:\\Users\\Wezzy Laptop\\Desktop\\Music\\Sephyx   Save Me (Official Video Clip)[1].mp3"));
+
+            songs.add(new Song("Sang nummer 1", "C:\\Users\\Wezzy\\Desktop\\Musik2\\Coone  E Life   Riot (Official Music Video)[1].mp3"));
+            songs.add(new Song("Sang nummer 2", "C:\\Users\\Wezzy\\Desktop\\Musik2\\Cyber   A New World (Official HQ Preview)[1].mp3"));
+            songs.add(new Song("Sang nummer 3", "C:\\Users\\Wezzy\\Desktop\\Musik2\\Sephyx   Save Me (Official Video Clip)[1].mp3"));
 
             queue.addSelection(songs);
             bip = queue.getSong(songIndex).getFilePath();
             hit = new Media(new File(bip).toURI().toString());
             mp = new MediaPlayer(hit);
+            MediaView view = new MediaView(mp);
+            
         }
         //String a = (String) mp.getMedia().getMetadata().get("album");
         //Her er det gode shit.
@@ -75,30 +88,35 @@ public class Player {
 //            File test = new File(file.toString());
 //            System.out.println(test.toPath());
 //            
-           // System.out.println(a);
+        // System.out.println(a);
 //            
 //        });
 //        
         //System.out.println(a);
-        mp.setOnReady(new Runnable() {
+        mp.setOnReady(new Runnable()
+        {
             @Override
-            public void run() {
-                
+            public void run()
+            {
+
                 System.out.println(mp.getMedia().getDuration().toMinutes());
-        
+
             }
-            });
-        
-        
+        });
+
         System.out.println(mp.getStatus());
-        if (mp.getStatus() != Status.PLAYING) {
+        if (mp.getStatus() != Status.PLAYING)
+        {
 
             mp.play();
             System.out.println("Print index " + songIndex);
-            mp.setOnEndOfMedia(new Runnable() {
+            mp.setOnEndOfMedia(new Runnable()
+            {
                 @Override
-                public void run() {
-                    if (queue.endOfQueue(songIndex)) {
+                public void run()
+                {
+                    if (queue.endOfQueue(songIndex))
+                    {
 
                         System.out.println("Song index before " + songIndex);
                         songIndex = 0;
@@ -113,33 +131,38 @@ public class Player {
 
     }
 
-    public void pauseSong() {
+    public void pauseSong()
+    {
         mp.pause();
 
     }
 
-    public MediaPlayer nextSong() {
+    public MediaPlayer nextSong()
+    {
 
         Song q = queue.getSong(songIndex);
         songIndex++;
         bip = q.getFilePath();
         hit = new Media(new File(bip).toURI().toString());
         mp = new MediaPlayer(hit);
-        
 
         return mp;
     }
 
-    public void changevolume(double vol) {
+    public void changevolume(double vol)
+    {
 
         mp.setVolume(vol);
     }
 
-    public void prevSong() {
-        if (songIndex == 0) {
+    public void prevSong()
+    {
+        if (songIndex == 0)
+        {
             System.out.println("Here 1");
             songIndex = queue.queueSize() - 1;
-        } else {
+        } else
+        {
             System.out.println("Here 2");
             songIndex--;
         }
@@ -153,10 +176,13 @@ public class Player {
 
     }
 
-    public void playNextSong() {
-        if (songIndex == queue.queueSize() - 1) {
+    public void playNextSong()
+    {
+        if (songIndex == queue.queueSize() - 1)
+        {
             songIndex = 0;
-        } else {
+        } else
+        {
             songIndex++;
         }
 
@@ -167,5 +193,35 @@ public class Player {
 
         System.out.println("status: " + mp.getStatus());
         playSong();
+    }
+
+    public void playOnRepeat()
+    {
+        if(onRepeat)
+        {
+        mp.setOnEndOfMedia(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                mp.seek(Duration.ZERO);
+                mp.play();
+                playOnRepeat();
+            }
+        });
+        }
+        else
+        {
+            
+            playSong();
+        }
+
+    }
+    
+    public void repeatHandler()
+    {
+        onRepeat = !onRepeat;
+        
+        playOnRepeat();
     }
 }
