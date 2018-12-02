@@ -44,6 +44,7 @@ public class Player
 
     public Player()
     {
+        
         queue = new Queue();
         List<Song> songs = new ArrayList();
 
