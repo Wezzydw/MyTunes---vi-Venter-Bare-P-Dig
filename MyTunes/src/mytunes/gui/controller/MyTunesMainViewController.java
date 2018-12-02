@@ -115,11 +115,13 @@ public class MyTunesMainViewController implements Initializable
     @FXML
     private void onHandleRemove(ActionEvent event)
     {
+        
     }
 
     @FXML
     private void onHandleMisc(ActionEvent event)
     {
+       
     }
 
     @FXML
