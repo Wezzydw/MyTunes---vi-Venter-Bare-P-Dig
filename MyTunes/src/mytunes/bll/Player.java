@@ -34,22 +34,34 @@ public class Player
     Queue queue;
     int songIndex;
     boolean onRepeat = false;
+    double volume;
+    boolean shuffle = false;
 
     public Player(Playlist play)
     {
-       
+
     }
 
     public Player()
     {
         queue = new Queue();
-        
+        List<Song> songs = new ArrayList();
+
+        songs.add(new Song("Sang nummer 1", "C:\\Users\\Wezzy\\Desktop\\Musik2\\Coone  E Life   Riot (Official Music Video)[1].mp3"));
+        songs.add(new Song("Sang nummer 2", "C:\\Users\\Wezzy\\Desktop\\Musik2\\Cyber   A New World (Official HQ Preview)[1].mp3"));
+        songs.add(new Song("Sang nummer 3", "C:\\Users\\Wezzy\\Desktop\\Musik2\\Sephyx   Save Me (Official Video Clip)[1].mp3"));
+
+        queue.addSelection(songs);
+        bip = queue.getSong(songIndex).getFilePath();
+        hit = new Media(new File(bip).toURI().toString());
+        mp = new MediaPlayer(hit);
+        MediaView view = new MediaView(mp);
+        view.setMediaPlayer(mp);
 
     }
-    
+
     //MÅske skal der laves noget arbejde i constructor, så det hele ikke ligger i playSong()
     //for så slipper vi for så mange checks, hvis f.eks. der bliver trykket på play knappen i træk
-
 //    public void addSong() {
 //        bip = "C:\\Users\\Wezzy\\Desktop\\Test folder\\Sephyx   Save Me (Official Video Clip)[1].mp3";
 //        hit = new Media(new File(bip).toURI().toString());
@@ -63,18 +75,7 @@ public class Player
         String path = "C:\\Users\\Wezzy Laptop\\Desktop\\Music\\Coone  E Life   Riot (Official Music Video)[1].mp3";
         if (mp == null)
         {
-            List<Song> songs = new ArrayList();
 
-            songs.add(new Song("Sang nummer 1", "C:\\Users\\Wezzy\\Desktop\\Musik2\\Coone  E Life   Riot (Official Music Video)[1].mp3"));
-            songs.add(new Song("Sang nummer 2", "C:\\Users\\Wezzy\\Desktop\\Musik2\\Cyber   A New World (Official HQ Preview)[1].mp3"));
-            songs.add(new Song("Sang nummer 3", "C:\\Users\\Wezzy\\Desktop\\Musik2\\Sephyx   Save Me (Official Video Clip)[1].mp3"));
-
-            queue.addSelection(songs);
-            bip = queue.getSong(songIndex).getFilePath();
-            hit = new Media(new File(bip).toURI().toString());
-            mp = new MediaPlayer(hit);
-            MediaView view = new MediaView(mp);
-            
         }
         //String a = (String) mp.getMedia().getMetadata().get("album");
         //Her er det gode shit.
@@ -109,6 +110,7 @@ public class Player
         {
 
             mp.play();
+            mp.setVolume(volume);
             System.out.println("Print index " + songIndex);
             mp.setOnEndOfMedia(new Runnable()
             {
@@ -121,9 +123,26 @@ public class Player
                         System.out.println("Song index before " + songIndex);
                         songIndex = 0;
                         System.out.println("Song index after " + songIndex);
+
                     }
-                    nextSong();
-                    playSong();
+                    if (onRepeat)
+                    {
+                        System.out.println("on repeat");
+                        playOnRepeat();
+                        playSong();
+
+                    } else if (shuffle)
+                    {
+                        songIndex = getRandom();
+                        playSong();
+                    } else
+                    {
+                        System.out.println("not on repeat");
+                        nextSong();
+                        playSong();
+
+                    }
+
                 }
 
             });
@@ -151,20 +170,26 @@ public class Player
 
     public void changevolume(double vol)
     {
-
+        volume = vol;
         mp.setVolume(vol);
     }
 
-    public void prevSong()
+    public void playPrevSong()
     {
-        if (songIndex == 0)
+        if (!shuffle)
         {
-            System.out.println("Here 1");
-            songIndex = queue.queueSize() - 1;
+            if (songIndex == 0)
+            {
+                System.out.println("Here 1");
+                songIndex = queue.queueSize() - 1;
+            } else
+            {
+                System.out.println("Here 2");
+                songIndex--;
+            }
         } else
         {
-            System.out.println("Here 2");
-            songIndex--;
+            songIndex = getRandom();
         }
         mp.stop();
         bip = queue.getSong(songIndex).getFilePath();
@@ -178,12 +203,18 @@ public class Player
 
     public void playNextSong()
     {
-        if (songIndex == queue.queueSize() - 1)
+        if (!shuffle)
         {
-            songIndex = 0;
+            if (songIndex == queue.queueSize() - 1)
+            {
+                songIndex = 0;
+            } else
+            {
+                songIndex++;
+            }
         } else
         {
-            songIndex++;
+            songIndex = getRandom();
         }
 
         mp.stop();
@@ -197,31 +228,50 @@ public class Player
 
     public void playOnRepeat()
     {
-        if(onRepeat)
-        {
-        mp.setOnEndOfMedia(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                mp.seek(Duration.ZERO);
-                mp.play();
-                playOnRepeat();
-            }
-        });
-        }
-        else
-        {
-            
-            playSong();
-        }
+
+        bip = queue.getSong(songIndex).getFilePath();
+        hit = new Media(new File(bip).toURI().toString());
+        mp = new MediaPlayer(hit);
+//        if (onRepeat)
+//        {
+//            mp.setOnEndOfMedia(new Runnable()
+//            {
+//                @Override
+//                public void run()
+//                {
+//                    mp.seek(Duration.ZERO);
+//                    mp.play();
+//                    playOnRepeat();
+//                }
+//            });
+//        } else
+//        {
+//
+//            playSong();
+//        }
 
     }
-    
+
     public void repeatHandler()
     {
         onRepeat = !onRepeat;
-        
-        playOnRepeat();
+        System.out.println(onRepeat);
+        //playOnRepeat();
+    }
+
+    public MediaPlayer getMediaPlayer()
+    {
+        return mp;
+    }
+
+    public void shuffleHandler()
+    {
+        shuffle = !shuffle;
+        System.out.println(shuffle);
+    }
+
+    public int getRandom()
+    {
+        return (int) (Math.random() * queue.queueSize());
     }
 }

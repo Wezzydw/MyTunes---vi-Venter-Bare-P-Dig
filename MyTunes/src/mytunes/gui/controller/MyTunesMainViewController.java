@@ -26,13 +26,9 @@ import mytunes.bll.Player;
  *
  * @author Wezzy Laptop
  */
-public class MyTunesMainViewController implements Initializable {
-    Player p = new Player();
-    int i = 0;
-    
+public class MyTunesMainViewController implements Initializable
+{
 
-    @FXML
-    private TextArea txtTopleft;
     @FXML
     private Slider sliderVol;
     @FXML
@@ -47,78 +43,103 @@ public class MyTunesMainViewController implements Initializable {
     private TextField txtFieldSearch;
     @FXML
     private ListView<?> listViewAllSongs;
+    private MediaView mediaView;
+
+    Player p;
+    int i;
+    @FXML
+    private ListView<?> listNowPlaying;
 
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+    public void initialize(URL url, ResourceBundle rb)
+    {
+        p = new Player();
+        i = 0;
+        //mediaView.setMediaPlayer(p.getMediaPlayer());
+        
+    }
 
     @FXML
-    private void onHandleSliderVol(MouseEvent event) {
+    private void onHandleSliderVol(MouseEvent event)
+    {
         double vol = sliderVol.getValue();
         System.out.println(vol);
-        p.changevolume(vol/100);
+        p.changevolume(vol / 100);
     }
 
     @FXML
-    private void onHandleShuffe(ActionEvent event) {
+    private void onHandleShuffe(ActionEvent event)
+    {
+        p.shuffleHandler();
     }
 
     @FXML
-    private void onHandleRepeat(ActionEvent event) {
+    private void onHandleRepeat(ActionEvent event)
+    {
         p.repeatHandler();
     }
 
     @FXML
-    private void onHandlePrev(ActionEvent event) {
-        p.prevSong();
+    private void onHandlePrev(ActionEvent event)
+    {
+        p.playPrevSong();
     }
 
     @FXML
-    private void onHandlePlay(ActionEvent event) {
+    private void onHandlePlay(ActionEvent event)
+    {
 
         p.playSong();
     }
 
     @FXML
-    private void onHandlePause(ActionEvent event) { 
+    private void onHandlePause(ActionEvent event)
+    {
         p.pauseSong();
     }
 
     @FXML
-    private void onHandleNext(ActionEvent event) {
+    private void onHandleNext(ActionEvent event)
+    {
         p.playNextSong();
     }
 
     @FXML
-    private void onHandleAdd(ActionEvent event) {
+    private void onHandleAdd(ActionEvent event)
+    {
     }
 
     @FXML
-    private void onHandleRemove(ActionEvent event) {
+    private void onHandleRemove(ActionEvent event)
+    {
     }
 
     @FXML
-    private void onHandleMisc(ActionEvent event) {
+    private void onHandleMisc(ActionEvent event)
+    {
     }
 
     @FXML
-    private void onHandleSearch(KeyEvent event) {
+    private void onHandleSearch(KeyEvent event)
+    {
     }
 
     @FXML
-    private void onHandlePlaylistEdit(ActionEvent event) {
+    private void onHandlePlaylistEdit(ActionEvent event)
+    {
     }
 
     @FXML
-    private void onHandlePlaylistAdd(ActionEvent event) {
+    private void onHandlePlaylistAdd(ActionEvent event)
+    {
     }
 
     @FXML
-    private void onHandlePlaylistRemove(ActionEvent event) {
+    private void onHandlePlaylistRemove(ActionEvent event)
+    {
     }
-    
+
 }
