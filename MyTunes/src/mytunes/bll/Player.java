@@ -58,6 +58,7 @@ public class Player {
 //                    System.out.println(queue.queueSize());
                     System.out.println(me.getMetadata().get("title"));
                     
+                    
                 }
 
     });}}
@@ -94,7 +95,7 @@ public class Player {
         mp.pause();
     }
 
-    public MediaPlayer nextSong() {
+    private MediaPlayer nextSong() {
         songIndex++;
         mp = new MediaPlayer(queue.getMedia(songIndex));
         return mp;
@@ -135,7 +136,7 @@ public class Player {
         playSong();
     }
 
-    public void playOnRepeat() {
+    private void playOnRepeat() {
         mp = new MediaPlayer(queue.getMedia(songIndex));
     }
 
@@ -143,7 +144,7 @@ public class Player {
         onRepeat = !onRepeat;
     }
 
-    public MediaPlayer getMediaPlayer() {
+    private MediaPlayer getMediaPlayer() {
         return mp;
     }
 
@@ -151,7 +152,7 @@ public class Player {
         shuffle = !shuffle;
     }
 
-    public int getRandom() {
+    private int getRandom() {
         return (int) (Math.random() * queue.queueSize());
     }
 
