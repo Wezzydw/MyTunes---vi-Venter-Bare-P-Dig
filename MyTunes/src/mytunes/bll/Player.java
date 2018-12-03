@@ -42,6 +42,7 @@ public class Player {
         queue.addSelection(songs);
         mp = new MediaPlayer(queue.getMedia(songIndex));
         
+<<<<<<< HEAD
 //        for (Media me : queue.getAllSongs()) {
 //
 //            me.getMetadata().addListener((MapChangeListener<String, Object>) change -> {
@@ -63,6 +64,27 @@ public class Player {
 //
 //    });}
     }
+=======
+        for (Media me : queue.getAllSongs()) {
+
+            me.getMetadata().addListener((MapChangeListener<String, Object>) change -> {
+                
+                //System.out.println(change.getValueAdded());
+                //System.out.println(change.getKey());
+//                System.out.println(change.getKey());
+                if(change.getKey() == "title")
+                {
+                    
+                    String a = (String) me.getMetadata().get("album");
+                    queue.getMediaSong(me).setAlbum(a);
+//                    System.out.println(me.getSource().toString());
+//                    System.out.println(queue.queueSize());
+                    System.out.println(me.getMetadata().get("title"));
+                    
+                }
+
+    });}}
+>>>>>>> parent of fb8ccbb... Update Player.java
 
     public void playSong() {
         
@@ -98,7 +120,7 @@ public class Player {
         mp.pause();
     }
 
-    private MediaPlayer nextSong() {
+    public MediaPlayer nextSong() {
         songIndex++;
         mp = new MediaPlayer(queue.getMedia(songIndex));
         return mp;
@@ -139,7 +161,7 @@ public class Player {
         playSong();
     }
 
-    private void playOnRepeat() {
+    public void playOnRepeat() {
         mp = new MediaPlayer(queue.getMedia(songIndex));
     }
 
@@ -147,7 +169,7 @@ public class Player {
         onRepeat = !onRepeat;
     }
 
-    private MediaPlayer getMediaPlayer() {
+    public MediaPlayer getMediaPlayer() {
         return mp;
     }
 
@@ -155,7 +177,7 @@ public class Player {
         shuffle = !shuffle;
     }
 
-    private int getRandom() {
+    public int getRandom() {
         return (int) (Math.random() * queue.queueSize());
     }
 
