@@ -7,9 +7,9 @@ package mytunes.gui.controller;
 
 /**
  *
- * @author Wezzy Laptop
+ * @author marce
  */
-public class MyTunesModel {
-    
+public class PlayerManager
+{
     
 }

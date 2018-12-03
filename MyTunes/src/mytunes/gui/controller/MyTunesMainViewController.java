@@ -7,6 +7,7 @@ package mytunes.gui.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,6 +20,8 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaView;
+import mytunes.be.Playlist;
+import mytunes.be.Song;
 import mytunes.bll.Player;
 
 /**
@@ -32,21 +35,20 @@ public class MyTunesMainViewController implements Initializable
     @FXML
     private Slider sliderVol;
     @FXML
-    private ListView<?> listViewLibrary;
+    private ListView<Playlist> listViewLibrary;
     @FXML
-    private ListView<?> listViewSongInfo;
+    private ListView<Song> listViewSongInfo;
     @FXML
-    private ListView<?> listViewQueue;
+    private ListView<Song> listViewQueue;
     @FXML
-    private ComboBox<?> comboBoxMisc;
+    private ComboBox<String> comboBoxMisc;
     @FXML
     private TextField txtFieldSearch;
     @FXML
-    private ListView<?> listViewAllSongs;
+    private ListView<Song> listViewAllSongs;
     private MediaView mediaView;
 
-    Player p;
-    int i;
+    Model model;
     @FXML
     private ListView<?> listNowPlaying;
 
@@ -56,55 +58,50 @@ public class MyTunesMainViewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        p = new Player();
-        i = 0;
-        //mediaView.setMediaPlayer(p.getMediaPlayer());
-        
+        model = new Model();
     }
 
     @FXML
     private void onHandleSliderVol(MouseEvent event)
     {
         double vol = sliderVol.getValue();
-        System.out.println(vol);
-        p.changevolume(vol / 100);
     }
 
     @FXML
     private void onHandleShuffe(ActionEvent event)
     {
-        p.shuffleHandler();
+        model.shuffleHandler();
     }
 
     @FXML
     private void onHandleRepeat(ActionEvent event)
     {
-        p.repeatHandler();
+        model.repeatHandler();
     }
 
     @FXML
     private void onHandlePrev(ActionEvent event)
     {
-        p.playPrevSong();
+        model.playPrevSong();
     }
 
     @FXML
     private void onHandlePlay(ActionEvent event)
     {
 
-        p.playSong();
+        model.playSong();
     }
 
     @FXML
     private void onHandlePause(ActionEvent event)
     {
-        p.pauseSong();
+        model.pauseSong();
     }
 
     @FXML
     private void onHandleNext(ActionEvent event)
     {
-        p.playNextSong();
+        model.playNextSong();
     }
 
     @FXML
@@ -121,7 +118,8 @@ public class MyTunesMainViewController implements Initializable
     @FXML
     private void onHandleMisc(ActionEvent event)
     {
-       
+        comboBoxMisc.setItems(FXCollections.observableArrayList("reverseList", "randomiseList", "sortByTitle"));
+        comboBoxMisc.setVisibleRowCount(3);
     }
 
     @FXML

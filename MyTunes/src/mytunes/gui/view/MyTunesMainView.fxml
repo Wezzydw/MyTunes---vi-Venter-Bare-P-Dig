@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.MyTunesMainViewController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.MyTunesMainViewController">
    <left>
       <VBox prefHeight="375.0" prefWidth="285.0" BorderPane.alignment="CENTER">
          <children>
@@ -54,6 +54,17 @@
                </children>
             </HBox>
             <TextField fx:id="txtFieldSearch" onKeyReleased="#onHandleSearch" />
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" prefWidth="70.0" text="Title" />
+                  <Button mnemonicParsing="false" prefWidth="70.0" text="Year" />
+                  <Button mnemonicParsing="false" prefWidth="70.0" text="Album" />
+                  <Button mnemonicParsing="false" prefWidth="70.0" text="Categori" />
+                  <Button mnemonicParsing="false" prefWidth="70.0" text="Artist" />
+                  <Button mnemonicParsing="false" prefWidth="70.0" text="Length" />
+                  <Button mnemonicParsing="false" prefWidth="70.0" text="ID" />
+               </children>
+            </HBox>
             <ListView fx:id="listViewAllSongs" prefHeight="330.0" prefWidth="476.0" />
             <HBox prefHeight="14.0" prefWidth="476.0">
                <children>

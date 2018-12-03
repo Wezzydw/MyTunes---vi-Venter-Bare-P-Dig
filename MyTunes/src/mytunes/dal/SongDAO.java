@@ -34,7 +34,7 @@ public class SongDAO {
         int counter = 0;
         for (String string : listFilesForFolder(folder))
         {
-            songs.add(new Song("song nummber " + counter, string));
+            songs.add(new Song("song nummber " + counter, string, counter));
             Media m1 = new Media(new File(string).toURI().toString());
             songsToAdd.add(m1);
             counter++;
@@ -143,6 +143,10 @@ public class SongDAO {
         return null;   
     }
     
+   
+
+    
+    
     public void writeChanges()throws IOException
     {
         List<Song> allSongs = new SongDAO().getAllSongs();
@@ -151,11 +155,9 @@ public class SongDAO {
         ds.setDatabaseName("MovieSys");
         ds.setUser("CS2018A_20");
         ds.setPassword("CS2018A_20");
-        try (Connection con = ds.getConnection())
-        {
-            for (Song song : allSongs)
-            {
-               try(PreparedStatement pstmt = con.prepareStatement("INSERT INTO Song (Title, Id, Author, Album, Categori, Filepath, Length, ReleaseYear) VALUES (")){
+        try (Connection con = ds.getConnection()) {
+            for (Song song : allSongs) {
+                try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO Song (Title, Id, Author, Album, Categori, Filepath, Length, ReleaseYear) VALUES (")) {
                     pstmt.setString(1, song.getTitle());
                     pstmt.setString(2, song.getAuthor());
                     pstmt.setString(3, song.getAlbum());
@@ -165,13 +167,12 @@ public class SongDAO {
                     pstmt.setInt(7, song.getId());
                     pstmt.setString(8, song.getReleaseYear());
                     pstmt.execute();
-               }
+                }
             }
-        } catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
 
     }
-    }
+}
 

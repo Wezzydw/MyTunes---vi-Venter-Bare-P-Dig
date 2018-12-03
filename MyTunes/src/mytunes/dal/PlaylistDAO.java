@@ -16,7 +16,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import static java.util.Collections.list;
 import java.util.List;
-import javax.swing.JFileChooser; //måske?!
 import mytunes.be.Playlist;
 import mytunes.be.Song;
 
@@ -37,7 +36,7 @@ DatabaseConnection dc;
     
     public Playlist addSelection(List<Song> songs) {
         
-        JFileChooser chooser = new JFileChooser(); //Måske?!
+        
         
         return null;
     }
@@ -54,15 +53,16 @@ DatabaseConnection dc;
     
     public List<Playlist> getPlaylist(String query)
     {
-        List<Playlist> playlist = new ArrayList<Playlist>(); 
+        List<Playlist> playlist = new ArrayList<Playlist>();
         List<Playlist> foundPlaylist = new ArrayList();
-        
+
         for (Playlist playlist1 : playlist) {
-            
-            if(playlist1.getTitle().toLowerCase().contains(query.toLowerCase()))
-            foundPlaylist.add(playlist1);
+
+            if (playlist1.getTitle().toLowerCase().contains(query.toLowerCase())) {
+                foundPlaylist.add(playlist1);
+            }
         }
-        
+
         return foundPlaylist;
     }
     /**
@@ -131,8 +131,8 @@ DatabaseConnection dc;
      */
     public void renamePlaylist(String title, String newTitle ) throws SQLException, IOException
     {
-        Playlist p = (Playlist) getPlaylist(title);  //tilføjet typecast for at få denne til at virke
-        p.setTitle(newTitle);
+       // Playlist p = getPlaylist(title);  //tilføjet typecast for at få denne til at virke
+       // p.setTitle(newTitle);
     
         try
         {
@@ -155,14 +155,17 @@ DatabaseConnection dc;
         {
             ex.printStackTrace(); 
         }
-        
-    }   
+    }  
+    
+    
+    
+    
       public void writeChanges()throws IOException
     {
         List<Playlist> allPlaylists = new PlaylistDAO().getAllPlaylists();
         SQLServerDataSource ds = new SQLServerDataSource();
         ds.setServerName("10.176.111.31");
-        ds.setDatabaseName("MovieSys");
+        ds.setDatabaseName("MyTunes1");
         ds.setUser("CS2018A_20");
         ds.setPassword("CS2018A_20");
         try (Connection con = ds.getConnection())
@@ -171,7 +174,6 @@ DatabaseConnection dc;
             {
                try(PreparedStatement pstmt = con.prepareStatement("INSERT INTO Playlist (Title, SongId, FilePath ) VALUES (")){
                     pstmt.setString(1, playlist.getTitle());
-                    //pstmt.setInt(2, playlist.getSongId); //<-- Denne ved jeg ikke hvad jeg skal gøre ved.
                     pstmt.execute();
                }
             }

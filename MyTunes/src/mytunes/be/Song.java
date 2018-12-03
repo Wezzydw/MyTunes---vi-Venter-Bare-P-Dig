@@ -11,6 +11,7 @@ package mytunes.be;
  */
 public class Song {
     
+
     String title;
     String author;
     String album;
@@ -19,6 +20,7 @@ public class Song {
     String categori;
     String filePath;
     int id;
+
     
     public Song(String title, String author, String length, String releaseYear, String categori, String filePath, String album,int id)
     {
@@ -31,10 +33,11 @@ public class Song {
         this.releaseYear = releaseYear;
         this.id = id;
     }
-    public Song(String title, String filePath)
+    public Song(String title, String filePath, int id)
     {
         this.title = title;
         this.filePath = filePath;
+        this.id = id;
     }
 
     public String getReleaseYear() {
