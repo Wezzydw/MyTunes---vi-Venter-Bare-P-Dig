@@ -7,6 +7,7 @@ package mytunes.bll;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.MapChangeListener;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
@@ -40,7 +41,26 @@ public class Player {
         songs.add(new Song("Sang nummer 3", "C:\\Users\\Wezzy Laptop\\Desktop\\Music\\Sephyx   Save Me (Official Video Clip)[1].mp3",3));
         queue.addSelection(songs);
         mp = new MediaPlayer(queue.getMedia(songIndex));
-    }
+        
+        for (Media me : queue.getAllSongs()) {
+
+            me.getMetadata().addListener((MapChangeListener<String, Object>) change -> {
+                
+                //System.out.println(change.getValueAdded());
+                //System.out.println(change.getKey());
+//                System.out.println(change.getKey());
+                if(change.getKey() == "title")
+                {
+                    
+                    String a = (String) me.getMetadata().get("album");
+                    queue.getMediaSong(me).setAlbum(a);
+//                    System.out.println(me.getSource().toString());
+//                    System.out.println(queue.queueSize());
+                    System.out.println(me.getMetadata().get("title"));
+                    
+                }
+
+    });}}
 
     public void playSong() {
         if (mp.getStatus() != Status.PLAYING) {

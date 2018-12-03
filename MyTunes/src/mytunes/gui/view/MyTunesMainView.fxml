@@ -60,7 +60,7 @@
                   <Button mnemonicParsing="false" prefWidth="70.0" text="Year" />
                   <Button mnemonicParsing="false" prefWidth="70.0" text="Album" />
                   <Button mnemonicParsing="false" prefWidth="70.0" text="Categori" />
-                  <Button mnemonicParsing="false" prefWidth="70.0" text="Author" />
+                  <Button mnemonicParsing="false" prefWidth="70.0" text="Artist" />
                   <Button mnemonicParsing="false" prefWidth="70.0" text="Length" />
                   <Button mnemonicParsing="false" prefWidth="70.0" text="ID" />
                </children>
