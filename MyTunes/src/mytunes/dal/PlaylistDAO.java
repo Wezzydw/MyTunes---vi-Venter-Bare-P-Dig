@@ -131,8 +131,8 @@ DatabaseConnection dc;
      */
     public void renamePlaylist(String title, String newTitle ) throws SQLException, IOException
     {
-        Playlist p = getPlaylist(title);  //tilføjet typecast for at få denne til at virke
-        p.setTitle(newTitle);
+       // Playlist p = getPlaylist(title);  //tilføjet typecast for at få denne til at virke
+       // p.setTitle(newTitle);
     
         try
         {

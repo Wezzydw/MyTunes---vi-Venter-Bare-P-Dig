@@ -20,6 +20,8 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaView;
+import mytunes.be.Playlist;
+import mytunes.be.Song;
 import mytunes.bll.Player;
 
 /**
@@ -33,17 +35,17 @@ public class MyTunesMainViewController implements Initializable
     @FXML
     private Slider sliderVol;
     @FXML
-    private ListView<?> listViewLibrary;
+    private ListView<Playlist> listViewLibrary;
     @FXML
-    private ListView<?> listViewSongInfo;
+    private ListView<Song> listViewSongInfo;
     @FXML
-    private ListView<?> listViewQueue;
+    private ListView<Song> listViewQueue;
     @FXML
-    private ComboBox<?> comboBoxMisc;
+    private ComboBox<String> comboBoxMisc;
     @FXML
     private TextField txtFieldSearch;
     @FXML
-    private ListView<?> listViewAllSongs;
+    private ListView<Song> listViewAllSongs;
     private MediaView mediaView;
 
     Model model;
