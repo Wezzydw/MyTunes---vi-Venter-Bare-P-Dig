@@ -46,8 +46,7 @@ public class MyTunesMainViewController implements Initializable
     private ListView<?> listViewAllSongs;
     private MediaView mediaView;
 
-    Player p;
-    int i;
+    Model model;
     @FXML
     private ListView<?> listNowPlaying;
 
@@ -57,55 +56,50 @@ public class MyTunesMainViewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        p = new Player();
-        i = 0;
-        //mediaView.setMediaPlayer(p.getMediaPlayer());
-        
+        model = new Model();
     }
 
     @FXML
     private void onHandleSliderVol(MouseEvent event)
     {
         double vol = sliderVol.getValue();
-        System.out.println(vol);
-        p.changevolume(vol / 100);
     }
 
     @FXML
     private void onHandleShuffe(ActionEvent event)
     {
-        p.shuffleHandler();
+        model.shuffleHandler();
     }
 
     @FXML
     private void onHandleRepeat(ActionEvent event)
     {
-        p.repeatHandler();
+        model.repeatHandler();
     }
 
     @FXML
     private void onHandlePrev(ActionEvent event)
     {
-        p.playPrevSong();
+        model.playPrevSong();
     }
 
     @FXML
     private void onHandlePlay(ActionEvent event)
     {
 
-        p.playSong();
+        model.playSong();
     }
 
     @FXML
     private void onHandlePause(ActionEvent event)
     {
-        p.pauseSong();
+        model.pauseSong();
     }
 
     @FXML
     private void onHandleNext(ActionEvent event)
     {
-        p.playNextSong();
+        model.playNextSong();
     }
 
     @FXML

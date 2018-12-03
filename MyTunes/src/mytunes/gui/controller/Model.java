@@ -12,6 +12,7 @@ import javafx.scene.media.MediaPlayer;
 import mytunes.be.Playlist;
 import mytunes.bll.PlayerManager;
 import mytunes.be.Song;
+import mytunes.bll.Player;
 import mytunes.bll.Search;
 import mytunes.dal.SongDAO;
 
@@ -28,6 +29,7 @@ public class Model
     private ObservableList<Playlist> playlist;
     private PlayerManager logiclayer;
     private Search songsearcher;
+    private Player player;
 
     public Model()
     {
@@ -38,6 +40,7 @@ public class Model
         songsearcher = new Search();
         logiclayer = new PlayerManager();
         sDAO = new SongDAO();
+        player = new Player();
 
     }
 
@@ -69,52 +72,42 @@ public class Model
     */
     public void playSong()
     {
-        
+        player.playSong();
     }
 
     public void pauseSong()
     {
-
+        player.pauseSong();
     }
 
-    public void nextSong()
+    public void changeVolume(double vol)
     {
-
-    }
-
-    public void changeVolume()
-    {
-
+        player.changevolume(vol / 100);
     }
 
     public void playPrevSong()
     {
-
+        player.playPrevSong();
     }
 
     public void playNextSong()
     {
-
-    }
-
-    public void playOnRepeat()
-    {
-
+        player.playNextSong();
     }
 
     public void repeatHandler()
     {
-
+        player.repeatHandler();
     }
 
     public void shuffleHandler()
     {
-
+        player.shuffleHandler();
     }
 
-    public List<Song> searcher()
+    public List<Song> searcher(String query)
     {
-        return null;
+        return songsearcher.searcher(query);
     }
 
     public void addSong(Song song)
