@@ -11,14 +11,14 @@ package mytunes.be;
  */
 public class Song {
     
-    String title;
-    String author;
-    String album;
-    int length;
-    int releaseYear;
-    String categori;
-    String filePath;
-    int id;
+    private String title;
+    private String author;
+    private String album;
+    private int length;
+    private int releaseYear;
+    private String categori;
+    private String filePath;
+    private int id;
     
     public Song(String title, String author, int length, int releaseYear, String categori, String filePath, String album,int id)
     {

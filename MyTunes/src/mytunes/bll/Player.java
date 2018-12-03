@@ -5,15 +5,12 @@
  */
 package mytunes.bll;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.MapChangeListener;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
-import javafx.scene.media.MediaView;
-import javafx.util.Duration;
 import mytunes.be.Playlist;
 import mytunes.be.Queue;
 import mytunes.be.Song;
@@ -24,26 +21,19 @@ import mytunes.be.Song;
  */
 public class Player {
 
-    String FOLDER = "C:\\Users\\Wezzy\\Desktop\\Test folder\\";
-    String bip;
-    Media hit;
-    MediaPlayer mp;
-    MediaPlayer currentPlayer;
-    Status currentStatus;
-    Queue queue;
-    int songIndex;
-    boolean onRepeat = false;
-    double volume;
-    boolean shuffle = false;
-    int i = 0;
-    int j = 0;
+    private MediaPlayer mp;
+    private Queue queue;
+    private int songIndex;
+    private boolean onRepeat = false;
+    private double volume;
+    private boolean shuffle = false;
 
     public Player(Playlist play) {
 
     }
 
     public Player() {
-
+        //Tmp tester code, skal slettes når db kan sende en queue
         queue = new Queue();
         List<Song> songs = new ArrayList();
         songs.add(new Song("Sang nummer 1", "C:\\Users\\Wezzy Laptop\\Desktop\\Music\\Coone  E Life   Riot (Official Music Video)[1].mp3", 1));
@@ -51,7 +41,27 @@ public class Player {
         songs.add(new Song("Sang nummer 3", "C:\\Users\\Wezzy Laptop\\Desktop\\Music\\Sephyx   Save Me (Official Video Clip)[1].mp3",3));
         queue.addSelection(songs);
         mp = new MediaPlayer(queue.getMedia(songIndex));
-    }
+        
+        for (Media me : queue.getAllSongs()) {
+
+            me.getMetadata().addListener((MapChangeListener<String, Object>) change -> {
+                
+                //System.out.println(change.getValueAdded());
+                //System.out.println(change.getKey());
+//                System.out.println(change.getKey());
+                if(change.getKey() == "title")
+                {
+                    
+                    String a = (String) me.getMetadata().get("album");
+                    queue.getMediaSong(me).setAlbum(a);
+//                    System.out.println(me.getSource().toString());
+//                    System.out.println(queue.queueSize());
+                    System.out.println(me.getMetadata().get("title"));
+                    
+                    
+                }
+
+    });}}
 
     public void playSong() {
         if (mp.getStatus() != Status.PLAYING) {
@@ -85,7 +95,7 @@ public class Player {
         mp.pause();
     }
 
-    public MediaPlayer nextSong() {
+    private MediaPlayer nextSong() {
         songIndex++;
         mp = new MediaPlayer(queue.getMedia(songIndex));
         return mp;
@@ -126,7 +136,7 @@ public class Player {
         playSong();
     }
 
-    public void playOnRepeat() {
+    private void playOnRepeat() {
         mp = new MediaPlayer(queue.getMedia(songIndex));
     }
 
@@ -134,7 +144,7 @@ public class Player {
         onRepeat = !onRepeat;
     }
 
-    public MediaPlayer getMediaPlayer() {
+    private MediaPlayer getMediaPlayer() {
         return mp;
     }
 
@@ -142,7 +152,7 @@ public class Player {
         shuffle = !shuffle;
     }
 
-    public int getRandom() {
+    private int getRandom() {
         return (int) (Math.random() * queue.queueSize());
     }
 
