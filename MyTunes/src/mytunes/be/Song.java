@@ -31,10 +31,11 @@ public class Song {
         this.releaseYear = releaseYear;
         this.id = id;
     }
-    public Song(String title, String filePath)
+    public Song(String title, String filePath, int id)
     {
         this.title = title;
         this.filePath = filePath;
+        this.id = id;
     }
 
     public int getReleaseYear() {
