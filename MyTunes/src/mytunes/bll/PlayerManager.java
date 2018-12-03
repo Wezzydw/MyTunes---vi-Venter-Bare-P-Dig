@@ -5,15 +5,42 @@
  */
 package mytunes.bll;
 
+import javafx.collections.FXCollections;
+import javafx.scene.control.ComboBox;
+
 /**
  *
  * @author Wezzy Laptop
  */
 public class PlayerManager {
 
+    private ComboBox<String> comboBoxMisc;
+    
+    
     public PlayerManager()
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+    }
+    
+    public void addSongToQue()
+    {
+        
+    }
+
+    public void removeSongFromQue()
+    {
+        
+    }
+
+    public void queMisc()
+    {
+        comboBoxMisc.setItems(FXCollections.observableArrayList("reverseList", "randomiseList", "sortByTitle"));
+        comboBoxMisc.setVisibleRowCount(3);
+    }
+    
+    public void editSong()
+    {
+
     }
     
 }

@@ -130,22 +130,23 @@ public class Model
 
     public void editSong()
     {
-
+        logiclayer.editSong();
     }
 
     public void addSongToQue()
     {
-
+        logiclayer.addSongToQue();
     }
 
     public void removeSongFromQue()
     {
-
+        logiclayer.removeSongFromQue();
     }
 
-    public void queMisc()
+    public void queComboBox()
     {
-
+        logiclayer.queMisc();
+        
     }
 
 }
