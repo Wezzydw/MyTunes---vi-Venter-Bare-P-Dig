@@ -7,6 +7,7 @@ package mytunes.gui.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -121,7 +122,8 @@ public class MyTunesMainViewController implements Initializable
     @FXML
     private void onHandleMisc(ActionEvent event)
     {
-       
+        comboBoxMisc.setItems(FXCollections.observableArrayList("reverseList", "randomiseList", "sortByTitle"));
+        comboBoxMisc.setVisibleRowCount(3);
     }
 
     @FXML

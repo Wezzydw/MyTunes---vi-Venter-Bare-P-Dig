@@ -56,4 +56,14 @@ public class Playlist {
     {
         return playlist.size();
     }
+
+    public String getSongId()
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public String getFilePath()
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
