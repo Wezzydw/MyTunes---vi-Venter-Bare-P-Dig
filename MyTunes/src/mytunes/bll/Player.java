@@ -5,15 +5,11 @@
  */
 package mytunes.bll;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.collections.MapChangeListener;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
-import javafx.scene.media.MediaView;
-import javafx.util.Duration;
 import mytunes.be.Playlist;
 import mytunes.be.Queue;
 import mytunes.be.Song;
@@ -24,26 +20,19 @@ import mytunes.be.Song;
  */
 public class Player {
 
-    String FOLDER = "C:\\Users\\Wezzy\\Desktop\\Test folder\\";
-    String bip;
-    Media hit;
-    MediaPlayer mp;
-    MediaPlayer currentPlayer;
-    Status currentStatus;
-    Queue queue;
-    int songIndex;
-    boolean onRepeat = false;
-    double volume;
-    boolean shuffle = false;
-    int i = 0;
-    int j = 0;
+    private MediaPlayer mp;
+    private Queue queue;
+    private int songIndex;
+    private boolean onRepeat = false;
+    private double volume;
+    private boolean shuffle = false;
 
     public Player(Playlist play) {
 
     }
 
     public Player() {
-
+        //Tmp tester code, skal slettes når db kan sende en queue
         queue = new Queue();
         List<Song> songs = new ArrayList();
         songs.add(new Song("Sang nummer 1", "C:\\Users\\Wezzy Laptop\\Desktop\\Music\\Coone  E Life   Riot (Official Music Video)[1].mp3", 1));
