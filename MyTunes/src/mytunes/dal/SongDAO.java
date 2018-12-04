@@ -25,46 +25,41 @@ import mytunes.be.Song;
  * @author Wezzy Laptop
  */
 public class SongDAO {
-    File folder = new File("/Users/andreas/Music/");
+
+    //File folder = new File("/Users/andreas/Music/");
     List<Song> songs = new ArrayList<>();
-    public List<Song> addFolder(File folderPath) throws IOException
-    {
+
+    public List<Song> addFolder(File folderPath) throws IOException {
         listFilesForFolder(folderPath);
         List<Media> songsToAdd = new ArrayList<>();
         int counter = 0;
-        for (String string : listFilesForFolder(folder))
-        {
+        for (String string : listFilesForFolder(folderPath)) {
             songs.add(new Song("song nummber " + counter, string, counter));
             Media m1 = new Media(new File(string).toURI().toString());
             songsToAdd.add(m1);
             counter++;
         }
-        
+
         for (Media me : songsToAdd) {
 
             me.getMetadata().addListener((MapChangeListener<String, Object>) change -> {
-            
+
                 //System.out.println(change.getValueAdded());
                 //System.out.println(change.getKey());
-                
-                System.out.println(songsToAdd.size());
-                if(change.getKey() == "album artist")
-                {
+                //System.out.println(songsToAdd.size());
+                if (change.getKey() == "album artist") {
                     String a = (String) me.getMetadata().get("album artist");
                     getMediaSong(me).setAuthor(a);
                 }
-                if(change.getKey() == "year")
-                {
+                if (change.getKey() == "year") {
                     String a = "" + me.getMetadata().get("year");
                     getMediaSong(me).setReleaseYear(a);
                 }
-                if(change.getKey() == "genre")
-                {
+                if (change.getKey() == "genre") {
                     String a = (String) me.getMetadata().get("genre");
                     getMediaSong(me).setCategori(a);
                 }
-                if(change.getKey() == "title")
-                {
+                if (change.getKey() == "title") {
                     String a = (String) me.getMetadata().get("title");
                     getMediaSong(me).setTitle(a);
                 }
@@ -72,8 +67,7 @@ public class SongDAO {
             MediaPlayer mp = new MediaPlayer(me);
             mp.setOnReady(new Runnable() {
                 @Override
-                public void run()
-                {
+                public void run() {
                     String duration = "" + me.getDuration().toMinutes();
                     getMediaSong(me).setLength(duration);
                 }
@@ -81,74 +75,56 @@ public class SongDAO {
         }
         return null;
     }
-    public Song getMediaSong(Media m)
-    {
-        for (Song song : songs)
-        {
-            if (new File(song.getFilePath()).toURI().toString().equals(m.getSource()))
-            {
+
+    public Song getMediaSong(Media m) {
+        for (Song song : songs) {
+            if (new File(song.getFilePath()).toURI().toString().equals(m.getSource())) {
                 return song;
             }
         }
         return null;
     }
+
     public List<String> listFilesForFolder(File folder) throws IOException {
         File[] listOfFiles = folder.listFiles();
         List<String> filePaths = new ArrayList<>();
         for (File file : listOfFiles) {
             if (file.isDirectory()) {
-                
+
             }
-            if (file.isFile())
-            {
-                if (file.getName().contains("mp3")){//mp3 istedet for ""
+            if (file.isFile()) {
+                if (file.getName().contains("mp3")) {//mp3 istedet for ""
                     filePaths.add(file.getPath());
                 }
-                
+
             }
         }
         return filePaths;
     }
-    
-    public void deleteSong(Song song)
-    {
-        
+
+    public void deleteSong(Song song) {
+
     }
-    public void removeFolder(String filepath)
-    {
-        
+
+    public void removeFolder(String filepath) {
+
     }
-    
-    public void updateSong(Song song)
-    {
-        
+
+    public void updateSong(Song song) {
+
     }
-    
-    public List<Song> getAllSongs()
-    {
-        // Endnu mere off the good stuff:
-//        File folder = new File("/Users/you/folder/");
-//File[] listOfFiles = folder.listFiles();
-//
-//for (File file : listOfFiles) {
-//    if (file.isFile()) {
-//        System.out.println(file.getName());
-//    }
-//}
+
+    public List<Song> getAllSongs() {
+        List<Song> dummyList = new ArrayList();
+        // Hent fra DB
+        return dummyList;
+    }
+
+    public Song getSongForPlayback() {
         return null;
     }
-    
-    public Song getSongForPlayback()
-    {
-        return null;   
-    }
-    
-   
 
-    
-    
-    public void writeChanges()throws IOException
-    {
+    public void writeChanges() throws IOException {
         List<Song> allSongs = new SongDAO().getAllSongs();
         SQLServerDataSource ds = new SQLServerDataSource();
         ds.setServerName("10.176.111.31");
@@ -175,4 +151,3 @@ public class SongDAO {
 
     }
 }
-

@@ -5,10 +5,16 @@
  */
 package mytunes.gui.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 import mytunes.be.Playlist;
 import mytunes.bll.PlayerManager;
 import mytunes.be.Song;
@@ -20,8 +26,8 @@ import mytunes.dal.SongDAO;
  *
  * @author marce
  */
-public class Model
-{
+public class Model {
+
     private SongDAO sDAO;
     private ObservableList<Song> songs;
     private ObservableList<Song> ques;
@@ -30,9 +36,10 @@ public class Model
     private PlayerManager logiclayer;
     private Search songsearcher;
     private Player player;
+    @FXML
+    private BorderPane borderPane;
 
-    public Model()
-    {
+    public Model() {
         songinfo = FXCollections.observableArrayList();
         playlist = FXCollections.observableArrayList();
         ques = FXCollections.observableArrayList();
@@ -45,101 +52,105 @@ public class Model
     }
 
     /**
-     * 
+     *
      */
-    public ObservableList<Song> getSongInfo()
-    {
+    public ObservableList<Song> getSongInfo() {
         return songinfo;
 
     }
 
-    public ObservableList<Playlist> getPlayList()
-    {
+    public ObservableList<Playlist> getPlayList() {
         return playlist;
     }
 
-    public ObservableList<Song> getQuedSongs()
-    {
+    public ObservableList<Song> getQuedSongs() {
         return ques;
     }
 
-    public ObservableList<Song> getSongs()
-    {
+    public ObservableList<Song> getSongs() {
         return songs;
     }
+
     /*
     Alle vores Knapper
-    */
-    public void playSong()
-    {
+     */
+    public void playSong() {
         player.playSong();
     }
 
-    public void pauseSong()
-    {
+    public void pauseSong() {
         player.pauseSong();
     }
 
-    public void changeVolume(double vol)
-    {
+    public void changeVolume(double vol) {
         player.changevolume(vol / 100);
     }
 
-    public void playPrevSong()
-    {
+    public void playPrevSong() {
         player.playPrevSong();
     }
 
-    public void playNextSong()
-    {
+    public void playNextSong() {
         player.playNextSong();
     }
 
-    public void repeatHandler()
-    {
+    public void repeatHandler() {
         player.repeatHandler();
     }
 
-    public void shuffleHandler()
-    {
+    public void shuffleHandler() {
         player.shuffleHandler();
     }
 
-    public List<Song> searcher(String query)
-    {
+    public List<Song> searcher(String query) {
         return songsearcher.searcher(query);
     }
 
-    public void addSong(Song song)
-    {
+    public void addSong(Song song) {
         songs.add(song);
     }
 
-    public void removeSong(Song song)
-    {
+    public void removeSong(Song song) {
         sDAO.deleteSong(song);
         songs.remove(song);
     }
 
-    public void editSong()
-    {
+    public void editSong() {
         logiclayer.editSong();
     }
 
-    public void addSongToQue()
-    {
+    public void addSongToQue() {
         logiclayer.addSongToQue();
     }
 
-    public void removeSongFromQue()
-    {
+    public void removeSongFromQue() {
         logiclayer.removeSongFromQue();
     }
 
-    public void queComboBox()
-    {
+    public void queComboBox() {
         logiclayer.queMisc();
+
+    }
+
+    public void SelectFolder(Stage stage) throws IOException {
+
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File selectedDirectory = directoryChooser.showDialog(stage);
+
+        if (selectedDirectory == null) {
+            //No Directory selected
+        } else {
+            String path = selectedDirectory.getAbsolutePath();
+             logiclayer.SelectedFolder(path);
+        }
         
+        logiclayer.getAllSongs();
+        for(Song s : logiclayer.getAllSongs())
+        {
+            System.out.println(s.getTitle());
+        }
+        //Do something with view here
+       
     }
 
 }

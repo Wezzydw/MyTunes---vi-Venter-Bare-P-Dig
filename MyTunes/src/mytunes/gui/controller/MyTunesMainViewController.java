@@ -5,6 +5,8 @@
  */
 package mytunes.gui.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -19,7 +21,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.media.MediaView;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
 import mytunes.bll.Player;
@@ -29,8 +37,7 @@ import mytunes.bll.Player;
  *
  * @author Wezzy Laptop
  */
-public class MyTunesMainViewController implements Initializable
-{
+public class MyTunesMainViewController implements Initializable {
 
     @FXML
     private Slider sliderVol;
@@ -46,7 +53,10 @@ public class MyTunesMainViewController implements Initializable
     private TextField txtFieldSearch;
     @FXML
     private ListView<Song> listViewAllSongs;
+    @FXML
     private MediaView mediaView;
+    @FXML
+    private BorderPane borderPane;
 
     Model model;
     @FXML
@@ -56,90 +66,77 @@ public class MyTunesMainViewController implements Initializable
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         model = new Model();
     }
 
     @FXML
-    private void onHandleSliderVol(MouseEvent event)
-    {
+    private void onHandleSliderVol(MouseEvent event) {
         model.changeVolume(sliderVol.getValue());
     }
 
     @FXML
-    private void onHandleShuffe(ActionEvent event)
-    {
+    private void onHandleShuffe(ActionEvent event) {
         model.shuffleHandler();
     }
 
     @FXML
-    private void onHandleRepeat(ActionEvent event)
-    {
+    private void onHandleRepeat(ActionEvent event) {
         model.repeatHandler();
     }
 
     @FXML
-    private void onHandlePrev(ActionEvent event)
-    {
+    private void onHandlePrev(ActionEvent event) {
         model.playPrevSong();
     }
 
     @FXML
-    private void onHandlePlay(ActionEvent event)
-    {
+    private void onHandlePlay(ActionEvent event) {
 
         model.playSong();
     }
 
     @FXML
-    private void onHandlePause(ActionEvent event)
-    {
+    private void onHandlePause(ActionEvent event) {
         model.pauseSong();
     }
 
     @FXML
-    private void onHandleNext(ActionEvent event)
-    {
+    private void onHandleNext(ActionEvent event) {
         model.playNextSong();
     }
 
     @FXML
-    private void onHandleAdd(ActionEvent event)
-    {
+    private void onHandleAdd(ActionEvent event) throws IOException {
+        Stage stage = (Stage) borderPane.getScene().getWindow();
+        model.SelectFolder(stage);
     }
 
     @FXML
-    private void onHandleRemove(ActionEvent event)
-    {
-        
+    private void onHandleRemove(ActionEvent event) {
+
     }
 
     @FXML
-    private void onHandleMisc(ActionEvent event)
-    {
+    private void onHandleMisc(ActionEvent event) {
         comboBoxMisc.setItems(FXCollections.observableArrayList("reverseList", "randomiseList", "sortByTitle"));
         comboBoxMisc.setVisibleRowCount(3);
     }
 
     @FXML
-    private void onHandleSearch(KeyEvent event)
-    {
+    private void onHandleSearch(KeyEvent event) {
     }
 
     @FXML
-    private void onHandlePlaylistEdit(ActionEvent event)
-    {
+    private void onHandlePlaylistEdit(ActionEvent event) {
     }
 
     @FXML
-    private void onHandlePlaylistAdd(ActionEvent event)
-    {
+    private void onHandlePlaylistAdd(ActionEvent event) {
     }
 
     @FXML
-    private void onHandlePlaylistRemove(ActionEvent event)
-    {
+    private void onHandlePlaylistRemove(ActionEvent event) {
     }
 
 }
