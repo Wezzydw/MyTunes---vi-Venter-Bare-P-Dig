@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
@@ -51,6 +52,10 @@ public class MyTunesMainViewController implements Initializable
     Model model;
     @FXML
     private ListView<?> listNowPlaying;
+    @FXML
+    private Button btnRemoveSongQue;
+    @FXML
+    private Button btnRemoveSong;
 
     /**
      * Initializes the controller class.
@@ -138,8 +143,9 @@ public class MyTunesMainViewController implements Initializable
     }
 
     @FXML
-    private void onHandlePlaylistRemove(ActionEvent event)
+    private void onSongRemove(ActionEvent event)
     {
+        
     }
 
 }
