@@ -27,7 +27,7 @@ import mytunes.be.Song;
 public class SongDAO {
     File folder = new File("/Users/andreas/Music/");
     List<Song> songs = new ArrayList<>();
-    public List<Song> addFolder(File folderPath) throws IOException
+    public void addFolder(File folderPath) throws IOException
     {
         listFilesForFolder(folderPath);
         List<Media> songsToAdd = new ArrayList<>();
@@ -79,7 +79,6 @@ public class SongDAO {
                 }
             });
         }
-        return null;
     }
     public Song getMediaSong(Media m)
     {
