@@ -5,6 +5,7 @@
  */
 package mytunes.gui.controller;
 
+import java.io.IOException;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -115,7 +116,7 @@ public class Model
         songs.add(song);
     }
 
-    public void removeSong(Song song)
+    public void removeSong(Song song) throws IOException
     {
         sDAO.deleteSong(song);
         songs.remove(song);

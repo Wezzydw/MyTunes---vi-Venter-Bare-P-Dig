@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.MyTunesMainViewController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.MyTunesMainViewController">
    <left>
       <VBox prefHeight="375.0" prefWidth="285.0" BorderPane.alignment="CENTER">
          <children>
@@ -45,7 +45,7 @@
                         <HBox prefHeight="28.0" prefWidth="283.0">
                            <children>
                               <Button mnemonicParsing="false" onAction="#onHandleAdd" prefHeight="25.0" prefWidth="65.0" text="Add" />
-                              <Button mnemonicParsing="false" onAction="#onHandleRemove" prefWidth="65.0" text="Remove" />
+                              <Button fx:id="btnRemoveSongQue" mnemonicParsing="false" onAction="#onHandleRemove" prefWidth="65.0" text="Remove" />
                               <ComboBox fx:id="comboBoxMisc" onAction="#onHandleMisc" prefWidth="150.0" promptText="Misc" />
                            </children>
                         </HBox>
@@ -70,7 +70,7 @@
                <children>
                   <Button mnemonicParsing="false" onAction="#onHandlePlaylistEdit" text="Edit" />
                   <Button mnemonicParsing="false" onAction="#onHandlePlaylistAdd" text="Add" />
-                  <Button mnemonicParsing="false" onAction="#onHandlePlaylistRemove" text="Remove" />
+                  <Button fx:id="btnRemoveSong" mnemonicParsing="false" onAction="#onSongRemove" text="Remove" />
                </children>
             </HBox>
          </children>
