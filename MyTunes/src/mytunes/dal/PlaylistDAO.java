@@ -26,7 +26,7 @@ import mytunes.be.Song;
  */
 public class PlaylistDAO {
 DatabaseConnection dc;
-
+SongDAO sDAO = new SongDAO();
     public PlaylistDAO() throws IOException
     {
         this.dc = new DatabaseConnection();
@@ -34,11 +34,19 @@ DatabaseConnection dc;
 
     private DatabaseConnection conProvider;
     
-    public Playlist addSelection(List<Song> songs) {
+    public Playlist addSelection(List<Song> songs, Playlist playlist) {
         
+        try (Connection con = conProvider.getConnection()){
+            PreparedStatement statement = (PreparedStatement) con.createStatement();
+            for (Song song : songs) {
+                statement.executeQuery("INSERT INTO Playlist (Title =" + playlist.getTitle() + ", SongId =" + song.getId() + ";");
+            }
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
         
-        
-        return null;
+        return playlist;
     }
 
     public Playlist mergePlaylist(Playlist A, Playlist B, String Title) 
@@ -51,19 +59,32 @@ DatabaseConnection dc;
         return np;
     }
     
-    public List<Playlist> getPlaylist(String query)
+    public Playlist getPlaylist(String query)
     {
-        List<Playlist> playlist = new ArrayList<Playlist>();
-        List<Playlist> foundPlaylist = new ArrayList();
-
-        for (Playlist playlist1 : playlist) {
-
-            if (playlist1.getTitle().toLowerCase().contains(query.toLowerCase())) {
-                foundPlaylist.add(playlist1);
-            }
+        List<Song> playlistSongs = new ArrayList();
+        List<Song> allSongs = sDAO.getAllSongs();
+        List<Integer> tempId = new ArrayList();
+        try(Connection con = conProvider.getConnection()) {
+            PreparedStatement statement = (PreparedStatement) con.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM Playlist;");
+            while(rs.getString("Title")== query) {
+                tempId.add(rs.getInt("SongId"));
+                
         }
-
-        return foundPlaylist;
+            for (Song song : allSongs) {
+                for (Integer integer : tempId) {
+                    if(integer == song.getId()){
+                        playlistSongs.add(song);
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        Playlist piklist = new Playlist(query);
+        piklist.setPlaylist(playlistSongs);
+        return piklist;
     }
     /**
      * 
@@ -71,7 +92,15 @@ DatabaseConnection dc;
      */
     public void removeSelection(List<Song> toBeRemoved)
     {
-        
+        try (Connection con = conProvider.getConnection()){
+            PreparedStatement statement = (PreparedStatement) con.createStatement();
+            statement.executeQuery("SELECT * FROM Playlist;");
+            for (Song song : toBeRemoved) {
+                statement.executeQuery("DELETE FROM Playlist WHERE SongId =" + song.getId() + ";");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
  
     public List<Playlist> getAllPlaylists()
