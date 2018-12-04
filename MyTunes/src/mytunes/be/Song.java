@@ -11,16 +11,18 @@ package mytunes.be;
  */
 public class Song {
     
-    private String title;
-    private String author;
-    private String album;
-    private int length;
-    private int releaseYear;
-    private String categori;
-    private String filePath;
-    private int id;
+
+    String title;
+    String author;
+    String album;
+    String length;
+    String releaseYear;
+    String categori;
+    String filePath;
+    int id;
+
     
-    public Song(String title, String author, int length, int releaseYear, String categori, String filePath, String album,int id)
+    public Song(String title, String author, String length, String releaseYear, String categori, String filePath, String album,int id)
     {
         this.title = title;
         this.author = author;
@@ -38,11 +40,11 @@ public class Song {
         this.id = id;
     }
 
-    public int getReleaseYear() {
+    public String getReleaseYear() {
         return releaseYear;
     }
 
-    public void setReleaseYear(int releaseYear) {
+    public void setReleaseYear(String releaseYear) {
         this.releaseYear = releaseYear;
     }
 
@@ -70,11 +72,11 @@ public class Song {
         this.author = author;
     }
 
-    public int getLength() {
+    public String getLength() {
         return length;
     }
 
-    public void setLength(int length) {
+    public void setLength(String length) {
         this.length = length;
     }
 

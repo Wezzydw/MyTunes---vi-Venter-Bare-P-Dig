@@ -64,7 +64,7 @@ public class MyTunesMainViewController implements Initializable
     @FXML
     private void onHandleSliderVol(MouseEvent event)
     {
-        double vol = sliderVol.getValue();
+        model.changeVolume(sliderVol.getValue());
     }
 
     @FXML
