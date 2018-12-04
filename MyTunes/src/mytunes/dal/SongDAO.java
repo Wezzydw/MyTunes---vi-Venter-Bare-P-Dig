@@ -119,8 +119,8 @@ public class SongDAO {
     {
         try(Connection con = conProvider.getConnection()){
             PreparedStatement statement = (PreparedStatement) con.createStatement();
-            statement.executeQuery("SELECT * FROM Songs");
-            statement.executeQuery("DELETE FROM Songs WHERE Id =" + song.getId());
+            statement.executeQuery("SELECT * FROM Songs;");
+            statement.executeQuery("DELETE FROM Songs WHERE Id =" + song.getId()+ ";");
         } catch(SQLException ex){
             ex.printStackTrace();
         }
@@ -148,7 +148,7 @@ public class SongDAO {
         List<Song> allSongs = new ArrayList();
         try(Connection con = conProvider.getConnection()){
             PreparedStatement statement = (PreparedStatement) con.createStatement();
-            ResultSet rs = statement.executeQuery();
+            ResultSet rs = statement.executeQuery("SELECT * FROM Songs;");
             while(rs.next()){
                 String title = rs.getString("Title");
                 String author = rs.getString("Author");
