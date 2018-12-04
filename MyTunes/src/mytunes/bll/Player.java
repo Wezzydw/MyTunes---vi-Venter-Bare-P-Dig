@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
+import javafx.scene.media.MediaView;
 import mytunes.be.Playlist;
 import mytunes.be.Queue;
 import mytunes.be.Song;
@@ -130,5 +131,9 @@ public class Player {
     private int getRandom() {
         return (int) (Math.random() * queue.queueSize());
     }
-
+    
+    public void makeView(MediaView mv)
+    {
+        mv = new MediaView(mp);
+    }
 }

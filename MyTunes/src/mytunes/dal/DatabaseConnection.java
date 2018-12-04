@@ -31,7 +31,6 @@ public class DatabaseConnection {
         ds.setDatabaseName(databaseProperties.getProperty("Database"));
         ds.setUser(databaseProperties.getProperty("User"));
         ds.setPassword(databaseProperties.getProperty("Password"));
-    
     }
     
     public Connection getConnection() throws SQLServerException

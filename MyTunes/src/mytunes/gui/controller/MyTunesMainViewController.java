@@ -65,6 +65,8 @@ public class MyTunesMainViewController implements Initializable {
     private Button btnRemoveSongQue;
     @FXML
     private Button btnRemoveSong;
+    @FXML
+    private MediaView mvMediaView;
 
     /**
      * Initializes the controller class.
@@ -72,13 +74,14 @@ public class MyTunesMainViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        try
-        {
+        try {
             model = new Model();
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
             Logger.getLogger(MyTunesMainViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        Player p = new Player();
+        p.makeView(mvMediaView);
+
     }
 
     @FXML
@@ -146,9 +149,6 @@ public class MyTunesMainViewController implements Initializable {
     private void onHandlePlaylistAdd(ActionEvent event) {
     }
 
-    @FXML
-    private void onHandlePlaylistRemove(ActionEvent event) {
-    }
 
     @FXML
 
@@ -157,6 +157,7 @@ public class MyTunesMainViewController implements Initializable {
 
     }
     
+    @FXML
     private void onSongRemove(ActionEvent event)
     {
 
