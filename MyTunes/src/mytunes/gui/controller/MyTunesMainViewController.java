@@ -5,14 +5,16 @@
  */
 package mytunes.gui.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
@@ -59,13 +61,24 @@ public class MyTunesMainViewController implements Initializable {
     Model model;
     @FXML
     private ListView<?> listNowPlaying;
+    @FXML
+    private Button btnRemoveSongQue;
+    @FXML
+    private Button btnRemoveSong;
 
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        model = new Model();
+    public void initialize(URL url, ResourceBundle rb)
+    {
+        try
+        {
+            model = new Model();
+        } catch (IOException ex)
+        {
+            Logger.getLogger(MyTunesMainViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
@@ -138,8 +151,15 @@ public class MyTunesMainViewController implements Initializable {
     }
 
     @FXML
+
     private void HandleDragDone(DragEvent event) {
         //event.getDragboard().getFiles().clear();
+
+    }
+    
+    private void onSongRemove(ActionEvent event)
+    {
+
     }
 
 }

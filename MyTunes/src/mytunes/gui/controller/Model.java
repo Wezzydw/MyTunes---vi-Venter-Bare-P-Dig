@@ -7,12 +7,11 @@ package mytunes.gui.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import mytunes.be.Playlist;
@@ -20,6 +19,7 @@ import mytunes.bll.PlayerManager;
 import mytunes.be.Song;
 import mytunes.bll.Player;
 import mytunes.bll.Search;
+import mytunes.dal.PlaylistDAO;
 import mytunes.dal.SongDAO;
 
 /**
@@ -29,48 +29,56 @@ import mytunes.dal.SongDAO;
 public class Model {
 
     private SongDAO sDAO;
+    private PlaylistDAO pDAO;
     private ObservableList<Song> songs;
-    private ObservableList<Song> ques;
-    private ObservableList<Song> songinfo;
+    private ObservableList<Song> queues;
+    private ObservableList<String> songinfo;
     private ObservableList<Playlist> playlist;
     private PlayerManager logiclayer;
     private Search songsearcher;
     private Player player;
-    @FXML
     private BorderPane borderPane;
-
-    public Model() {
+    private List<Song> empty;
+    
+    public Model() throws IOException
+    {
         songinfo = FXCollections.observableArrayList();
         playlist = FXCollections.observableArrayList();
-        ques = FXCollections.observableArrayList();
+        queues = FXCollections.observableArrayList();
         songs = FXCollections.observableArrayList();
         songsearcher = new Search();
         logiclayer = new PlayerManager();
         sDAO = new SongDAO();
         player = new Player();
-
+        pDAO = new PlaylistDAO();
+        empty = new ArrayList();
+        songinfo = FXCollections.observableArrayList(logiclayer.getMetaData());
+        songs = FXCollections.observableArrayList(logiclayer.getAllSongs());
+        playlist = FXCollections.observableArrayList(logiclayer.getAllPlaylists());
+        queues = FXCollections.observableArrayList(empty);
     }
 
     /**
      *
      */
-    public ObservableList<Song> getSongInfo() {
-        return songinfo;
 
+    public ObservableList<String> getSongInfo()
+    {
+        return songinfo;
     }
 
     public ObservableList<Playlist> getPlayList() {
         return playlist;
     }
 
-    public ObservableList<Song> getQuedSongs() {
-        return ques;
+    public ObservableList<Song> getQuedSongs()
+    {
+        return queues;
     }
 
     public ObservableList<Song> getSongs() {
         return songs;
     }
-
     /*
     Alle vores Knapper
      */
@@ -110,7 +118,8 @@ public class Model {
         songs.add(song);
     }
 
-    public void removeSong(Song song) {
+    public void removeSong(Song song) throws IOException
+    {
         sDAO.deleteSong(song);
         songs.remove(song);
     }
