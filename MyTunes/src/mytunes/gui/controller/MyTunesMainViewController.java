@@ -54,8 +54,6 @@ public class MyTunesMainViewController implements Initializable {
     @FXML
     private ListView<Song> listViewAllSongs;
     @FXML
-    private MediaView mediaView;
-    @FXML
     private BorderPane borderPane;
 
     Model model;
@@ -137,6 +135,11 @@ public class MyTunesMainViewController implements Initializable {
 
     @FXML
     private void onHandlePlaylistRemove(ActionEvent event) {
+    }
+
+    @FXML
+    private void HandleDragDone(DragEvent event) {
+        //event.getDragboard().getFiles().clear();
     }
 
 }

@@ -29,7 +29,7 @@
                   <Button mnemonicParsing="false" onAction="#onHandleNext" prefWidth="72.0" text="Next" />
                </children>
             </HBox>
-            <ListView fx:id="listViewLibrary" prefHeight="347.0" prefWidth="285.0" />
+            <ListView fx:id="listViewLibrary" onDragDone="#HandleDragDone" prefHeight="347.0" prefWidth="285.0" />
          </children>
       </VBox>
    </left>
