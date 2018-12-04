@@ -5,12 +5,15 @@
  */
 package mytunes.bll;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import static java.util.Collections.list;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ComboBox;
+import mytunes.be.Playlist;
 import mytunes.be.Song;
+import mytunes.dal.PlaylistDAO;
 import mytunes.dal.SongDAO;
 
 /**
@@ -22,10 +25,12 @@ public class PlayerManager
 
     private ComboBox<String> comboBoxMisc;
     private SongDAO sDAO;
+    private PlaylistDAO pDAO;
 
-    public PlayerManager()
+    public PlayerManager() throws IOException
     {
         sDAO = new SongDAO();
+        pDAO = new PlaylistDAO();
     }
 
     public void addSongToQue()
@@ -49,6 +54,16 @@ public class PlayerManager
 
     }
 
+    public List<Playlist> getAllPlaylists()
+    {
+    return pDAO.getAllPlaylists();
+    }
+
+    public List<Song> getAllSongs()
+    {
+       return sDAO.getAllSongs();
+    }
+               
     public List<String> getMetaData()
     {
         List<String> MetaList = new ArrayList();

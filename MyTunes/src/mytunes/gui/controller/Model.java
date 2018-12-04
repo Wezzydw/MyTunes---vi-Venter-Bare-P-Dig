@@ -6,6 +6,7 @@
 package mytunes.gui.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,7 +34,7 @@ public class Model
     private PlayerManager logiclayer;
     private Search songsearcher;
     private Player player;
-    
+    private List<Song> empty;
     public Model() throws IOException
     {
         songinfo = FXCollections.observableArrayList();
@@ -45,8 +46,11 @@ public class Model
         sDAO = new SongDAO();
         player = new Player();
         pDAO = new PlaylistDAO();
+        empty = new ArrayList();
         songinfo = FXCollections.observableArrayList(logiclayer.getMetaData());
-        //songs = FXCollections.observableArrayList
+        songs = FXCollections.observableArrayList(logiclayer.getAllSongs());
+        playlist = FXCollections.observableArrayList(logiclayer.getAllPlaylists());
+        queues = FXCollections.observableArrayList(empty);
     }
 
     /**
