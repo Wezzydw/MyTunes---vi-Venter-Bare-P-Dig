@@ -6,22 +6,17 @@
 package mytunes.dal;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.MapChangeListener;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import mytunes.be.Queue;
 import mytunes.be.Song;
 
 /**
@@ -29,47 +24,42 @@ import mytunes.be.Song;
  * @author Wezzy Laptop
  */
 public class SongDAO {
+
     private DatabaseConnection conProvider;
-    File folder = new File("/Users/andreas/Music/");
+    //File folder = new File("/Users/andreas/Music/");
     List<Song> songs = new ArrayList<>();
-    public List<Song> addFolder(File folderPath) throws IOException
+    public void addFolder(File folderPath) throws IOException
     {
         listFilesForFolder(folderPath);
         List<Media> songsToAdd = new ArrayList<>();
         int counter = 0;
-        for (String string : listFilesForFolder(folder))
-        {
+        for (String string : listFilesForFolder(folderPath)) {
             songs.add(new Song("song nummber " + counter, string, counter));
             Media m1 = new Media(new File(string).toURI().toString());
             songsToAdd.add(m1);
             counter++;
         }
-        
+
         for (Media me : songsToAdd) {
 
             me.getMetadata().addListener((MapChangeListener<String, Object>) change -> {
-            
+
                 //System.out.println(change.getValueAdded());
                 //System.out.println(change.getKey());
-                
-                System.out.println(songsToAdd.size());
-                if(change.getKey() == "album artist")
-                {
+                //System.out.println(songsToAdd.size());
+                if (change.getKey() == "album artist") {
                     String a = (String) me.getMetadata().get("album artist");
                     getMediaSong(me).setAuthor(a);
                 }
-                if(change.getKey() == "year")
-                {
+                if (change.getKey() == "year") {
                     String a = "" + me.getMetadata().get("year");
                     getMediaSong(me).setReleaseYear(a);
                 }
-                if(change.getKey() == "genre")
-                {
+                if (change.getKey() == "genre") {
                     String a = (String) me.getMetadata().get("genre");
                     getMediaSong(me).setCategori(a);
                 }
-                if(change.getKey() == "title")
-                {
+                if (change.getKey() == "title") {
                     String a = (String) me.getMetadata().get("title");
                     getMediaSong(me).setTitle(a);
                 }
@@ -77,44 +67,40 @@ public class SongDAO {
             MediaPlayer mp = new MediaPlayer(me);
             mp.setOnReady(new Runnable() {
                 @Override
-                public void run()
-                {
+                public void run() {
                     String duration = "" + me.getDuration().toMinutes();
                     getMediaSong(me).setLength(duration);
                 }
             });
         }
-        return null;
     }
-    public Song getMediaSong(Media m)
-    {
-        for (Song song : songs)
-        {
-            if (new File(song.getFilePath()).toURI().toString().equals(m.getSource()))
-            {
+
+    public Song getMediaSong(Media m) {
+        for (Song song : songs) {
+            if (new File(song.getFilePath()).toURI().toString().equals(m.getSource())) {
                 return song;
             }
         }
         return null;
     }
+
     public List<String> listFilesForFolder(File folder) throws IOException {
         File[] listOfFiles = folder.listFiles();
         List<String> filePaths = new ArrayList<>();
         for (File file : listOfFiles) {
             if (file.isDirectory()) {
-                
+
             }
-            if (file.isFile())
-            {
-                if (file.getName().contains("mp3")){//mp3 istedet for ""
+            if (file.isFile()) {
+                if (file.getName().contains("mp3")) {//mp3 istedet for ""
                     filePaths.add(file.getPath());
                 }
-                
+
             }
         }
         return filePaths;
     }
-    
+
     public void deleteSong(Song song) throws IOException
     {
         try(Connection con = conProvider.getConnection()){
@@ -144,6 +130,7 @@ public class SongDAO {
     }
     
     public List<Song> getAllSongs()
+
     {
         List<Song> allSongs = new ArrayList();
         try(Connection con = conProvider.getConnection()){
@@ -166,18 +153,25 @@ public class SongDAO {
         }
         return allSongs;
     }
-    
-    public Song getSongForPlayback()
-    {
-        return null;   
+
+    public Song getSongForPlayback() {
+        return null;
     }
     
-   
-
-    
-    
-    public void writeChanges()throws IOException
+    public Song getSong(Song song)     
     {
+        getAllSongs();
+    
+        
+        for(Song MetaSong : getAllSongs()){
+         if (MetaSong.getId() == song.getId())
+         {return song;}
+                 
+        }
+     return null;       
+    }
+
+    public void writeChanges() throws IOException {
         List<Song> allSongs = new SongDAO().getAllSongs();
         SQLServerDataSource ds = new SQLServerDataSource();
         ds.setServerName("10.176.111.31");
@@ -204,4 +198,3 @@ public class SongDAO {
 
     }
 }
-

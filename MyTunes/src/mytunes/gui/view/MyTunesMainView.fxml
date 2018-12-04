@@ -8,11 +8,14 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.media.MediaView?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.MyTunesMainViewController">
+<BorderPane id="BorderPane" fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.MyTunesMainViewController">
+
    <left>
       <VBox prefHeight="375.0" prefWidth="285.0" BorderPane.alignment="CENTER">
          <children>
+            <MediaView fx:id="mvMediaView" fitHeight="200.0" fitWidth="200.0" />
             <ListView fx:id="listNowPlaying" prefHeight="200.0" prefWidth="200.0" />
             <HBox prefHeight="48.0" prefWidth="285.0">
                <children>
@@ -29,7 +32,7 @@
                   <Button mnemonicParsing="false" onAction="#onHandleNext" prefWidth="72.0" text="Next" />
                </children>
             </HBox>
-            <ListView fx:id="listViewLibrary" prefHeight="347.0" prefWidth="285.0" />
+            <ListView fx:id="listViewLibrary" onDragDone="#HandleDragDone" prefHeight="347.0" prefWidth="285.0" />
          </children>
       </VBox>
    </left>

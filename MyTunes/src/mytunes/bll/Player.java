@@ -7,10 +7,9 @@ package mytunes.bll;
 
 import java.util.ArrayList;
 import java.util.List;
-import javafx.collections.MapChangeListener;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
+import javafx.scene.media.MediaView;
 import mytunes.be.Playlist;
 import mytunes.be.Queue;
 import mytunes.be.Song;
@@ -38,34 +37,13 @@ public class Player {
         List<Song> songs = new ArrayList();
         songs.add(new Song("Sang nummer 1", "C:\\Users\\Wezzy Laptop\\Desktop\\Music\\Coone  E Life   Riot (Official Music Video)[1].mp3", 1));
         songs.add(new Song("Sang nummer 2", "C:\\Users\\Wezzy Laptop\\Desktop\\Music\\Cyber   A New World (Official HQ Preview)[1].mp3", 2));
-        songs.add(new Song("Sang nummer 3", "C:\\Users\\Wezzy Laptop\\Desktop\\Music\\Sephyx   Save Me (Official Video Clip)[1].mp3",3));
+        songs.add(new Song("Sang nummer 3", "C:\\Users\\Wezzy Laptop\\Desktop\\Music\\Sephyx   Save Me (Official Video Clip)[1].mp3", 3));
         queue.addSelection(songs);
         mp = new MediaPlayer(queue.getMedia(songIndex));
-        
-//        for (Media me : queue.getAllSongs()) {
-//
-//            me.getMetadata().addListener((MapChangeListener<String, Object>) change -> {
-//                
-//                //System.out.println(change.getValueAdded());
-//                //System.out.println(change.getKey());
-////                System.out.println(change.getKey());
-//                if(change.getKey() == "title")
-//                {
-//                    
-//                    String a = (String) me.getMetadata().get("album");
-//                    queue.getMediaSong(me).setAlbum(a);
-////                    System.out.println(me.getSource().toString());
-////                    System.out.println(queue.queueSize());
-//                    System.out.println(me.getMetadata().get("title"));
-//                    
-//                    
-//                }
-//
-//    });}
     }
 
     public void playSong() {
-        
+
         if (mp.getStatus() != Status.PLAYING) {
 
             mp.play();
@@ -75,7 +53,6 @@ public class Player {
                 @Override
                 public void run() {
                     if (queue.endOfQueue(songIndex)) {
-
                         songIndex = 0;
                     }
                     if (onRepeat) {
@@ -147,10 +124,6 @@ public class Player {
         onRepeat = !onRepeat;
     }
 
-    private MediaPlayer getMediaPlayer() {
-        return mp;
-    }
-
     public void shuffleHandler() {
         shuffle = !shuffle;
     }
@@ -158,5 +131,9 @@ public class Player {
     private int getRandom() {
         return (int) (Math.random() * queue.queueSize());
     }
-
+    
+    public void makeView(MediaView mv)
+    {
+        mv = new MediaView(mp);
+    }
 }
