@@ -5,6 +5,7 @@
  */
 package mytunes.gui.controller;
 
+import java.io.IOException;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +15,7 @@ import mytunes.bll.PlayerManager;
 import mytunes.be.Song;
 import mytunes.bll.Player;
 import mytunes.bll.Search;
+import mytunes.dal.PlaylistDAO;
 import mytunes.dal.SongDAO;
 
 /**
@@ -23,31 +25,34 @@ import mytunes.dal.SongDAO;
 public class Model
 {
     private SongDAO sDAO;
+    private PlaylistDAO pDAO;
     private ObservableList<Song> songs;
-    private ObservableList<Song> ques;
-    private ObservableList<Song> songinfo;
+    private ObservableList<Song> queues;
+    private ObservableList<String> songinfo;
     private ObservableList<Playlist> playlist;
     private PlayerManager logiclayer;
     private Search songsearcher;
     private Player player;
-
-    public Model()
+    
+    public Model() throws IOException
     {
         songinfo = FXCollections.observableArrayList();
         playlist = FXCollections.observableArrayList();
-        ques = FXCollections.observableArrayList();
+        queues = FXCollections.observableArrayList();
         songs = FXCollections.observableArrayList();
         songsearcher = new Search();
         logiclayer = new PlayerManager();
         sDAO = new SongDAO();
         player = new Player();
-
+        pDAO = new PlaylistDAO();
+        songinfo = FXCollections.observableArrayList(logiclayer.getMetaData());
+        //songs = FXCollections.observableArrayList
     }
 
     /**
      * 
      */
-    public ObservableList<Song> getSongInfo()
+    public ObservableList<String> getSongInfo()
     {
         return songinfo;
 
@@ -60,13 +65,16 @@ public class Model
 
     public ObservableList<Song> getQuedSongs()
     {
-        return ques;
+        return queues;
     }
 
     public ObservableList<Song> getSongs()
     {
         return songs;
     }
+        
+        
+    
     /*
     Alle vores Knapper
     */

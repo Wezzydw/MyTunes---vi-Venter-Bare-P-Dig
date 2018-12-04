@@ -5,31 +5,37 @@
  */
 package mytunes.bll;
 
+import java.util.ArrayList;
+import static java.util.Collections.list;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ComboBox;
+import mytunes.be.Song;
+import mytunes.dal.SongDAO;
 
 /**
  *
  * @author Wezzy Laptop
  */
-public class PlayerManager {
+public class PlayerManager
+{
 
     private ComboBox<String> comboBoxMisc;
-    
-    
+    private SongDAO sDAO;
+
     public PlayerManager()
     {
-        
+        sDAO = new SongDAO();
     }
-    
+
     public void addSongToQue()
     {
-        
+
     }
 
     public void removeSongFromQue()
     {
-        
+
     }
 
     public void queMisc()
@@ -37,10 +43,42 @@ public class PlayerManager {
         comboBoxMisc.setItems(FXCollections.observableArrayList("reverseList", "randomiseList", "sortByTitle"));
         comboBoxMisc.setVisibleRowCount(3);
     }
-    
+
     public void editSong()
     {
 
     }
-    
+
+    public List<String> getMetaData()
+    {
+        List<String> MetaList = new ArrayList();
+        sDAO.getSong(null);// input SONG HERE
+        Song son = sDAO.getSong(null);
+        if (son.getTitle() != null)
+        {
+            MetaList.add("title;" + son.getTitle());
+        }
+        if (son.getAuthor() != null)
+        {
+            MetaList.add("author;" + son.getAuthor());
+        }
+        if (son.getCategori() != null)
+        {
+            MetaList.add("categori;" + son.getCategori());
+        }
+        if (son.getReleaseYear() != null)
+        {
+            MetaList.add("releaseyear;" + son.getReleaseYear());
+        }
+        if (son.getAlbum() != null)
+        {
+            MetaList.add("album;" + son.getAlbum());
+        }
+        if (son.getLength() != null)
+        {
+            MetaList.add("length;" + son.getLength());
+        }
+
+        return MetaList;
+    }
 }

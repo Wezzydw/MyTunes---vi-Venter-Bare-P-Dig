@@ -114,17 +114,13 @@ public class SongDAO {
     {
         
     }
-    public void removeFolder(String filepath)
-    {
-        
-    }
-    
+ 
     public void updateSong(Song song)
     {
-        
-    }
+            }
     
     public List<Song> getAllSongs()
+
     {
         // Endnu mere off the good stuff:
 //        File folder = new File("/Users/you/folder/");
@@ -143,6 +139,18 @@ public class SongDAO {
         return null;   
     }
     
+    public Song getSong(Song song)     
+    {
+        getAllSongs();
+    
+        
+        for(Song MetaSong : getAllSongs()){
+         if (MetaSong.getId() == song.getId())
+         {return song;}
+                 
+        }
+     return null;       
+    }
    
 
     
