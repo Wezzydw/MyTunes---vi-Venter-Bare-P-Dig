@@ -127,7 +127,7 @@ public class Model
         songs.add(song);
     }
 
-    public void removeSong(Song song)
+    public void removeSong(Song song) throws IOException
     {
         sDAO.deleteSong(song);
         songs.remove(song);
