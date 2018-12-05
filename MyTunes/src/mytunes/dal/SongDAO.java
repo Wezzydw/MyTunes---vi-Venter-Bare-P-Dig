@@ -125,7 +125,7 @@ public class SongDAO {
 
             }
             if (file.isFile()) {
-                if (file.getName().contains("mp3")) {//mp3 istedet for ""
+                if (file.getName().endsWith(".mp3")) {//mp3 istedet for ""
                     filePaths.add(file.getPath());
                 }
 
