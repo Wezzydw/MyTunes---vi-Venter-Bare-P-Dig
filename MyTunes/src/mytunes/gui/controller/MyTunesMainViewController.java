@@ -67,6 +67,8 @@ public class MyTunesMainViewController implements Initializable {
     private Button btnRemoveSong;
     @FXML
     private MediaView mvMediaView;
+    
+   
 
     /**
      * Initializes the controller class.
@@ -81,6 +83,8 @@ public class MyTunesMainViewController implements Initializable {
         }
         Player p = new Player();
         p.makeView(mvMediaView);
+        listViewAllSongs.setItems(model.getSongs());
+        
 
     }
 
@@ -127,8 +131,8 @@ public class MyTunesMainViewController implements Initializable {
     }
 
     @FXML
-    private void onHandleRemove(ActionEvent event) {
-
+    private void onHandleRemove(ActionEvent event) throws IOException {
+        model.removeSong(null); //flyttes en sang i fra gui'en.
     }
 
     @FXML
@@ -138,15 +142,19 @@ public class MyTunesMainViewController implements Initializable {
     }
 
     @FXML
-    private void onHandleSearch(KeyEvent event) {
+    private void onHandleSearch(KeyEvent event) throws IOException {
+        model.searcher(txtFieldSearch.getText());
+        
     }
 
     @FXML
     private void onHandlePlaylistEdit(ActionEvent event) {
+        model.editSong();
     }
 
     @FXML
     private void onHandlePlaylistAdd(ActionEvent event) {
+        model.addPlaylist();
     }
 
 
@@ -160,7 +168,7 @@ public class MyTunesMainViewController implements Initializable {
     @FXML
     private void onSongRemove(ActionEvent event)
     {
-
+        
     }
 
 }

@@ -39,6 +39,7 @@ public class Model {
     private Player player;
     private BorderPane borderPane;
     private List<Song> empty;
+    private List<Playlist> addPlaylist;
     
     public Model() throws IOException
     {
@@ -56,6 +57,7 @@ public class Model {
         songs = FXCollections.observableArrayList(logiclayer.getAllSongs());
         playlist = FXCollections.observableArrayList(logiclayer.getAllPlaylists());
         queues = FXCollections.observableArrayList(empty);
+        addPlaylist = new ArrayList();
     }
 
     /**
@@ -65,6 +67,10 @@ public class Model {
     public ObservableList<String> getSongInfo()
     {
         return songinfo;
+    }
+    
+    public List<Playlist> addPlaylist(){
+        return addPlaylist;
     }
 
     public ObservableList<Playlist> getPlayList() {
@@ -110,7 +116,7 @@ public class Model {
         player.shuffleHandler();
     }
 
-    public List<Song> searcher(String query) {
+    public List<Song> searcher(String query) throws IOException {
         return songsearcher.searcher(query);
     }
 

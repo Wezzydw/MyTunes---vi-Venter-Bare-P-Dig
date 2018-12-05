@@ -20,17 +20,21 @@ import java.util.Properties;
  */
 public class DatabaseConnection {
     
-    private static final String PROP_FILE = "database.setttings";
+  //  private static final String PROP_FILE = "database.settings";
     private SQLServerDataSource ds;
     
     public DatabaseConnection() throws IOException{
     Properties databaseProperties = new Properties();
-        databaseProperties.load(new FileInputStream(PROP_FILE));
+       // databaseProperties.load(new FileInputStream(PROP_FILE));
         ds = new SQLServerDataSource();
-        ds.setServerName(databaseProperties.getProperty("Server"));
-        ds.setDatabaseName(databaseProperties.getProperty("Database"));
-        ds.setUser(databaseProperties.getProperty("User"));
-        ds.setPassword(databaseProperties.getProperty("Password"));
+//        ds.setServerName(databaseProperties.getProperty("10.176.111.31"));
+//        ds.setDatabaseName(databaseProperties.getProperty("MyTunes1"));
+//        ds.setUser(databaseProperties.getProperty("CS2018A_20"));
+//        ds.setPassword(databaseProperties.getProperty("CS2018A_20"));
+        ds.setServerName("10.176.111.31");
+        ds.setDatabaseName("MyTunes1");
+        ds.setUser("CS2018A_20");
+        ds.setPassword("CS2018A_20");
     }
     
     public Connection getConnection() throws SQLServerException

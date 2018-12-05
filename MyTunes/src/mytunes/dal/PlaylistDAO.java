@@ -25,14 +25,14 @@ import mytunes.be.Song;
  * @author Wezzy Laptop
  */
 public class PlaylistDAO {
-DatabaseConnection dc;
+DatabaseConnection conProvider;
 SongDAO sDAO = new SongDAO();
     public PlaylistDAO() throws IOException
     {
-        this.dc = new DatabaseConnection();
+        this.conProvider = new DatabaseConnection();
     }
 
-    private DatabaseConnection conProvider;
+   
     
     public Playlist addSelection(List<Song> songs, Playlist playlist) {
         
@@ -111,7 +111,7 @@ SongDAO sDAO = new SongDAO();
         try (Connection con = conProvider.getConnection())
         {
             
-            PreparedStatement statement = (PreparedStatement) con.createStatement();
+            Statement statement =  con.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM Playlists;");
             while(rs.next())
             {
@@ -135,7 +135,7 @@ SongDAO sDAO = new SongDAO();
      */
     public void deletePlaylist(String title) throws IOException, SQLException
         {
-        try (Connection con = dc.getConnection())
+        try (Connection con = conProvider.getConnection())
         {
            Statement statement = con.createStatement();
            ResultSet rs = statement.executeQuery("Select * FROM Playlist;");

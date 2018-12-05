@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.MapChangeListener;
@@ -24,8 +25,11 @@ import mytunes.be.Song;
  * @author Wezzy Laptop
  */
 public class SongDAO {
-
-    private DatabaseConnection conProvider;
+DatabaseConnection conProvider;
+    public SongDAO() throws IOException{
+         conProvider = new DatabaseConnection();
+    }
+    
     //File folder = new File("/Users/andreas/Music/");
     List<Song> songs = new ArrayList<>();
     public void addFolder(File folderPath) throws IOException
@@ -130,11 +134,10 @@ public class SongDAO {
     }
     
     public List<Song> getAllSongs()
-
     {
         List<Song> allSongs = new ArrayList();
         try(Connection con = conProvider.getConnection()){
-            PreparedStatement statement = (PreparedStatement) con.createStatement();
+            Statement statement =  con.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM Songs;");
             while(rs.next()){
                 String title = rs.getString("Title");
@@ -163,12 +166,12 @@ public class SongDAO {
         getAllSongs();
     
         
-        for(Song MetaSong : getAllSongs()){
-         if (MetaSong.getId() == song.getId())
-         {return song;}
-                 
+        for (Song MetaSong : getAllSongs()) {
+            if (MetaSong.getId() == song.getId()) {
+                return song;
+            }
         }
-     return null;       
+        return null;
     }
 
     public void writeChanges() throws IOException {
@@ -195,6 +198,5 @@ public class SongDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-
     }
 }
