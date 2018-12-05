@@ -60,7 +60,8 @@ public class PlayerManager
     public void SelectedFolder(String path) throws IOException
     {
         File file = new File(path);
-        sdao.addFolder(file);
+        
+        sdao.writeChanges(sdao.addFolder(file));
     }
 
     public List<Playlist> getAllPlaylists()
@@ -76,32 +77,32 @@ public class PlayerManager
     public List<String> getMetaData()
     {
         List<String> MetaList = new ArrayList();
-        sdao.getSong(null);// input SONG HERE
-        Song son = sdao.getSong(null);
-        if (son.getTitle() != null)
-        {
-            MetaList.add("title;" + son.getTitle());
-        }
-        if (son.getAuthor() != null)
-        {
-            MetaList.add("author;" + son.getAuthor());
-        }
-        if (son.getCategori() != null)
-        {
-            MetaList.add("categori;" + son.getCategori());
-        }
-        if (son.getReleaseYear() != null)
-        {
-            MetaList.add("releaseyear;" + son.getReleaseYear());
-        }
-        if (son.getAlbum() != null)
-        {
-            MetaList.add("album;" + son.getAlbum());
-        }
-        if (son.getLength() != null)
-        {
-            MetaList.add("length;" + son.getLength());
-        }
+//        sdao.getSong(null);// input SONG HERE
+//        Song son = sdao.getSong(null);
+//        if (son.getTitle() != null)
+//        {
+//            MetaList.add("title;" + son.getTitle());
+//        }
+//        if (son.getAuthor() != null)
+//        {
+//            MetaList.add("author;" + son.getAuthor());
+//        }
+//        if (son.getCategori() != null)
+//        {
+//            MetaList.add("categori;" + son.getCategori());
+//        }
+//        if (son.getReleaseYear() != null)
+//        {
+//            MetaList.add("releaseyear;" + son.getReleaseYear());
+//        }
+//        if (son.getAlbum() != null)
+//        {
+//            MetaList.add("album;" + son.getAlbum());
+//        }
+//        if (son.getLength() != null)
+//        {
+//            MetaList.add("length;" + son.getLength());
+//        }
 
         return MetaList;
     }

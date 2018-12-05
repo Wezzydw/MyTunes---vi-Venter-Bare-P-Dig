@@ -101,6 +101,11 @@ public class Song {
         return id;
         
     }
+    
+    public String toString()
+    {
+        return "Title: " + title + "Year :" + releaseYear;
+    }
 }
     
     

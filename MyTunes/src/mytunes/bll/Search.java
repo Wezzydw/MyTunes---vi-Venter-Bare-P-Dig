@@ -5,6 +5,7 @@
  */
 package mytunes.bll;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import mytunes.be.Song;
@@ -22,7 +23,7 @@ public class Search {
      * or album name. If value is found
      * returns a list if all songs containing the title input
     */
-    public List<Song> searcher(String query){
+    public List<Song> searcher(String query) throws IOException{
         
         SongDAO sdao = new SongDAO();
 
