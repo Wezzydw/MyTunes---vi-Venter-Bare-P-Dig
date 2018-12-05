@@ -48,7 +48,24 @@ SongDAO sDAO = new SongDAO();
         
         return playlist;
     }
-
+    public void addPlaylist(Playlist plist)
+    {
+        
+        try (Connection con = conProvider.getConnection()) {
+            for (Song song : plist.getPlaylist())
+            {
+                try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO Playlist (Title, SongId) VALUES (")) {
+                    pstmt.setString(1, plist.getTitle());
+                    pstmt.setInt(2, song.getId());
+                    pstmt.execute();
+            }
+                
+            
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
     public Playlist mergePlaylist(Playlist A, Playlist B, String Title) 
     {
         Playlist np = new Playlist(Title);
@@ -81,10 +98,16 @@ SongDAO sDAO = new SongDAO();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        
-        Playlist piklist = new Playlist(query);
-        piklist.setPlaylist(playlistSongs);
-        return piklist;
+        List<Playlist> allPlaylists = getAllPlaylists();
+        for (Playlist allPlaylist : allPlaylists)
+        {
+            if (allPlaylist.getTitle()==query)
+            {
+                allPlaylist.setPlaylist(playlistSongs);
+                return allPlaylist;
+            }
+        }
+        return null;
     }
     /**
      * 
@@ -105,6 +128,7 @@ SongDAO sDAO = new SongDAO();
  
     public List<Playlist> getAllPlaylists()
     {
+        
         
         List<Playlist> playlists = new ArrayList<>();
         
@@ -212,6 +236,7 @@ SongDAO sDAO = new SongDAO();
         }
 
     }
+      
 }
     
 
