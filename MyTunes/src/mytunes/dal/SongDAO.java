@@ -73,6 +73,7 @@ public class SongDAO {
                     String a = (String) me.getMetadata().get("title");
                     getMediaSong(me).setTitle(a);
                 }
+                
             });
             MediaPlayer mp = new MediaPlayer(me);
             mp.setOnReady(new Runnable() {
@@ -97,6 +98,17 @@ public class SongDAO {
                     while (currentTime < expectedTime) {
                         currentTime = System.currentTimeMillis();
                     }
+                    for (Song song : songs)
+                    {
+                        if(song.getTitle().contains("song nummber"))
+                        {
+                            String tmpTitle = song.getFilePath().substring(song.getFilePath().lastIndexOf("\\" + 1), song.getFilePath().length()-4);
+                            song.setTitle(tmpTitle);
+                        }
+                    }
+                    
+                        
+                    
                     System.out.println("Before writechanges");
                     writeChanges(songs);
                 } catch (IOException ex) {
