@@ -83,12 +83,20 @@ public class Model {
     }
 
     public ObservableList<Song> getSongs() {
+        
+        
+        for(Song s : sDAO.getAllSongs())
+        {
+            System.out.println(s.getTitle());
+            //songs.add(s);
+        }
         return songs;
     }
     /*
     Alle vores Knapper
      */
     public void playSong() {
+        System.out.println(songs.size());
         player.playSong();
     }
 

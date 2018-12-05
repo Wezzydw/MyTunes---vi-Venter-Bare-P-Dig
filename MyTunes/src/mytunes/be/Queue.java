@@ -26,7 +26,7 @@ public class Queue
         this.songs = songs;
         for (Song s : songs)
         {
-            System.out.println(i);
+           
             queue.add(new Media(new File(s.getFilePath()).toURI().toString()));
             i++;
             

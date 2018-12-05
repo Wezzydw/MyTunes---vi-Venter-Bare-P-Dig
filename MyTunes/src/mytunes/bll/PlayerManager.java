@@ -61,6 +61,7 @@ public class PlayerManager
     {
         File file = new File(path);
         sdao.addFolder(file);
+        sdao.writeChanges(sdao.getAllSongs());
     }
 
     public List<Playlist> getAllPlaylists()

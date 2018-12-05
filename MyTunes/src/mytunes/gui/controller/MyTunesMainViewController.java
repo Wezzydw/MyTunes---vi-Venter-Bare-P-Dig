@@ -81,9 +81,9 @@ public class MyTunesMainViewController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(MyTunesMainViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Player p = new Player();
-        p.makeView(mvMediaView);
+        System.out.println(listViewAllSongs.getItems().size());
         listViewAllSongs.setItems(model.getSongs());
+        
         
 
     }

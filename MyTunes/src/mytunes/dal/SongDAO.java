@@ -174,24 +174,24 @@ DatabaseConnection conProvider;
         return null;
     }
 
-    public void writeChanges() throws IOException {
-        List<Song> allSongs = new SongDAO().getAllSongs();
+    public void writeChanges(List<Song> allSongs) throws IOException {
+        //List<Song> allSongs = new SongDAO().getAllSongs();
         SQLServerDataSource ds = new SQLServerDataSource();
         ds.setServerName("10.176.111.31");
-        ds.setDatabaseName("MovieSys");
+        ds.setDatabaseName("MyTunes1");
         ds.setUser("CS2018A_20");
         ds.setPassword("CS2018A_20");
         try (Connection con = ds.getConnection()) {
             for (Song song : allSongs) {
-                try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO Song (Title, Id, Author, Album, Categori, Filepath, Length, ReleaseYear) VALUES (")) {
+                try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO Songs (Title, Author, Album, Categori, Filepath, Length, ReleaseYear) VALUES (?,?,?,?,?,?,?);")) {
                     pstmt.setString(1, song.getTitle());
                     pstmt.setString(2, song.getAuthor());
                     pstmt.setString(3, song.getAlbum());
                     pstmt.setString(4, song.getCategori());
                     pstmt.setString(5, song.getFilePath());
                     pstmt.setString(6, song.getLength());
-                    pstmt.setInt(7, song.getId());
-                    pstmt.setString(8, song.getReleaseYear());
+                    //pstmt.setInt(7, song.getId());
+                    pstmt.setString(7, song.getReleaseYear());
                     pstmt.execute();
                 }
             }
