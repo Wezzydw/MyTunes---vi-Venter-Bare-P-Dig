@@ -32,7 +32,7 @@ DatabaseConnection conProvider;
     
     //File folder = new File("/Users/andreas/Music/");
     List<Song> songs = new ArrayList<>();
-    public void addFolder(File folderPath) throws IOException
+    public List<Song> addFolder(File folderPath) throws IOException
     {
         listFilesForFolder(folderPath);
         List<Media> songsToAdd = new ArrayList<>();
@@ -77,6 +77,7 @@ DatabaseConnection conProvider;
                 }
             });
         }
+        return songs;
     }
 
     public Song getMediaSong(Media m) {
@@ -181,9 +182,11 @@ DatabaseConnection conProvider;
         ds.setDatabaseName("MyTunes1");
         ds.setUser("CS2018A_20");
         ds.setPassword("CS2018A_20");
+        String a = "INSERT INTO Songs (Title, Author, Album, Categori, Filepath, Length, ReleaseYear) VALUES (?,?,?,?,?,?,?);";
         try (Connection con = ds.getConnection()) {
             for (Song song : allSongs) {
-                try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO Songs (Title, Author, Album, Categori, Filepath, Length, ReleaseYear) VALUES (?,?,?,?,?,?,?);")) {
+                System.out.println(allSongs.size());
+                 PreparedStatement pstmt = con.prepareStatement(a);
                     pstmt.setString(1, song.getTitle());
                     pstmt.setString(2, song.getAuthor());
                     pstmt.setString(3, song.getAlbum());
@@ -193,7 +196,7 @@ DatabaseConnection conProvider;
                     //pstmt.setInt(7, song.getId());
                     pstmt.setString(7, song.getReleaseYear());
                     pstmt.execute();
-                }
+                
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
