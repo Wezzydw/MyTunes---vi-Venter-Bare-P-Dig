@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.media.MediaView?>
 
-<BorderPane id="BorderPane" fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.MyTunesMainViewController">
+<BorderPane id="BorderPane" fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.MyTunesMainViewController">
 
    <left>
       <VBox prefHeight="375.0" prefWidth="285.0" BorderPane.alignment="CENTER">
@@ -44,7 +44,7 @@
                   <ListView fx:id="listViewSongInfo" prefHeight="200.0" prefWidth="199.0" />
                   <VBox prefHeight="200.0" prefWidth="278.0">
                      <children>
-                        <ListView fx:id="listViewQueue" prefHeight="250.0" prefWidth="280.0" />
+                        <ListView fx:id="listViewQueue" onDragDetected="#quedetected" onDragDone="#quedone" onDragDropped="#quedropped" onDragEntered="#queentered" onDragExited="#queexited" onDragOver="#queover" onMouseDragEntered="#queentered" onMouseDragExited="#queexited" onMouseDragOver="#queover" onMouseDragReleased="#quereleased" onMouseReleased="#queMouseRelease" prefHeight="250.0" prefWidth="280.0" />
                         <HBox prefHeight="28.0" prefWidth="283.0">
                            <children>
                               <Button mnemonicParsing="false" onAction="#onHandleAdd" prefHeight="25.0" prefWidth="65.0" text="Add" />
@@ -68,7 +68,7 @@
                   <Button mnemonicParsing="false" prefWidth="70.0" text="ID" />
                </children>
             </HBox>
-            <ListView fx:id="listViewAllSongs" prefHeight="330.0" prefWidth="476.0" />
+            <ListView fx:id="listViewAllSongs" onDragDetected="#allsongsdragdected" onDragDone="#allsongsdragdone" onDragDropped="#allsongsdragdropped" onDragEntered="#allsongsdragentered" onDragExited="#allsongsdragexited" onDragOver="#allsongsdragover" onMouseDragEntered="#allsongsdragentered" onMouseDragExited="#allsongsdragexoted" onMouseDragOver="#allsongsdragover" onMouseDragReleased="#allsongsdragreleased" prefHeight="330.0" prefWidth="476.0" />
             <HBox prefHeight="14.0" prefWidth="476.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#onHandlePlaylistEdit" text="Edit" />
