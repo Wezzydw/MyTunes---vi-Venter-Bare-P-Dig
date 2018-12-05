@@ -49,7 +49,7 @@ public class SongDAO {
         }
 
         for (Media me : songsToAdd) {
-
+            //me.getMetadata().size(); Kunne måske være en måde at tjekke for hvornår den er færdig
             me.getMetadata().addListener((MapChangeListener<String, Object>) change -> {
 
                 //System.out.println(change.getValueAdded());
