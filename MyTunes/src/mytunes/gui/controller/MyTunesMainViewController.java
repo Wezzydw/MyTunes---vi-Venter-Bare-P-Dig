@@ -295,7 +295,7 @@ public class MyTunesMainViewController implements Initializable {
 
     @FXML
     private void queMouseRelease(MouseEvent event) {
-        System.out.println("hej diller");
+        System.out.println("hej ");
     }
 
     
