@@ -15,6 +15,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.MapChangeListener;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -25,15 +27,17 @@ import mytunes.be.Song;
  * @author Wezzy Laptop
  */
 public class SongDAO {
-DatabaseConnection conProvider;
-    public SongDAO() throws IOException{
-         conProvider = new DatabaseConnection();
+
+    DatabaseConnection conProvider;
+
+    public SongDAO() throws IOException {
+        conProvider = new DatabaseConnection();
     }
-    
+
     //File folder = new File("/Users/andreas/Music/");
     List<Song> songs = new ArrayList<>();
-    public List<Song> addFolder(File folderPath) throws IOException
-    {
+
+    public List<Song> addFolder(File folderPath) throws IOException {
         listFilesForFolder(folderPath);
         List<Media> songsToAdd = new ArrayList<>();
         int counter = 0;
@@ -54,10 +58,12 @@ DatabaseConnection conProvider;
                 if (change.getKey() == "album artist") {
                     String a = (String) me.getMetadata().get("album artist");
                     getMediaSong(me).setAuthor(a);
+
                 }
                 if (change.getKey() == "year") {
                     String a = "" + me.getMetadata().get("year");
                     getMediaSong(me).setReleaseYear(a);
+                    System.out.println("year : " + a);
                 }
                 if (change.getKey() == "genre") {
                     String a = (String) me.getMetadata().get("genre");
@@ -67,6 +73,7 @@ DatabaseConnection conProvider;
                     String a = (String) me.getMetadata().get("title");
                     getMediaSong(me).setTitle(a);
                 }
+                
             });
             MediaPlayer mp = new MediaPlayer(me);
             mp.setOnReady(new Runnable() {
@@ -77,6 +84,39 @@ DatabaseConnection conProvider;
                 }
             });
         }
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("Before Time");
+                Long currentTime = System.currentTimeMillis();
+                Long expectedTime = currentTime + 5000L;
+
+                
+                try {
+                    
+                    while (currentTime < expectedTime) {
+                        currentTime = System.currentTimeMillis();
+                    }
+                    for (Song song : songs)
+                    {
+                        if(song.getTitle().contains("song nummber"))
+                        {
+                            String tmpTitle = song.getFilePath().substring(song.getFilePath().lastIndexOf("\\" + 1), song.getFilePath().length()-4);
+                            song.setTitle(tmpTitle);
+                        }
+                    }
+                    
+                        
+                    
+                    System.out.println("Before writechanges");
+                    writeChanges(songs);
+                } catch (IOException ex) {
+                    System.out.println(" done goofed");
+                }
+            }
+        });
+        t.start();
         return songs;
     }
 
@@ -97,7 +137,7 @@ DatabaseConnection conProvider;
 
             }
             if (file.isFile()) {
-                if (file.getName().contains("mp3")) {//mp3 istedet for ""
+                if (file.getName().endsWith(".mp3")) {//mp3 istedet for ""
                     filePaths.add(file.getPath());
                 }
 
@@ -106,41 +146,39 @@ DatabaseConnection conProvider;
         return filePaths;
     }
 
-    public void deleteSong(Song song) throws IOException
-    {
-        try(Connection con = conProvider.getConnection()){
+    public void deleteSong(Song song) throws IOException {
+        try (Connection con = conProvider.getConnection()) {
             PreparedStatement statement = (PreparedStatement) con.createStatement();
             statement.executeQuery("SELECT * FROM Songs;");
-            statement.executeQuery("DELETE FROM Songs WHERE Id =" + song.getId()+ ";");
-        } catch(SQLException ex){
+            statement.executeQuery("DELETE FROM Songs WHERE Id =" + song.getId() + ";");
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-    
-    public void updateSong(Song song)
-    {
-        try(Connection con = conProvider.getConnection()){
+
+    public void updateSong(Song song) {
+        try (Connection con = conProvider.getConnection()) {
             PreparedStatement statement = (PreparedStatement) con.createStatement();
             statement.executeQuery("SELECT * FROM Songs");
-            statement.executeQuery("UPDATE Songs SET Title = " +
-                    song.getTitle() + ", SET Author = " +
-                    song.getAuthor() + ", SET Album = " +
-                    song.getAlbum() + ", SET Categori = " +
-                    song.getCategori() + ", SET Filepath = " +
-                    song.getFilePath() + ", SET ReleaseYear = " +
-                    song.getReleaseYear() + ";");
-        } catch (SQLException ex){
+            statement.executeQuery("UPDATE Songs SET Title = "
+                    + song.getTitle() + ", SET Author = "
+                    + song.getAuthor() + ", SET Album = "
+                    + song.getAlbum() + ", SET Categori = "
+                    + song.getCategori() + ", SET Filepath = "
+                    + song.getFilePath() + ", SET ReleaseYear = "
+                    + song.getReleaseYear() + ";");
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-    
-    public List<Song> getAllSongs()
-    {
+
+    public List<Song> getAllSongs() {
+
         List<Song> allSongs = new ArrayList();
-        try(Connection con = conProvider.getConnection()){
-            Statement statement =  con.createStatement();
+        try (Connection con = conProvider.getConnection()) {
+            Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM Songs;");
-            while(rs.next()){
+            while (rs.next()) {
                 String title = rs.getString("Title");
                 String author = rs.getString("Author");
                 String album = rs.getString("Album");
@@ -151,7 +189,7 @@ DatabaseConnection conProvider;
                 String releaseYear = rs.getString("ReleaseYear");
                 Song song = new Song(title, author, length, releaseYear, categori, filepath, album, id);
                 allSongs.add(song);
-                    }
+            }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -161,12 +199,10 @@ DatabaseConnection conProvider;
     public Song getSongForPlayback() {
         return null;
     }
-    
-    public Song getSong(Song song)     
-    {
+
+    public Song getSong(Song song) {
         getAllSongs();
-    
-        
+
         for (Song MetaSong : getAllSongs()) {
             if (MetaSong.getId() == song.getId()) {
                 return song;
@@ -177,6 +213,7 @@ DatabaseConnection conProvider;
 
     public void writeChanges(List<Song> allSongs) throws IOException {
         //List<Song> allSongs = new SongDAO().getAllSongs();
+        System.out.println("WRITECHANGES ");
         SQLServerDataSource ds = new SQLServerDataSource();
         ds.setServerName("10.176.111.31");
         ds.setDatabaseName("MyTunes1");
@@ -186,17 +223,17 @@ DatabaseConnection conProvider;
         try (Connection con = ds.getConnection()) {
             for (Song song : allSongs) {
                 System.out.println(allSongs.size());
-                 PreparedStatement pstmt = con.prepareStatement(a);
-                    pstmt.setString(1, song.getTitle());
-                    pstmt.setString(2, song.getAuthor());
-                    pstmt.setString(3, song.getAlbum());
-                    pstmt.setString(4, song.getCategori());
-                    pstmt.setString(5, song.getFilePath());
-                    pstmt.setString(6, song.getLength());
-                    //pstmt.setInt(7, song.getId());
-                    pstmt.setString(7, song.getReleaseYear());
-                    pstmt.execute();
-                
+                PreparedStatement pstmt = con.prepareStatement(a);
+                pstmt.setString(1, song.getTitle());
+                pstmt.setString(2, song.getAuthor());
+                pstmt.setString(3, song.getAlbum());
+                pstmt.setString(4, song.getCategori());
+                pstmt.setString(5, song.getFilePath());
+                pstmt.setString(6, song.getLength());
+                //pstmt.setInt(7, song.getId());
+                pstmt.setString(7, song.getReleaseYear());
+                pstmt.execute();
+
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
