@@ -60,8 +60,8 @@ public class PlayerManager
     public void SelectedFolder(String path) throws IOException
     {
         File file = new File(path);
-        
-        sdao.writeChanges(sdao.addFolder(file));
+        sdao.addFolder(file);
+        //sdao.writeChanges();
     }
 
     public List<Playlist> getAllPlaylists()
