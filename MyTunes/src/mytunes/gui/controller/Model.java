@@ -58,7 +58,7 @@ public class Model {
         songinfo = FXCollections.observableArrayList(logiclayer.getMetaData());
         songs = FXCollections.observableArrayList(logiclayer.getAllSongs());
         playlist = FXCollections.observableArrayList(logiclayer.getAllPlaylists());
-        queues = FXCollections.observableArrayList(empty);
+        queues = FXCollections.observableArrayList(getQuedSongs());
         addPlaylist = new ArrayList();
         setDAO = new SettingsDAO();
         player.changevolume(setDAO.lastSetVolume());
@@ -84,6 +84,7 @@ public class Model {
 
     public ObservableList<Song> getQuedSongs()
     {
+        //queues.addAll(songs);
         return queues;
     }
 
@@ -110,6 +111,7 @@ public class Model {
     }
 
     public void changeVolume(double vol) {
+
         player.changevolume(vol / 100);            
     }
     public void UpdateVolume(double vol) {
@@ -151,7 +153,11 @@ public class Model {
     }
 
     public void addSongToQue() {
-        logiclayer.addSongToQue();
+        queues.addAll(songs);
+         player.addSongsToQueue(getSongs());
+//       queues.addAll(getSongs());
+//        System.out.println("Queue size out here " + queues.size());
+//       player.addSongsToQueue(queues);
     }
 
     public void removeSongFromQue() {
@@ -172,7 +178,7 @@ public class Model {
             //No Directory selected
         } else {
             String path = selectedDirectory.getAbsolutePath();
-             logiclayer.SelectedFolder(path);
+             songs.addAll(logiclayer.SelectedFolder(path));
         }
         
         logiclayer.getAllSongs();
@@ -180,6 +186,8 @@ public class Model {
         {
             System.out.println(s.getTitle());
         }
+        
+
         //Do something with view here
        
     }
