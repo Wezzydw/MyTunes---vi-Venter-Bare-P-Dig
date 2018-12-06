@@ -27,15 +27,12 @@ public class PlayerManager
     private ComboBox<String> comboBoxMisc;
     private SongDAO sdao;
     private PlaylistDAO pDAO;
-   
-
-    
 
     public PlayerManager() throws IOException
     {
         sdao = new SongDAO();
         pDAO = new PlaylistDAO();
-        
+
     }
 
     public void addSongToQue()
@@ -58,7 +55,7 @@ public class PlayerManager
     {
 
     }
-    
+
     public List<Song> SelectedFolder(String path) throws IOException
     {
         File file = new File(path);
@@ -68,14 +65,14 @@ public class PlayerManager
 
     public List<Playlist> getAllPlaylists()
     {
-    return pDAO.getAllPlaylists();
+        return pDAO.getAllPlaylists();
     }
 
     public List<Song> getAllSongs()
     {
-       return sdao.getAllSongs();
+        return sdao.getAllSongs();
     }
-               
+
     public List<String> getMetaData()
     {
         List<String> MetaList = new ArrayList();

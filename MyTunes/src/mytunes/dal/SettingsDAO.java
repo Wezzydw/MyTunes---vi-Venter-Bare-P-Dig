@@ -14,7 +14,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import mytunes.be.Playlist;
-import mytunes.be.Queue;
 import mytunes.be.Song;
 import mytunes.bll.Player;
 
@@ -27,17 +26,13 @@ public class SettingsDAO
 
     DatabaseConnection conProvider;
 
-
     public SettingsDAO() throws IOException
 
-                {
+    {
         conProvider = new DatabaseConnection();
     }
     Player player;
     SongDAO sDAO;
- 
-
-
 
     public void updateVolume(double vol)
     {
@@ -46,11 +41,11 @@ public class SettingsDAO
         {
             Statement statement = con.createStatement();
             PreparedStatement pstmt = con.prepareStatement("UPDATE Settings SET Volume = (?)");
-                     pstmt.setDouble(1, vol);
-                     pstmt.execute();
-                     pstmt.close();
-                     System.out.println("Diller found - and updated!");
-                    } catch (SQLException ex)
+            pstmt.setDouble(1, vol);
+            pstmt.execute();
+            pstmt.close();
+            System.out.println("Diller found - and updated!");
+        } catch (SQLException ex)
         {
 
             ex.printStackTrace();
@@ -120,12 +115,10 @@ public class SettingsDAO
         return queueList;
     }
 
-
-
     public List<Song> queueList(String str)
     {
         String[] a = str.split(",");
-      
+
         List<Song> queSongs = new ArrayList();
         List<Song> allSongs = sDAO.getAllSongs();
         List<Integer> tempId = new ArrayList();
@@ -133,16 +126,18 @@ public class SettingsDAO
         {
             tempId.add(Integer.valueOf(string));
         }
-            
-            for (Song song : allSongs) {
-                for (Integer integer : tempId) {
-                    if(integer == song.getId()){
-                        queSongs.add(song);
-                    }
+
+        for (Song song : allSongs)
+        {
+            for (Integer integer : tempId)
+            {
+                if (integer == song.getId())
+                {
+                    queSongs.add(song);
                 }
             }
+        }
         return queSongs;
     }
-    
 
 }

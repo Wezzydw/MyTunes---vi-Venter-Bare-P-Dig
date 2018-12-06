@@ -27,7 +27,8 @@ import mytunes.dal.SongDAO;
  *
  * @author marce
  */
-public class Model {
+public class Model
+{
 
     private SongDAO sDAO;
     private PlaylistDAO pDAO;
@@ -42,7 +43,7 @@ public class Model {
     private List<Song> empty;
     private List<Playlist> addPlaylist;
     private SettingsDAO setDAO;
-    
+
     public Model() throws IOException
     {
         songinfo = FXCollections.observableArrayList();
@@ -68,17 +69,18 @@ public class Model {
     /**
      *
      */
-
     public ObservableList<String> getSongInfo()
     {
         return songinfo;
     }
-    
-    public List<Playlist> addPlaylist(){
+
+    public List<Playlist> addPlaylist()
+    {
         return addPlaylist;
     }
 
-    public ObservableList<Playlist> getPlayList() {
+    public ObservableList<Playlist> getPlayList()
+    {
         return playlist;
     }
 
@@ -88,57 +90,69 @@ public class Model {
         return queues;
     }
 
-    public ObservableList<Song> getSongs() {
-        
-        
-        for(Song s : sDAO.getAllSongs())
+    public ObservableList<Song> getSongs()
+    {
+
+        for (Song s : sDAO.getAllSongs())
         {
             System.out.println(s.getTitle());
             //songs.add(s);
         }
         return songs;
     }
+
     /*
     Alle vores Knapper
      */
-    public void playSong() {
+    public void playSong()
+    {
         System.out.println(songs.size());
         player.playSong();
     }
 
-    public void pauseSong() {
+    public void pauseSong()
+    {
         player.pauseSong();
     }
 
-    public void changeVolume(double vol) {
+    public void changeVolume(double vol)
+    {
 
-        player.changevolume(vol / 100);            
-    }
-    public void UpdateVolume(double vol) {
-           setDAO.updateVolume(vol / 100);
+        player.changevolume(vol / 100);
     }
 
-    public void playPrevSong() {
+    public void UpdateVolume(double vol)
+    {
+        setDAO.updateVolume(vol / 100);
+    }
+
+    public void playPrevSong()
+    {
         player.playPrevSong();
     }
 
-    public void playNextSong() {
+    public void playNextSong()
+    {
         player.playNextSong();
     }
 
-    public void repeatHandler() {
+    public void repeatHandler()
+    {
         player.repeatHandler();
     }
 
-    public void shuffleHandler() {
+    public void shuffleHandler()
+    {
         player.shuffleHandler();
     }
 
-    public List<Song> searcher(String query) throws IOException {
+    public List<Song> searcher(String query) throws IOException
+    {
         return songsearcher.searcher(query);
     }
 
-    public void addSong(Song song) {
+    public void addSong(Song song)
+    {
         songs.add(song);
     }
 
@@ -148,48 +162,53 @@ public class Model {
         songs.remove(song);
     }
 
-    public void editSong() {
+    public void editSong()
+    {
         logiclayer.editSong();
     }
 
-    public void addSongToQue() {
+    public void addSongToQue()
+    {
         queues.addAll(songs);
-         player.addSongsToQueue(getSongs());
+        player.addSongsToQueue(getSongs());
 //       queues.addAll(getSongs());
 //        System.out.println("Queue size out here " + queues.size());
 //       player.addSongsToQueue(queues);
     }
 
-    public void removeSongFromQue() {
+    public void removeSongFromQue()
+    {
         logiclayer.removeSongFromQue();
     }
 
-    public void queComboBox() {
+    public void queComboBox()
+    {
         logiclayer.queMisc();
 
     }
 
-    public void SelectFolder(Stage stage) throws IOException {
+    public void SelectFolder(Stage stage) throws IOException
+    {
 
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File selectedDirectory = directoryChooser.showDialog(stage);
 
-        if (selectedDirectory == null) {
+        if (selectedDirectory == null)
+        {
             //No Directory selected
-        } else {
+        } else
+        {
             String path = selectedDirectory.getAbsolutePath();
-             songs.addAll(logiclayer.SelectedFolder(path));
+            songs.addAll(logiclayer.SelectedFolder(path));
         }
-        
+
         logiclayer.getAllSongs();
-        for(Song s : logiclayer.getAllSongs())
+        for (Song s : logiclayer.getAllSongs())
         {
             System.out.println(s.getTitle());
         }
-        
 
         //Do something with view here
-       
     }
 
 }

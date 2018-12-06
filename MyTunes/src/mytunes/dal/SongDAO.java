@@ -15,8 +15,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.MapChangeListener;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -26,92 +24,106 @@ import mytunes.be.Song;
  *
  * @author Wezzy Laptop
  */
-public class SongDAO {
+public class SongDAO
+{
 
     DatabaseConnection conProvider;
 
-    public SongDAO() throws IOException {
+    public SongDAO() throws IOException
+    {
         conProvider = new DatabaseConnection();
     }
 
     //File folder = new File("/Users/andreas/Music/");
     List<Song> songs = new ArrayList<>();
 
-    public List<Song> addFolder(File folderPath) throws IOException {
+    public List<Song> addFolder(File folderPath) throws IOException
+    {
         listFilesForFolder(folderPath);
         List<Media> songsToAdd = new ArrayList<>();
         int counter = 0;
-        for (String string : listFilesForFolder(folderPath)) {
+        for (String string : listFilesForFolder(folderPath))
+        {
             songs.add(new Song("song nummber " + counter, string, counter));
             Media m1 = new Media(new File(string).toURI().toString());
             songsToAdd.add(m1);
             counter++;
         }
 
-        for (Media me : songsToAdd) {
+        for (Media me : songsToAdd)
+        {
             //me.getMetadata().size(); Kunne måske være en måde at tjekke for hvornår den er færdig
-            me.getMetadata().addListener((MapChangeListener<String, Object>) change -> {
+            me.getMetadata().addListener((MapChangeListener<String, Object>) change ->
+            {
 
                 //System.out.println(change.getValueAdded());
                 //System.out.println(change.getKey());
                 //System.out.println(songsToAdd.size());
-                if (change.getKey() == "album artist") {
+                if (change.getKey() == "album artist")
+                {
                     String a = (String) me.getMetadata().get("album artist");
                     getMediaSong(me).setAuthor(a);
 
                 }
-                if (change.getKey() == "year") {
+                if (change.getKey() == "year")
+                {
                     String a = "" + me.getMetadata().get("year");
                     getMediaSong(me).setReleaseYear(a);
                     System.out.println("year : " + a);
                 }
-                if (change.getKey() == "genre") {
+                if (change.getKey() == "genre")
+                {
                     String a = (String) me.getMetadata().get("genre");
                     getMediaSong(me).setCategori(a);
                 }
-                if (change.getKey() == "title") {
+                if (change.getKey() == "title")
+                {
                     String a = (String) me.getMetadata().get("title");
                     getMediaSong(me).setTitle(a);
                 }
-                
+
             });
             MediaPlayer mp = new MediaPlayer(me);
-            mp.setOnReady(new Runnable() {
+            mp.setOnReady(new Runnable()
+            {
                 @Override
-                public void run() {
+                public void run()
+                {
                     String duration = "" + me.getDuration().toMinutes();
                     getMediaSong(me).setLength(duration);
                 }
             });
         }
 
-        Thread t = new Thread(new Runnable() {
+        Thread t = new Thread(new Runnable()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 System.out.println("Before Time");
                 Long currentTime = System.currentTimeMillis();
                 Long expectedTime = currentTime + 5000L;
 
-                
-                try {
-                    
-                    while (currentTime < expectedTime) {
+                try
+                {
+
+                    while (currentTime < expectedTime)
+                    {
                         currentTime = System.currentTimeMillis();
                     }
                     for (Song song : songs)
                     {
-                        if(song.getTitle().contains("song nummber"))
+                        if (song.getTitle().contains("song nummber"))
                         {
-                            String tmpTitle = song.getFilePath().substring(song.getFilePath().lastIndexOf("\\") + 1, song.getFilePath().length()-4);
+                            String tmpTitle = song.getFilePath().substring(song.getFilePath().lastIndexOf("\\") + 1, song.getFilePath().length() - 4);
                             song.setTitle(tmpTitle);
                         }
                     }
-                    
-                        
-                    
+
                     System.out.println("Before writechanges");
                     writeChanges(songs);
-                } catch (IOException ex) {
+                } catch (IOException ex)
+                {
                     System.out.println(" done goofed");
                 }
             }
@@ -120,24 +132,32 @@ public class SongDAO {
         return songs;
     }
 
-    public Song getMediaSong(Media m) {
-        for (Song song : songs) {
-            if (new File(song.getFilePath()).toURI().toString().equals(m.getSource())) {
+    public Song getMediaSong(Media m)
+    {
+        for (Song song : songs)
+        {
+            if (new File(song.getFilePath()).toURI().toString().equals(m.getSource()))
+            {
                 return song;
             }
         }
         return null;
     }
 
-    public List<String> listFilesForFolder(File folder) throws IOException {
+    public List<String> listFilesForFolder(File folder) throws IOException
+    {
         File[] listOfFiles = folder.listFiles();
         List<String> filePaths = new ArrayList<>();
-        for (File file : listOfFiles) {
-            if (file.isDirectory()) {
+        for (File file : listOfFiles)
+        {
+            if (file.isDirectory())
+            {
 
             }
-            if (file.isFile()) {
-                if (file.getName().endsWith(".mp3")) {//mp3 istedet for ""
+            if (file.isFile())
+            {
+                if (file.getName().endsWith(".mp3"))
+                {//mp3 istedet for ""
                     filePaths.add(file.getPath());
                 }
 
@@ -146,18 +166,23 @@ public class SongDAO {
         return filePaths;
     }
 
-    public void deleteSong(Song song) throws IOException {
-        try (Connection con = conProvider.getConnection()) {
+    public void deleteSong(Song song) throws IOException
+    {
+        try (Connection con = conProvider.getConnection())
+        {
             PreparedStatement statement = (PreparedStatement) con.createStatement();
             statement.executeQuery("SELECT * FROM Songs;");
             statement.executeQuery("DELETE FROM Songs WHERE Id =" + song.getId() + ";");
-        } catch (SQLException ex) {
+        } catch (SQLException ex)
+        {
             ex.printStackTrace();
         }
     }
 
-    public void updateSong(Song song) {
-        try (Connection con = conProvider.getConnection()) {
+    public void updateSong(Song song)
+    {
+        try (Connection con = conProvider.getConnection())
+        {
             PreparedStatement statement = (PreparedStatement) con.createStatement();
             statement.executeQuery("SELECT * FROM Songs");
             statement.executeQuery("UPDATE Songs SET Title = "
@@ -167,18 +192,22 @@ public class SongDAO {
                     + song.getCategori() + ", SET Filepath = "
                     + song.getFilePath() + ", SET ReleaseYear = "
                     + song.getReleaseYear() + ";");
-        } catch (SQLException ex) {
+        } catch (SQLException ex)
+        {
             ex.printStackTrace();
         }
     }
 
-    public List<Song> getAllSongs() {
+    public List<Song> getAllSongs()
+    {
 
         List<Song> allSongs = new ArrayList();
-        try (Connection con = conProvider.getConnection()) {
+        try (Connection con = conProvider.getConnection())
+        {
             Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM Songs;");
-            while (rs.next()) {
+            while (rs.next())
+            {
                 String title = rs.getString("Title");
                 String author = rs.getString("Author");
                 String album = rs.getString("Album");
@@ -190,28 +219,34 @@ public class SongDAO {
                 Song song = new Song(title, author, length, releaseYear, categori, filepath, album, id);
                 allSongs.add(song);
             }
-        } catch (SQLException ex) {
+        } catch (SQLException ex)
+        {
             ex.printStackTrace();
         }
         return allSongs;
     }
 
-    public Song getSongForPlayback() {
+    public Song getSongForPlayback()
+    {
         return null;
     }
 
-    public Song getSong(Song song) {
+    public Song getSong(Song song)
+    {
         getAllSongs();
 
-        for (Song MetaSong : getAllSongs()) {
-            if (MetaSong.getId() == song.getId()) {
+        for (Song MetaSong : getAllSongs())
+        {
+            if (MetaSong.getId() == song.getId())
+            {
                 return song;
             }
         }
         return null;
     }
 
-    public void writeChanges(List<Song> allSongs) throws IOException {
+    public void writeChanges(List<Song> allSongs) throws IOException
+    {
         //List<Song> allSongs = new SongDAO().getAllSongs();
         System.out.println("WRITECHANGES ");
         SQLServerDataSource ds = new SQLServerDataSource();
@@ -220,8 +255,10 @@ public class SongDAO {
         ds.setUser("CS2018A_20");
         ds.setPassword("CS2018A_20");
         String a = "INSERT INTO Songs (Title, Author, Album, Categori, Filepath, Length, ReleaseYear) VALUES (?,?,?,?,?,?,?);";
-        try (Connection con = ds.getConnection()) {
-            for (Song song : allSongs) {
+        try (Connection con = ds.getConnection())
+        {
+            for (Song song : allSongs)
+            {
                 System.out.println(allSongs.size());
                 PreparedStatement pstmt = con.prepareStatement(a);
                 pstmt.setString(1, song.getTitle());
@@ -235,7 +272,8 @@ public class SongDAO {
                 pstmt.execute();
 
             }
-        } catch (SQLException ex) {
+        } catch (SQLException ex)
+        {
             ex.printStackTrace();
         }
     }

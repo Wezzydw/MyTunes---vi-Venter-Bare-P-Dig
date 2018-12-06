@@ -14,94 +14,107 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import static java.util.Collections.list;
 import java.util.List;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
 
- 
 /**
  *
  * @author Wezzy Laptop
  */
-public class PlaylistDAO {
-DatabaseConnection conProvider;
-SongDAO sDAO = new SongDAO();
+public class PlaylistDAO
+{
+
+    DatabaseConnection conProvider;
+    SongDAO sDAO = new SongDAO();
+
     public PlaylistDAO() throws IOException
     {
         this.conProvider = new DatabaseConnection();
     }
 
-   
-    
-    public Playlist addSelection(List<Song> songs, Playlist playlist) {
-        
-        try (Connection con = conProvider.getConnection()){
+    public Playlist addSelection(List<Song> songs, Playlist playlist)
+    {
+
+        try (Connection con = conProvider.getConnection())
+        {
             PreparedStatement statement = (PreparedStatement) con.createStatement();
-            for (Song song : songs) {
+            for (Song song : songs)
+            {
                 statement.executeQuery("INSERT INTO Playlist (Title =" + playlist.getTitle() + ", SongId =" + song.getId() + ";");
             }
-            
-        } catch (Exception ex) {
+
+        } catch (Exception ex)
+        {
             ex.printStackTrace();
         }
-        
+
         return playlist;
     }
+
     public void addPlaylist(Playlist plist)
     {
-        
-        try (Connection con = conProvider.getConnection()) {
+
+        try (Connection con = conProvider.getConnection())
+        {
             for (Song song : plist.getPlaylist())
             {
-                try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO Playlist (Title, SongId) VALUES (")) {
+                try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO Playlist (Title, SongId) VALUES ("))
+                {
                     pstmt.setString(1, plist.getTitle());
                     pstmt.setInt(2, song.getId());
                     pstmt.execute();
+                }
+
             }
-                
-            
-            }
-        } catch (SQLException ex) {
+        } catch (SQLException ex)
+        {
             ex.printStackTrace();
         }
     }
-    public Playlist mergePlaylist(Playlist A, Playlist B, String Title) 
+
+    public Playlist mergePlaylist(Playlist A, Playlist B, String Title)
     {
         Playlist np = new Playlist(Title);
-        for(int i = 0; 1 < A.getSize(); i++)
+        for (int i = 0; 1 < A.getSize(); i++)
         {
-        np.addSong(A.getSong(i));
+            np.addSong(A.getSong(i));
         }
         return np;
     }
-    
+
     public Playlist getPlaylist(String query)
     {
         List<Song> playlistSongs = new ArrayList();
         List<Song> allSongs = sDAO.getAllSongs();
         List<Integer> tempId = new ArrayList();
-        try(Connection con = conProvider.getConnection()) {
+        try (Connection con = conProvider.getConnection())
+        {
             PreparedStatement statement = (PreparedStatement) con.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM Playlist;");
-            while(rs.getString("Title")== query) {
+            while (rs.getString("Title") == query)
+            {
                 tempId.add(rs.getInt("SongId"));
-                
-        }
-            for (Song song : allSongs) {
-                for (Integer integer : tempId) {
-                    if(integer == song.getId()){
+
+            }
+            for (Song song : allSongs)
+            {
+                for (Integer integer : tempId)
+                {
+                    if (integer == song.getId())
+                    {
                         playlistSongs.add(song);
                     }
                 }
             }
-        } catch (Exception ex) {
+        } catch (Exception ex)
+        {
             ex.printStackTrace();
         }
         List<Playlist> allPlaylists = getAllPlaylists();
         for (Playlist allPlaylist : allPlaylists)
         {
-            if (allPlaylist.getTitle()==query)
+            if (allPlaylist.getTitle() == query)
             {
                 allPlaylist.setPlaylist(playlistSongs);
                 return allPlaylist;
@@ -109,37 +122,40 @@ SongDAO sDAO = new SongDAO();
         }
         return null;
     }
+
     /**
-     * 
-     * @param toBeRemoved 
+     *
+     * @param toBeRemoved
      */
     public void removeSelection(List<Song> toBeRemoved)
     {
-        try (Connection con = conProvider.getConnection()){
+        try (Connection con = conProvider.getConnection())
+        {
             PreparedStatement statement = (PreparedStatement) con.createStatement();
             statement.executeQuery("SELECT * FROM Playlist;");
-            for (Song song : toBeRemoved) {
+            for (Song song : toBeRemoved)
+            {
                 statement.executeQuery("DELETE FROM Playlist WHERE SongId =" + song.getId() + ";");
             }
-        } catch (Exception ex) {
+        } catch (Exception ex)
+        {
             ex.printStackTrace();
         }
     }
- 
+
     public List<Playlist> getAllPlaylists()
     {
-        
-        
+
         List<Playlist> playlists = new ArrayList<>();
-        
+
         try (Connection con = conProvider.getConnection())
         {
-            
-            Statement statement =  con.createStatement();
+
+            Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM Playlists;");
-            while(rs.next())
+            while (rs.next())
             {
-                
+
                 String title = rs.getString("title");
                 Playlist playlist = new Playlist(title);
                 playlists.add(playlist);
@@ -151,69 +167,67 @@ SongDAO sDAO = new SongDAO();
         }
         return playlists;
     }
+
     /**
-     * 
+     *
      * @param title
      * @throws IOException
-     * @throws SQLException 
+     * @throws SQLException
      */
     public void deletePlaylist(String title) throws IOException, SQLException
-        {
+    {
         try (Connection con = conProvider.getConnection())
         {
-           Statement statement = con.createStatement();
-           ResultSet rs = statement.executeQuery("Select * FROM Playlist;");
-             {
-                 {
-                     PreparedStatement pstmt = con.prepareStatement("DELETE FROM Playlist WHERE Title=()");
-                     pstmt.setString(1, title);
-                     pstmt.execute();
-                     pstmt.close();
-                 }
-             }
-            
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery("Select * FROM Playlist;");
+            {
+                {
+                    PreparedStatement pstmt = con.prepareStatement("DELETE FROM Playlist WHERE Title=()");
+                    pstmt.setString(1, title);
+                    pstmt.execute();
+                    pstmt.close();
+                }
+            }
+
         } catch (SQLServerException ex)
         {
-        }}
+        }
+    }
+
     /**
-     * 
+     *
      * @param title
      * @param newTitle
      * @throws SQLException
-     * @throws IOException 
+     * @throws IOException
      */
-    public void renamePlaylist(String title, String newTitle ) throws SQLException, IOException
+    public void renamePlaylist(String title, String newTitle) throws SQLException, IOException
     {
-       // Playlist p = getPlaylist(title);  //tilføjet typecast for at få denne til at virke
-       // p.setTitle(newTitle);
-    
+        // Playlist p = getPlaylist(title);  //tilføjet typecast for at få denne til at virke
+        // p.setTitle(newTitle);
+
         try
         {
             DatabaseConnection dc = new DatabaseConnection();
             Connection con = dc.getConnection();
             Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery("Select * FROM Playlist;");
-             while (rs.next()) 
-             {
-                     PreparedStatement pstmt = con.prepareStatement("UPDATE Playlist SET Title = (?) WHERE movie = (?) AND [user] = (?)");
-                     pstmt.setString(1, newTitle);
-                     pstmt.execute();
-                     pstmt.close();
-                     System.out.println("Playlist found - and updated!"); 
-             }
-            
-             }
-    
-        catch (SQLServerException ex)
+            while (rs.next())
+            {
+                PreparedStatement pstmt = con.prepareStatement("UPDATE Playlist SET Title = (?) WHERE movie = (?) AND [user] = (?)");
+                pstmt.setString(1, newTitle);
+                pstmt.execute();
+                pstmt.close();
+                System.out.println("Playlist found - and updated!");
+            }
+
+        } catch (SQLServerException ex)
         {
-            ex.printStackTrace(); 
+            ex.printStackTrace();
         }
-    }  
-    
-    
-    
-    
-      public void writeChanges()throws IOException
+    }
+
+    public void writeChanges() throws IOException
     {
         List<Playlist> allPlaylists = new PlaylistDAO().getAllPlaylists();
         SQLServerDataSource ds = new SQLServerDataSource();
@@ -225,10 +239,11 @@ SongDAO sDAO = new SongDAO();
         {
             for (Playlist playlist : allPlaylists)
             {
-               try(PreparedStatement pstmt = con.prepareStatement("INSERT INTO Playlist (Title, SongId, FilePath ) VALUES (")){
+                try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO Playlist (Title, SongId, FilePath ) VALUES ("))
+                {
                     pstmt.setString(1, playlist.getTitle());
                     pstmt.execute();
-               }
+                }
             }
         } catch (SQLException ex)
         {
@@ -236,7 +251,5 @@ SongDAO sDAO = new SongDAO();
         }
 
     }
-      
-}
-    
 
+}

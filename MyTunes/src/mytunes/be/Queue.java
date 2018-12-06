@@ -16,56 +16,60 @@ import javafx.scene.media.Media;
  */
 public class Queue
 {
+
     List<Media> queue = new ArrayList();
     List<Song> songs = new ArrayList();
-    
-    
+
     public void addSelection(List<Song> songs)
     {
         int i = 0;
         this.songs = songs;
         for (Song s : songs)
         {
-           
+
             queue.add(new Media(new File(s.getFilePath()).toURI().toString()));
             i++;
-            
+
         }
-        
+
     }
-    
+
     public void removeSelection()
     {
-        
+
     }
-    
+
     public Media getMedia(int index)
     {
         return queue.get(index);
     }
-    
+
     public Song getSong(int index)
     {
         return songs.get(index);
     }
-    
+
     public boolean endOfQueue(int index)
     {
-        if (queue.size()-1 == index)
+        if (queue.size() - 1 == index)
+        {
             return true;
-        else return false;
+        } else
+        {
+            return false;
+        }
     }
-    
+
     public int queueSize()
     {
         return queue.size();
     }
-    
+
     public List<Media> getAllSongs()
     {
         return queue;
     }
-    
+
     public Song getMediaSong(Media m)
     {
         for (Song s : songs)
@@ -74,8 +78,8 @@ public class Queue
 //            Uri u = Uri.parse(s.getFilePath());
 //            s.getFilePath().Uri.parse();
 //            s.getFilePath().to
-            
-            if(new File(s.getFilePath()).toURI().toString().equals( m.getSource()))
+
+            if (new File(s.getFilePath()).toURI().toString().equals(m.getSource()))
             {
                 System.out.println("to be sure");
                 return s;
@@ -83,7 +87,5 @@ public class Queue
         }
         return null;
     }
-    
 
-            
 }
