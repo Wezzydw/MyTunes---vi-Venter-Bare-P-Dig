@@ -5,9 +5,18 @@
  */
 package mytunes.dal;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import mytunes.be.Playlist;
 import mytunes.be.Queue;
 import mytunes.be.Song;
+import mytunes.bll.Player;
 
 /**
  *
@@ -15,22 +24,125 @@ import mytunes.be.Song;
  */
 public class SettingsDAO
 {
+
+    DatabaseConnection conProvider;
+
+
+    public SettingsDAO() throws IOException
+
+                {
+        conProvider = new DatabaseConnection();
+    }
+    Player player;
+    SongDAO sDAO;
+ 
+
+
+
+    public void updateVolume(double vol)
+    {
+
+        try (Connection con = conProvider.getConnection())
+        {
+            Statement statement = con.createStatement();
+            PreparedStatement pstmt = con.prepareStatement("UPDATE Settings SET Volume = (?)");
+                     pstmt.setDouble(1, vol);
+                     pstmt.execute();
+                     pstmt.close();
+                     System.out.println("Diller found - and updated!");
+                    } catch (SQLException ex)
+        {
+
+            ex.printStackTrace();
+        }
+    }
+
     public double lastSetVolume()
     {
-        
-        return 2.11;
+        double vol = 0;
+        try (Connection con = conProvider.getConnection())
+        {
+            //PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Settings;");
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM Settings;");
+            while (rs.next())
+            {
+                vol = rs.getDouble("Volume");
+
+            }
+        } catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+        return vol;
     }
-    public Song lastPlayedSong()
+
+    public int lastPlayedSong()
     {
-        return null;
+        int songId = 0;
+        try (Connection con = conProvider.getConnection())
+        {
+            //PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Settings;");
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM Settings;");
+            while (rs.next())
+            {
+                songId = rs.getInt("lastSong");
+            }
+        } catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+        return songId;
     }
+
     public Playlist lastPlayedPlaylist()
     {
         return null;
     }
-    public Queue lastPlayedQueue()
+
+    public String lastPlayedQueue()
     {
-        return null;
+        String queueList = "";
+        try (Connection con = conProvider.getConnection())
+        {
+            //PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Settings;");
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM Settings;");
+            while (rs.next())
+            {
+                queueList = rs.getString("lastQueue");
+            }
+        } catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+        return queueList;
+    }
+
+
+
+    public List<Song> queueList(String str)
+    {
+        String[] a = str.split(",");
+      
+        List<Song> queSongs = new ArrayList();
+        List<Song> allSongs = sDAO.getAllSongs();
+        List<Integer> tempId = new ArrayList();
+        for (String string : a)
+        {
+            tempId.add(Integer.valueOf(string));
+        }
+            
+            for (Song song : allSongs) {
+                for (Integer integer : tempId) {
+                    if(integer == song.getId()){
+                        queSongs.add(song);
+                    }
+                }
+            }
+        return queSongs;
     }
     
+
 }
