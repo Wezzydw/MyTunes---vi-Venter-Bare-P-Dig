@@ -86,7 +86,14 @@ public class MyTunesMainViewController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(MyTunesMainViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println(listViewAllSongs.getItems().size());
+        
+        
+        
+        
+        
+        
+        
+        
         listViewAllSongs.setItems(model.getSongs());
         listViewSongInfo.setItems(model.getSongInfo());
         listViewQueue.setItems(model.getQuedSongs());

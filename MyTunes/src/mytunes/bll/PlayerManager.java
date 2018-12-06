@@ -57,10 +57,10 @@ public class PlayerManager
 
     }
     
-    public void SelectedFolder(String path) throws IOException
+    public List<Song> SelectedFolder(String path) throws IOException
     {
         File file = new File(path);
-        sdao.addFolder(file);
+        return sdao.addFolder(file);
         //sdao.writeChanges();
     }
 

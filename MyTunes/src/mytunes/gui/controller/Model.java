@@ -106,6 +106,7 @@ public class Model {
 
     public void changeVolume(double vol) {
         player.changevolume(vol / 100);
+        //System.out.println("vol: " + vol);
     }
 
     public void playPrevSong() {
@@ -164,7 +165,7 @@ public class Model {
             //No Directory selected
         } else {
             String path = selectedDirectory.getAbsolutePath();
-             logiclayer.SelectedFolder(path);
+             songs.addAll(logiclayer.SelectedFolder(path));
         }
         
         logiclayer.getAllSongs();
@@ -172,6 +173,8 @@ public class Model {
         {
             System.out.println(s.getTitle());
         }
+        
+
         //Do something with view here
        
     }
