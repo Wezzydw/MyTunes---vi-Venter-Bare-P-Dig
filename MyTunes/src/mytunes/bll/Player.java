@@ -43,7 +43,7 @@ public class Player {
     }
 
     public void playSong() {
-
+        System.out.println("queue size" + queue.getAllSongs().size());
         if (mp.getStatus() != Status.PLAYING) {
 
             mp.play();

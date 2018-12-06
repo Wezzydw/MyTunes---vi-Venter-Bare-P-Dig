@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -32,6 +33,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.media.MediaView;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import mytunes.be.Playlist;
@@ -71,29 +73,19 @@ public class MyTunesMainViewController implements Initializable {
     private Button btnRemoveSong;
     @FXML
     private MediaView mvMediaView;
-    
-    
-   
 
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         try {
             model = new Model();
         } catch (IOException ex) {
             Logger.getLogger(MyTunesMainViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
-        
-        
-        
-        
-        
+
+//        Stage stage = (Stage) borderPane.getScene().getWindow();
         listViewAllSongs.setItems(model.getSongs());
         listViewSongInfo.setItems(model.getSongInfo());
         listViewQueue.setItems(model.getQuedSongs());
@@ -101,13 +93,14 @@ public class MyTunesMainViewController implements Initializable {
         listNowPlaying.setItems(model.getSongInfo());
         listViewAllSongs.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         listViewQueue.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        listViewQueue.setItems(model.getSongs());
+        //listViewQueue.setItems(null);
 
     }
 
     @FXML
     private void onHandleSliderVol(MouseEvent event) {
         model.changeVolume(sliderVol.getValue());
+
     }
 
     @FXML
@@ -143,8 +136,8 @@ public class MyTunesMainViewController implements Initializable {
 
     @FXML
     private void onHandleAdd(ActionEvent event) throws IOException {
-        Stage stage = (Stage) borderPane.getScene().getWindow();
-        model.SelectFolder(stage);
+        model.addSongToQue();
+        //listViewQueue.getItems().addAll(model.getQuedSongs());
     }
 
     @FXML
@@ -161,7 +154,7 @@ public class MyTunesMainViewController implements Initializable {
     @FXML
     private void onHandleSearch(KeyEvent event) throws IOException {
         model.searcher(txtFieldSearch.getText());
-        
+
     }
 
     @FXML
@@ -170,10 +163,11 @@ public class MyTunesMainViewController implements Initializable {
     }
 
     @FXML
-    private void onHandlePlaylistAdd(ActionEvent event) {
-        model.addPlaylist();
-    }
+    private void onHandlePlaylistAdd(ActionEvent event) throws IOException {
+        Stage stage = (Stage) borderPane.getScene().getWindow();
+        model.SelectFolder(stage);
 
+    }
 
     @FXML
 
@@ -181,11 +175,10 @@ public class MyTunesMainViewController implements Initializable {
         event.getDragboard().getFiles().clear();
 
     }
-    
+
     @FXML
-    private void onSongRemove(ActionEvent event)
-    {
-        
+    private void onSongRemove(ActionEvent event) {
+
     }
 
 //    private void dragSelected(DragEvent event) {
@@ -194,10 +187,7 @@ public class MyTunesMainViewController implements Initializable {
 //                {
 //            listViewQueue.getItems().add(song);
 //        }
-        
-        
 //    }
-
     @FXML
     private void queentered(MouseDragEvent event) {
         System.out.println("que entered 1");
@@ -260,8 +250,8 @@ public class MyTunesMainViewController implements Initializable {
 
     @FXML
     private void allsongsdragdected(MouseEvent event) {
-        System.out.println("0 "+event.MOUSE_RELEASED.getName());
-        System.out.println(" 1 "+event.getTarget().toString());
+        System.out.println("0 " + event.MOUSE_RELEASED.getName());
+        System.out.println(" 1 " + event.getTarget().toString());
         System.out.println("songs drag detected");
     }
 
@@ -305,5 +295,4 @@ public class MyTunesMainViewController implements Initializable {
         System.out.println("hej ");
     }
 
-    
 }
