@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -32,11 +33,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.media.MediaView;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
 import mytunes.bll.Player;
+import mytunes.dal.SongDAO;
 
 /**
  * FXML Controller class
@@ -61,6 +64,7 @@ public class MyTunesMainViewController implements Initializable {
     private ListView<Song> listViewAllSongs;
     @FXML
     private BorderPane borderPane;
+    
 
     Model model;
     @FXML
@@ -101,8 +105,18 @@ public class MyTunesMainViewController implements Initializable {
     @FXML
     private void onHandleSliderVol(MouseEvent event) {
         model.changeVolume(sliderVol.getValue());
+    Stage stage = (Stage) borderPane.getScene().getWindow();
+    stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event)      
+            {
+                System.out.println("Stage is Closing");
+                model.UpdateVolume(sliderVol.getValue());
+            }
+        });
+        
     }
-
+  
     @FXML
     private void onHandleShuffe(ActionEvent event) {
         model.shuffleHandler();
