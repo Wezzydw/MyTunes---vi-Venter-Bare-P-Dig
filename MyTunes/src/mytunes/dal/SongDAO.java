@@ -102,7 +102,7 @@ public class SongDAO {
                     {
                         if(song.getTitle().contains("song nummber"))
                         {
-                            String tmpTitle = song.getFilePath().substring(song.getFilePath().lastIndexOf("\\" + 1), song.getFilePath().length()-4);
+                            String tmpTitle = song.getFilePath().substring(song.getFilePath().lastIndexOf("\\") + 1, song.getFilePath().length()-4);
                             song.setTitle(tmpTitle);
                         }
                     }

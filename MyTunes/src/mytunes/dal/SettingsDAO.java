@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import mytunes.be.Playlist;
 import mytunes.be.Queue;
 import mytunes.be.Song;
@@ -25,10 +27,17 @@ public class SettingsDAO
 
     DatabaseConnection conProvider;
 
+
     public SettingsDAO() throws IOException
-    {
+
+                {
         conProvider = new DatabaseConnection();
     }
+    Player player;
+    SongDAO sDAO;
+ 
+
+
 
     public void updateVolume(double vol)
     {
@@ -108,5 +117,48 @@ public class SettingsDAO
         }
         return queueList;
     }
+
+
+
+    public List<Song> queueList(String str)
+    {
+        String[] a = str.split(",");
+        for (String string : a)
+        {
+            System.out.println(string);
+        }
+        List<Song> playlistSongs = new ArrayList();
+        List<Song> allSongs = sDAO.getAllSongs();
+        List<Integer> tempId = new ArrayList();
+        try(Connection con = conProvider.getConnection()) {
+            PreparedStatement statement = (PreparedStatement) con.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM Playlist;");
+            while(rs.getString("Title")== str) {
+                tempId.add(rs.getInt("SongId"));
+                
+        }
+            for (Song song : allSongs) {
+                for (Integer integer : tempId) {
+                    if(integer == song.getId()){
+                        playlistSongs.add(song);
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+//        List<Playlist> allPlaylists = getAllPlaylists();
+//        for (Playlist allPlaylist : allPlaylists)
+//        {
+//            if (allPlaylist.getTitle()==query)
+//            
+//        return null;{
+//                allPlaylist.setPlaylist(playlistSongs);
+//                return allPlaylist;
+//            }
+//        }
+        return null;
+    }
+    
 
 }
