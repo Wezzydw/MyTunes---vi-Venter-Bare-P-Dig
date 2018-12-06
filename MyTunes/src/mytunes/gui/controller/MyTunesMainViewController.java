@@ -39,6 +39,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
 import mytunes.bll.Player;
+import mytunes.dal.SongDAO;
 
 /**
  * FXML Controller class
@@ -63,6 +64,7 @@ public class MyTunesMainViewController implements Initializable {
     private ListView<Song> listViewAllSongs;
     @FXML
     private BorderPane borderPane;
+    
 
     Model model;
     @FXML
@@ -101,8 +103,18 @@ public class MyTunesMainViewController implements Initializable {
     private void onHandleSliderVol(MouseEvent event) {
         model.changeVolume(sliderVol.getValue());
 
+    Stage stage = (Stage) borderPane.getScene().getWindow();
+    stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event)      
+            {
+                System.out.println("Stage is Closing");
+                model.UpdateVolume(sliderVol.getValue());
+            }
+        });
+        
     }
-
+  
     @FXML
     private void onHandleShuffe(ActionEvent event) {
         model.shuffleHandler();

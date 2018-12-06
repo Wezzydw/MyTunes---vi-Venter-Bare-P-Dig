@@ -20,6 +20,7 @@ import mytunes.be.Song;
 import mytunes.bll.Player;
 import mytunes.bll.Search;
 import mytunes.dal.PlaylistDAO;
+import mytunes.dal.SettingsDAO;
 import mytunes.dal.SongDAO;
 
 /**
@@ -40,6 +41,7 @@ public class Model {
     private BorderPane borderPane;
     private List<Song> empty;
     private List<Playlist> addPlaylist;
+    private SettingsDAO setDAO;
     
     public Model() throws IOException
     {
@@ -58,6 +60,7 @@ public class Model {
         playlist = FXCollections.observableArrayList(logiclayer.getAllPlaylists());
         queues = FXCollections.observableArrayList(getQuedSongs());
         addPlaylist = new ArrayList();
+        setDAO = new SettingsDAO();
     }
 
     /**
@@ -106,8 +109,11 @@ public class Model {
     }
 
     public void changeVolume(double vol) {
-        player.changevolume(vol / 100);
-        //System.out.println("vol: " + vol);
+
+        player.changevolume(vol / 100);            
+    }
+    public void UpdateVolume(double vol) {
+           setDAO.updateVolume(vol / 100);
     }
 
     public void playPrevSong() {
