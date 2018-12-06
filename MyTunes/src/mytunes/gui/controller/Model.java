@@ -61,6 +61,8 @@ public class Model {
         queues = FXCollections.observableArrayList(empty);
         addPlaylist = new ArrayList();
         setDAO = new SettingsDAO();
+        player.changevolume(setDAO.lastSetVolume());
+        System.out.println(setDAO.lastSetVolume());
     }
 
     /**

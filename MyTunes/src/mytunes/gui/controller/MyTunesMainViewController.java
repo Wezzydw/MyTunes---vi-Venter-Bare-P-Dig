@@ -99,6 +99,7 @@ public class MyTunesMainViewController implements Initializable {
         listViewAllSongs.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         listViewQueue.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         listViewQueue.setItems(model.getSongs());
+        
 
     }
 

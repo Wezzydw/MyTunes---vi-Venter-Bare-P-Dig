@@ -27,6 +27,7 @@ public class PlayerManager
     private ComboBox<String> comboBoxMisc;
     private SongDAO sdao;
     private PlaylistDAO pDAO;
+   
 
     
 
@@ -34,6 +35,7 @@ public class PlayerManager
     {
         sdao = new SongDAO();
         pDAO = new PlaylistDAO();
+        
     }
 
     public void addSongToQue()
