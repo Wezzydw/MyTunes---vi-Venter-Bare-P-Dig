@@ -30,7 +30,7 @@ public class SettingsDAO
     {
         try (Connection con = conProvider.getConnection()) {
             PreparedStatement statement = (PreparedStatement) con.createStatement();
-            statement.executeQuery("SELECT * FROM Songs");
+            statement.executeQuery("SELECT * FROM Settings");
             statement.executeQuery("UPDATE Settings SET Volume = "
                     + "player.getvolume eller noget" + ";");
         } catch (SQLException ex) {
@@ -91,41 +91,23 @@ public class SettingsDAO
     public List<Song> queueList(String str)
     {
         String[] a = str.split(",");
-        for (String string : a)
-        {
-            System.out.println(string);
-        }
-        List<Song> playlistSongs = new ArrayList();
+      
+        List<Song> queSongs = new ArrayList();
         List<Song> allSongs = sDAO.getAllSongs();
         List<Integer> tempId = new ArrayList();
-        try(Connection con = conProvider.getConnection()) {
-            PreparedStatement statement = (PreparedStatement) con.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM Playlist;");
-            while(rs.getString("Title")== str) {
-                tempId.add(rs.getInt("SongId"));
-                
+        for (String string : a)
+        {
+            tempId.add(Integer.valueOf(string));
         }
+            
             for (Song song : allSongs) {
                 for (Integer integer : tempId) {
                     if(integer == song.getId()){
-                        playlistSongs.add(song);
+                        queSongs.add(song);
                     }
                 }
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-//        List<Playlist> allPlaylists = getAllPlaylists();
-//        for (Playlist allPlaylist : allPlaylists)
-//        {
-//            if (allPlaylist.getTitle()==query)
-//            
-//        return null;{
-//                allPlaylist.setPlaylist(playlistSongs);
-//                return allPlaylist;
-//            }
-//        }
-        return null;
+        return queSongs;
     }
     
 }
