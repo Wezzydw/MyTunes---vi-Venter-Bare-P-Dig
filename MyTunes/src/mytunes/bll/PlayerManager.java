@@ -33,6 +33,7 @@ public class PlayerManager
     private PlaylistDAO pDAO;
     private Player player;
     private SettingsDAO setdao;
+    private double volumeFromDB;
 
     public PlayerManager() throws IOException
     {
@@ -53,6 +54,7 @@ public class PlayerManager
             if (!songQueue.isEmpty())
             {
                 player = new Player(songQueue);
+                player.changevolume(volumeFromDB);
                 System.out.println("Er det her?");
                 nowPlaying.addAll(player.getNowPlaying());
             }
@@ -90,17 +92,8 @@ public class PlayerManager
         comboBoxMisc.setVisibleRowCount(3);
     }
 
-    public void editSong()
-    {
 
-    }
 
-    public List<Song> SelectedFolder(String path) throws IOException
-    {
-        File file = new File(path);
-        return sdao.addFolder(file);
-        //sdao.writeChanges();
-    }
 
     public List<Playlist> getAllPlaylists()
     {
@@ -151,13 +144,8 @@ public class PlayerManager
         {
             player.changevolume(vol);
         }
-    }
-
-    public void updateVolume(double vol)
-    {
-        if (player != null)
-        {
-            setdao.updateVolume(vol);
+        else {
+            volumeFromDB = vol;
         }
     }
 

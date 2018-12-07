@@ -117,13 +117,17 @@ public class Model
 
     public void changeVolume(double vol)
     {
-
         playerManager.changeVolume(vol/100);
     }
 
     public void UpdateVolume(double vol)
     {
-        playerManager.updateVolume(vol / 100);
+        setDAO.updateVolume(vol / 100);
+    }
+    
+    public double getSliderVolumeFromDB()
+    {
+        return setDAO.lastSetVolume();
     }
 
     public void playPrevSong()
@@ -164,7 +168,7 @@ public class Model
 
     public void editSong()
     {
-        playerManager.editSong();
+        
     }
 
     public void addSongToQue()
@@ -200,7 +204,11 @@ public class Model
         } else
         {
             String path = selectedDirectory.getAbsolutePath();
-            songs.addAll(playerManager.SelectedFolder(path));
+            File file = new File(path);
+            songs.addAll(sDAO.addFolder(file));
+            
+            
+        //sdao.writeChanges();
         }
 
         playerManager.getAllSongs();

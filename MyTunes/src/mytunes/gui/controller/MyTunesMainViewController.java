@@ -39,7 +39,7 @@ import mytunes.be.Song;
  */
 public class MyTunesMainViewController implements Initializable
 {
-
+    
     @FXML
     private Slider sliderVol;
     @FXML
@@ -56,7 +56,6 @@ public class MyTunesMainViewController implements Initializable
     private ListView<Song> listViewAllSongs;
     @FXML
     private BorderPane borderPane;
-
     
     @FXML
     private ListView<String> listNowPlaying;
@@ -91,14 +90,17 @@ public class MyTunesMainViewController implements Initializable
         listNowPlaying.setItems(model.getNowPlaying());
         listViewAllSongs.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         listViewQueue.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
+        sliderVol.setValue(model.getSliderVolumeFromDB());
+        System.out.println("Sliderfrom db " + model.getSliderVolumeFromDB());
+        model.changeVolume(model.getSliderVolumeFromDB());
     }
-
+    
     @FXML
     private void onHandleSliderVol(MouseEvent event)
     {
         model.changeVolume(sliderVol.getValue());
-
+        sliderVol.setValue(sliderVol.getValue());
+        System.out.println();
         Stage stage = (Stage) borderPane.getScene().getWindow();
         stage.setOnCloseRequest(new EventHandler<WindowEvent>()
         {
@@ -109,46 +111,46 @@ public class MyTunesMainViewController implements Initializable
                 model.UpdateVolume(sliderVol.getValue());
             }
         });
-
+        
     }
-
+    
     @FXML
     private void onHandleShuffe(ActionEvent event)
     {
         model.shuffleHandler();
     }
-
+    
     @FXML
     private void onHandleRepeat(ActionEvent event)
     {
         model.repeatHandler();
     }
-
+    
     @FXML
     private void onHandlePrev(ActionEvent event)
     {
         model.playPrevSong();
     }
-
+    
     @FXML
     private void onHandlePlay(ActionEvent event)
     {
-
+        
         model.playSong();
     }
-
+    
     @FXML
     private void onHandlePause(ActionEvent event)
     {
         model.pauseSong();
     }
-
+    
     @FXML
     private void onHandleNext(ActionEvent event)
     {
         model.playNextSong();
     }
-
+    
     @FXML
     private void onHandleAdd(ActionEvent event) throws IOException
     {
@@ -156,53 +158,53 @@ public class MyTunesMainViewController implements Initializable
         listNowPlaying.setItems(model.getNowPlaying());
         //listViewQueue.getItems().addAll(model.getQuedSongs());
     }
-
+    
     @FXML
     private void onHandleRemove(ActionEvent event) throws IOException
     {
         model.removeSong(null); //flyttes en sang i fra gui'en.
     }
-
+    
     @FXML
     private void onHandleMisc(ActionEvent event)
     {
         comboBoxMisc.setItems(FXCollections.observableArrayList("reverseList", "randomiseList", "sortByTitle"));
         comboBoxMisc.setVisibleRowCount(3);
     }
-
+    
     @FXML
     private void onHandleSearch(KeyEvent event) throws IOException
     {
         model.searcher(txtFieldSearch.getText());
-
+        
     }
-
+    
     @FXML
     private void onHandlePlaylistEdit(ActionEvent event)
     {
         model.editSong();
     }
-
+    
     @FXML
     private void onHandlePlaylistAdd(ActionEvent event) throws IOException
     {
         Stage stage = (Stage) borderPane.getScene().getWindow();
         model.SelectFolder(stage);
-
+        
     }
-
+    
     @FXML
-
+    
     private void HandleDragDone(DragEvent event)
     {
         event.getDragboard().getFiles().clear();
-
+        
     }
-
+    
     @FXML
     private void onSongRemove(ActionEvent event)
     {
-
+        
     }
 
 //    private void dragSelected(DragEvent event) {
@@ -217,73 +219,73 @@ public class MyTunesMainViewController implements Initializable
     {
         System.out.println("que entered 1");
     }
-
+    
     @FXML
     private void queentered(DragEvent event)
     {
         System.out.println("que entered 2");
     }
-
+    
     @FXML
     private void quedetected(MouseEvent event)
     {
         System.out.println("que detected");
     }
-
+    
     @FXML
     private void quedone(DragEvent event)
     {
         System.out.println("que done");
     }
-
+    
     @FXML
     private void queexited(DragEvent event)
     {
         System.out.println("que exited");
     }
-
+    
     @FXML
     private void quereleased(MouseDragEvent event)
     {
         System.out.println("que released");
     }
-
+    
     @FXML
     private void queover(DragEvent event)
     {
         System.out.println("que over");
     }
-
+    
     @FXML
     private void queexited(MouseDragEvent event)
     {
         System.out.println("que exited");
     }
-
+    
     @FXML
     private void queover(MouseDragEvent event)
     {
         System.out.println("que over");
     }
-
+    
     @FXML
     private void quedropped(DragEvent event)
     {
         System.out.println("que dropped");
     }
-
+    
     @FXML
     private void allsongsdragentered(MouseDragEvent event)
     {
         System.out.println("songs mousedrag entered");
     }
-
+    
     @FXML
     private void allsongsdragentered(DragEvent event)
     {
         System.out.println("songs drag entered");
     }
-
+    
     @FXML
     private void allsongsdragdected(MouseEvent event)
     {
@@ -291,59 +293,59 @@ public class MyTunesMainViewController implements Initializable
         System.out.println(" 1 " + event.getTarget().toString());
         System.out.println("songs drag detected");
     }
-
+    
     @FXML
     private void allsongsdragdone(DragEvent event)
     {
         System.out.println("songs drag done");
     }
-
+    
     @FXML
     private void allsongsdragexited(DragEvent event)
     {
         System.out.println("songs drag exit");
     }
-
+    
     @FXML
     private void allsongsdragreleased(MouseDragEvent event)
     {
         System.out.println("songs drag released");
     }
-
+    
     @FXML
     private void allsongsdragover(DragEvent event)
     {
         System.out.println("songs dragEvent over");
     }
-
+    
     @FXML
     private void allsongsdragexoted(MouseDragEvent event)
     {
         System.out.println("songs drag exited");
     }
-
+    
     @FXML
     private void allsongsdragover(MouseDragEvent event)
     {
         System.out.println("songs Mousedrag over");
     }
-
+    
     @FXML
     private void allsongsdragdropped(DragEvent event)
     {
         System.out.println("songs drag dropped");
     }
-
+    
     @FXML
     private void queMouseRelease(MouseEvent event)
     {
         System.out.println("hej ");
     }
-
+    
     @FXML
     private void MouseSelection(MouseEvent event)
     {
         System.out.println(listViewQueue.getSelectionModel().getSelectedItems());
     }
-
+    
 }
