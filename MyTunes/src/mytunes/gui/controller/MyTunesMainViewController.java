@@ -14,7 +14,10 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
@@ -65,6 +68,8 @@ public class MyTunesMainViewController implements Initializable
     private Button btnRemoveSong;
     
     Model model;
+    @FXML
+    private Slider sliderPlayback;
 
     /**
      * Initializes the controller class.
@@ -178,10 +183,10 @@ public class MyTunesMainViewController implements Initializable
         
     }
     
-    @FXML
-    private void onHandlePlaylistEdit(ActionEvent event)
+    private void onHandlePlaylistEdit(ActionEvent event) throws IOException
     {
-        model.editSong();
+        //model.editSong();
+        
     }
     
     @FXML
@@ -345,6 +350,17 @@ public class MyTunesMainViewController implements Initializable
     private void MouseSelection(MouseEvent event)
     {
         System.out.println(listViewQueue.getSelectionModel().getSelectedItems());
+    }
+
+    @FXML
+    private void onHandleSongEdit(ActionEvent event) throws IOException
+    {
+        
+        Parent ruuut = FXMLLoader.load(getClass().getResource("/mytunes/gui/view/editSongView.fxml"));
+        Scene scene = new Scene(ruuut);
+        Stage anotherStage = new Stage();
+        anotherStage.setScene(scene);
+        anotherStage.show();
     }
     
 }
