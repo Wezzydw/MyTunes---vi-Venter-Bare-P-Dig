@@ -71,7 +71,7 @@
             <ListView fx:id="listViewAllSongs" onDragDetected="#allsongsdragdected" onDragDone="#allsongsdragdone" onDragDropped="#allsongsdragdropped" onDragEntered="#allsongsdragentered" onDragExited="#allsongsdragexited" onDragOver="#allsongsdragover" onMouseDragEntered="#allsongsdragentered" onMouseDragExited="#allsongsdragexoted" onMouseDragOver="#allsongsdragover" onMouseDragReleased="#allsongsdragreleased" prefHeight="330.0" prefWidth="476.0" />
             <HBox prefHeight="14.0" prefWidth="476.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onHandlePlaylistEdit" text="Edit" />
+                  <Button mnemonicParsing="false" onAction="#onHandleSongEdit" text="Edit" />
                   <Button mnemonicParsing="false" onAction="#onHandlePlaylistAdd" text="Add" />
                   <Button fx:id="btnRemoveSong" mnemonicParsing="false" onAction="#onSongRemove" text="Remove" />
                </children>
