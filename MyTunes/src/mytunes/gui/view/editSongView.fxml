@@ -9,22 +9,22 @@
 
 <AnchorPane id="AnchorPane" prefHeight="382.0" prefWidth="438.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.EditSongViewController">
    <children>
-      <TextField fx:id="txtEditArtist" layoutX="105.0" layoutY="115.0" prefHeight="22.0" prefWidth="239.0" promptText="Edit Artist Here!">
+      <TextField fx:id="txtEditArtist" layoutX="120.0" layoutY="115.0" prefHeight="22.0" prefWidth="239.0" promptText="Edit Artist Here!">
          <font>
             <Font name="Berlin Sans FB" size="12.0" />
          </font>
       </TextField>
-      <TextField fx:id="txtEditAlbum" layoutX="105.0" layoutY="165.0" prefHeight="22.0" prefWidth="239.0" promptText="Edit Album Here!">
+      <TextField fx:id="txtEditAlbum" layoutX="120.0" layoutY="165.0" prefHeight="22.0" prefWidth="239.0" promptText="Edit Album Here!">
          <font>
             <Font name="Berlin Sans FB" size="12.0" />
          </font>
       </TextField>
-      <TextField fx:id="txtEditTitle" layoutX="105.0" layoutY="65.0" prefHeight="22.0" prefWidth="239.0" promptText="Edit Title Here!">
+      <TextField fx:id="txtEditTitle" layoutX="120.0" layoutY="65.0" prefHeight="22.0" prefWidth="239.0" promptText="Edit Title Here!" style="-fx-border-color: Yellow;">
          <font>
             <Font name="Berlin Sans FB" size="12.0" />
          </font>
       </TextField>
-      <TextField fx:id="txtEditYear" layoutX="105.0" layoutY="265.0" promptText="Edit Release Year Here!">
+      <TextField fx:id="txtEditYear" layoutX="120.0" layoutY="265.0" promptText="Edit Release Year Here!">
          <font>
             <Font name="Berlin Sans FB" size="12.0" />
          </font>
@@ -34,7 +34,7 @@
             <Font name="Berlin Sans FB" size="36.0" />
          </font>
       </Label>
-      <ComboBox fx:id="comboCategory" layoutX="105.0" layoutY="211.0" prefHeight="25.0" prefWidth="143.0" />
+      <ComboBox fx:id="comboCategory" layoutX="120.0" layoutY="211.0" prefHeight="25.0" prefWidth="143.0" />
       <Label layoutX="31.0" layoutY="68.0" text="Title:">
          <font>
             <Font name="Berlin Sans FB" size="12.0" />
@@ -65,8 +65,8 @@
             <Font name="Berlin Sans FB" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="lblFilepath" layoutX="163.0" layoutY="312.0" text="Label" />
-      <Button fx:id="btnCancel" layoutX="344.0" layoutY="337.0" mnemonicParsing="false" onAction="#onHandleCancelEdit" prefHeight="25.0" prefWidth="50.0" text="Cancel">
+      <Label fx:id="lblFilepath" layoutX="105.0" layoutY="313.0" text="Label" />
+      <Button fx:id="btnCancel" layoutX="344.0" layoutY="337.0" mnemonicParsing="false" onAction="#onHandleCancelEdit" prefHeight="25.0" prefWidth="55.0" text="Cancel">
          <font>
             <Font name="Berlin Sans FB" size="12.0" />
          </font>
