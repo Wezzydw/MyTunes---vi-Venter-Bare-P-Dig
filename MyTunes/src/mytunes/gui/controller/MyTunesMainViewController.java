@@ -179,7 +179,7 @@ public class MyTunesMainViewController implements Initializable
     }
     
     @FXML
-    private void onHandlePlaylistEdit(ActionEvent event)
+    private void onHandleSongEdit(ActionEvent event)
     {
         model.editSong();
     }
