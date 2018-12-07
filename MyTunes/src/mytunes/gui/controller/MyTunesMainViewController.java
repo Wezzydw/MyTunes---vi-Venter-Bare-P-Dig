@@ -96,6 +96,8 @@ public class MyTunesMainViewController implements Initializable
         sliderVol.setValue(model.getSliderVolumeFromDB()*100);
         System.out.println("Slider " + sliderVol.getValue());
         model.changeVolume(model.getSliderVolumeFromDB());
+        model.sendSliderForPlayback(sliderPlayback);
+        
     }
     
     @FXML
@@ -183,7 +185,9 @@ public class MyTunesMainViewController implements Initializable
         
     }
     
+
     private void onHandlePlaylistEdit(ActionEvent event) throws IOException
+
     {
         //model.editSong();
         
@@ -353,6 +357,7 @@ public class MyTunesMainViewController implements Initializable
     }
 
     @FXML
+
     private void onHandleSongEdit(ActionEvent event) throws IOException
     {
         
@@ -361,6 +366,7 @@ public class MyTunesMainViewController implements Initializable
         Stage anotherStage = new Stage();
         anotherStage.setScene(scene);
         anotherStage.show();
+
     }
     
 }
