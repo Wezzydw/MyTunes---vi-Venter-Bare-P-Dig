@@ -84,7 +84,7 @@ public class MyTunesMainViewController implements Initializable
 
 //        Stage stage = (Stage) borderPane.getScene().getWindow();
         listViewAllSongs.setItems(model.getSongs());
-        listViewSongInfo.setItems(model.getSongInfo());
+        listViewSongInfo.setItems(model.getNowPlaying());
         listViewQueue.setItems(model.getQuedSongs());
         listViewLibrary.setItems(model.getPlayList());
         listNowPlaying.setItems(model.getNowPlaying());
@@ -156,6 +156,7 @@ public class MyTunesMainViewController implements Initializable
     {
         model.addSongToQue();
         listNowPlaying.setItems(model.getNowPlaying());
+        listViewSongInfo.setItems(model.getNowPlaying());
         //listViewQueue.getItems().addAll(model.getQuedSongs());
     }
     
