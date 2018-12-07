@@ -5,34 +5,51 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.media.MediaView?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane id="BorderPane" fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.MyTunesMainViewController">
 
    <left>
       <VBox prefHeight="375.0" prefWidth="285.0" BorderPane.alignment="CENTER">
          <children>
-            <MediaView fx:id="mvMediaView" fitHeight="200.0" fitWidth="200.0" />
-            <ListView fx:id="listNowPlaying" prefHeight="200.0" prefWidth="200.0" />
-            <HBox prefHeight="48.0" prefWidth="285.0">
+            <ListView fx:id="listNowPlaying" prefHeight="131.0" prefWidth="285.0">
+               <effect>
+                  <ColorAdjust brightness="-1.0" />
+               </effect></ListView>
+            <Slider prefHeight="39.0" prefWidth="285.0" />
+            <HBox prefHeight="0.0" prefWidth="253.0">
                <children>
-                  <Slider fx:id="sliderVol" blockIncrement="1.0" majorTickUnit="1.0" minorTickCount="1" onMouseDragged="#onHandleSliderVol" prefHeight="14.0" prefWidth="181.0" />
+                  <Slider fx:id="sliderVol" blockIncrement="1.0" majorTickUnit="1.0" minorTickCount="1" onMouseDragged="#onHandleSliderVol" prefHeight="14.0" prefWidth="165.0" />
                   <Button mnemonicParsing="false" onAction="#onHandleShuffe" text="Shuffle" />
                   <Button mnemonicParsing="false" onAction="#onHandleRepeat" text="Repeat" />
                </children>
+               <effect>
+                  <ColorAdjust brightness="-1.0" />
+               </effect>
             </HBox>
             <HBox prefHeight="25.0" prefWidth="216.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onHandlePrev" prefWidth="72.0" text="Prev" />
+                  <Button mnemonicParsing="false" onAction="#onHandlePrev" prefWidth="72.0" text="Prev" textFill="#00ff34">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
                   <Button mnemonicParsing="false" onAction="#onHandlePlay" prefWidth="72.0" text="Play" />
                   <Button mnemonicParsing="false" onAction="#onHandlePause" prefWidth="72.0" text="Pause" />
                   <Button mnemonicParsing="false" onAction="#onHandleNext" prefWidth="72.0" text="Next" />
                </children>
+               <effect>
+                  <ColorAdjust brightness="-0.5" />
+               </effect>
             </HBox>
-            <ListView fx:id="listViewLibrary" onDragDone="#HandleDragDone" prefHeight="347.0" prefWidth="285.0" />
+            <ListView fx:id="listViewLibrary" onDragDone="#HandleDragDone" prefHeight="347.0" prefWidth="285.0">
+               <effect>
+                  <ColorAdjust brightness="-1.0" />
+               </effect></ListView>
          </children>
       </VBox>
    </left>
@@ -44,7 +61,10 @@
                   <ListView fx:id="listViewSongInfo" prefHeight="200.0" prefWidth="199.0" />
                   <VBox prefHeight="200.0" prefWidth="278.0">
                      <children>
-                        <ListView fx:id="listViewQueue" onDragDetected="#quedetected" onDragDone="#quedone" onDragDropped="#quedropped" onDragEntered="#queentered" onDragExited="#queexited" onDragOver="#queover" onMouseClicked="#MouseSelection" onMouseDragEntered="#queentered" onMouseDragExited="#queexited" onMouseDragOver="#queover" onMouseDragReleased="#quereleased" onMouseReleased="#queMouseRelease" prefHeight="250.0" prefWidth="280.0" />
+                        <ListView fx:id="listViewQueue" onDragDetected="#quedetected" onDragDone="#quedone" onDragDropped="#quedropped" onDragEntered="#queentered" onDragExited="#queexited" onDragOver="#queover" onMouseClicked="#MouseSelection" onMouseDragEntered="#queentered" onMouseDragExited="#queexited" onMouseDragOver="#queover" onMouseDragReleased="#quereleased" onMouseReleased="#queMouseRelease" prefHeight="250.0" prefWidth="280.0">
+                           <effect>
+                              <ColorAdjust />
+                           </effect></ListView>
                         <HBox prefHeight="28.0" prefWidth="283.0">
                            <children>
                               <Button mnemonicParsing="false" onAction="#onHandleAdd" prefHeight="25.0" prefWidth="65.0" text="Add" />
@@ -55,6 +75,9 @@
                      </children>
                   </VBox>
                </children>
+               <effect>
+                  <ColorAdjust brightness="-1.0" />
+               </effect>
             </HBox>
             <TextField fx:id="txtFieldSearch" onKeyReleased="#onHandleSearch" />
             <HBox prefHeight="100.0" prefWidth="200.0">
@@ -68,7 +91,10 @@
                   <Button mnemonicParsing="false" prefWidth="70.0" text="ID" />
                </children>
             </HBox>
-            <ListView fx:id="listViewAllSongs" onDragDetected="#allsongsdragdected" onDragDone="#allsongsdragdone" onDragDropped="#allsongsdragdropped" onDragEntered="#allsongsdragentered" onDragExited="#allsongsdragexited" onDragOver="#allsongsdragover" onMouseDragEntered="#allsongsdragentered" onMouseDragExited="#allsongsdragexoted" onMouseDragOver="#allsongsdragover" onMouseDragReleased="#allsongsdragreleased" prefHeight="330.0" prefWidth="476.0" />
+            <ListView fx:id="listViewAllSongs" onDragDetected="#allsongsdragdected" onDragDone="#allsongsdragdone" onDragDropped="#allsongsdragdropped" onDragEntered="#allsongsdragentered" onDragExited="#allsongsdragexited" onDragOver="#allsongsdragover" onMouseDragEntered="#allsongsdragentered" onMouseDragExited="#allsongsdragexoted" onMouseDragOver="#allsongsdragover" onMouseDragReleased="#allsongsdragreleased" prefHeight="330.0" prefWidth="476.0">
+               <effect>
+                  <ColorAdjust brightness="-1.0" />
+               </effect></ListView>
             <HBox prefHeight="14.0" prefWidth="476.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#onHandlePlaylistEdit" text="Edit" />
@@ -77,6 +103,12 @@
                </children>
             </HBox>
          </children>
+         <effect>
+            <ColorAdjust brightness="-0.5" />
+         </effect>
       </VBox>
    </right>
+   <effect>
+      <ColorAdjust brightness="0.1" />
+   </effect>
 </BorderPane>
