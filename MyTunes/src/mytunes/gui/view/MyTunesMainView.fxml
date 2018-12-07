@@ -7,7 +7,6 @@
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.ColorAdjust?>
-<?import javafx.scene.effect.ColorInput?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -147,10 +146,7 @@
                      </font></Button>
                </children>
             </HBox>
-            <ListView fx:id="listViewAllSongs" onDragDetected="#allsongsdragdected" onDragDone="#allsongsdragdone" onDragDropped="#allsongsdragdropped" onDragEntered="#allsongsdragentered" onDragExited="#allsongsdragexited" onDragOver="#allsongsdragover" onMouseDragEntered="#allsongsdragentered" onMouseDragExited="#allsongsdragexoted" onMouseDragOver="#allsongsdragover" onMouseDragReleased="#allsongsdragreleased" prefHeight="330.0" prefWidth="476.0" style="visibility: black;">
-               <effect>
-                  <ColorInput />
-               </effect></ListView>
+            <ListView fx:id="listViewAllSongs" onDragDetected="#allsongsdragdected" onDragDone="#allsongsdragdone" onDragDropped="#allsongsdragdropped" onDragEntered="#allsongsdragentered" onDragExited="#allsongsdragexited" onDragOver="#allsongsdragover" onMouseDragEntered="#allsongsdragentered" onMouseDragExited="#allsongsdragexoted" onMouseDragOver="#allsongsdragover" onMouseDragReleased="#allsongsdragreleased" prefHeight="330.0" prefWidth="476.0" style="visibility: black;" />
             <HBox prefHeight="14.0" prefWidth="476.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#onHandleSongEdit" style="-fx-background-color: black;" text="Edit" textFill="#00ff1d">
