@@ -65,6 +65,8 @@ public class MyTunesMainViewController implements Initializable
     private Button btnRemoveSong;
     
     Model model;
+    @FXML
+    private Slider sliderPlayback;
 
     /**
      * Initializes the controller class.
@@ -346,5 +348,5 @@ public class MyTunesMainViewController implements Initializable
     {
         System.out.println(listViewQueue.getSelectionModel().getSelectedItems());
     }
-    
+
 }
