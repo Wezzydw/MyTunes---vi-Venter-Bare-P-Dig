@@ -145,7 +145,9 @@ public class PlayerManager
             player.changevolume(vol);
         }
         else {
-            volumeFromDB = vol;
+            
+            volumeFromDB = vol*100;
+            System.out.println("saved volume from db " + volumeFromDB);
         }
     }
 

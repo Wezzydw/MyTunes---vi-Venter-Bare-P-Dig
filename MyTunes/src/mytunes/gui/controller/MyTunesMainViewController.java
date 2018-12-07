@@ -63,8 +63,6 @@ public class MyTunesMainViewController implements Initializable
     private Button btnRemoveSongQue;
     @FXML
     private Button btnRemoveSong;
-    @FXML
-    private MediaView mvMediaView;
     
     Model model;
 
@@ -84,14 +82,14 @@ public class MyTunesMainViewController implements Initializable
 
 //        Stage stage = (Stage) borderPane.getScene().getWindow();
         listViewAllSongs.setItems(model.getSongs());
-        listViewSongInfo.setItems(model.getSongInfo());
+        listViewSongInfo.setItems(model.getNowPlaying());
         listViewQueue.setItems(model.getQuedSongs());
         listViewLibrary.setItems(model.getPlayList());
         listNowPlaying.setItems(model.getNowPlaying());
         listViewAllSongs.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         listViewQueue.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        sliderVol.setValue(model.getSliderVolumeFromDB());
-        System.out.println("Sliderfrom db " + model.getSliderVolumeFromDB());
+        sliderVol.setValue(model.getSliderVolumeFromDB()*100);
+        System.out.println("Slider " + sliderVol.getValue());
         model.changeVolume(model.getSliderVolumeFromDB());
     }
     
@@ -99,7 +97,7 @@ public class MyTunesMainViewController implements Initializable
     private void onHandleSliderVol(MouseEvent event)
     {
         model.changeVolume(sliderVol.getValue());
-        sliderVol.setValue(sliderVol.getValue());
+        //sliderVol.setValue(sliderVol.getValue());
         System.out.println();
         Stage stage = (Stage) borderPane.getScene().getWindow();
         stage.setOnCloseRequest(new EventHandler<WindowEvent>()
@@ -156,6 +154,7 @@ public class MyTunesMainViewController implements Initializable
     {
         model.addSongToQue();
         listNowPlaying.setItems(model.getNowPlaying());
+        listViewSongInfo.setItems(model.getNowPlaying());
         //listViewQueue.getItems().addAll(model.getQuedSongs());
     }
     

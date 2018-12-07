@@ -93,6 +93,7 @@ public class Player
 
     public void changevolume(double vol)
     {
+        System.out.println("incoming vol " + vol);
         volume = vol;
         mp.setVolume(vol);
     }

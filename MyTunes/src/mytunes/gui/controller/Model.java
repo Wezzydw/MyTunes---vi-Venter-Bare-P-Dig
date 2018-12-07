@@ -117,6 +117,7 @@ public class Model
 
     public void changeVolume(double vol)
     {
+        //System.out.println("model change volume " + vol);
         playerManager.changeVolume(vol/100);
     }
 
@@ -150,9 +151,9 @@ public class Model
         playerManager.shuffleHandler();
     }
 
-    public List<Song> searcher(String query) throws IOException
+    public void searcher(String query) throws IOException
     {
-        return songsearcher.searcher(query);
+       songs.setAll(songsearcher.searcher(query));
     }
 
     public void addSong(Song song)

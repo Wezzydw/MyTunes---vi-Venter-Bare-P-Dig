@@ -17,7 +17,14 @@ import mytunes.dal.SongDAO;
  */
 public class Search
 {
-
+    private SongDAO sdao;
+    private List<Song> song;
+    public Search() throws IOException
+    {
+        sdao = new SongDAO();
+        song = sdao.getAllSongsFromDB();
+        
+    }
     /**
      * Searches the list of songs for input title, author, categori, release
      * year or album name. If value is found returns a list if all songs
@@ -25,31 +32,39 @@ public class Search
      */
     public List<Song> searcher(String query) throws IOException
     {
-
-        SongDAO sdao = new SongDAO();
-
-        List<Song> song = new ArrayList();
+        
         List<Song> searchResult = new ArrayList();
-        song = sdao.getAllSongsFromDB();
-
+        
         for (Song song1 : song)
         {
+            int counter = 0;
             String releaseYear = "" + song1.getReleaseYear(); //The only way we could get change an int to a String.
-            if (song1.getTitle().toLowerCase().contains(query.toLowerCase()))
+            
+            if (song1.getTitle().toLowerCase().contains(query.toLowerCase()) && song1.getTitle() != null)
             {
-                searchResult.add(song1);
-            } else if (song1.getAlbum().toLowerCase().contains(query.toLowerCase()))
+                if(counter == 0){
+                    counter ++;
+                searchResult.add(song1);}
+            }if (song1.getAlbum() != null && song1.getAlbum().toLowerCase().contains(query.toLowerCase()))
             {
-                searchResult.add(song1);
-            } else if (song1.getAuthor().toLowerCase().contains(query.toLowerCase()))
+                 if(counter == 0){
+                    counter ++;
+                searchResult.add(song1);}
+            } if ( song1.getAuthor()!= null && song1.getAuthor().toLowerCase().contains(query.toLowerCase()))
             {
-                searchResult.add(song1);
-            } else if (song1.getCategori().toLowerCase().contains(query.toLowerCase()))
+                 if(counter == 0){
+                    counter ++;
+                searchResult.add(song1);}
+            } if ( song1.getCategori() != null && song1.getCategori().toLowerCase().contains(query.toLowerCase()))
             {
-                searchResult.add(song1);
-            } else if (releaseYear.contains(query))
+                 if(counter == 0){
+                    counter ++;
+                searchResult.add(song1);}
+            } if ( song1.getReleaseYear() != null && releaseYear.contains(query))
             {
-                searchResult.add(song1);
+                 if(counter == 0){
+                    counter ++;
+                searchResult.add(song1); }
             }
         }
         return searchResult;
