@@ -53,6 +53,7 @@ public class PlayerManager
             if (!songQueue.isEmpty())
             {
                 player = new Player(songQueue);
+                System.out.println("Er det her?");
                 nowPlaying.addAll(player.getNowPlaying());
             }
         }
@@ -64,8 +65,11 @@ public class PlayerManager
     }
     
     public ObservableList<String> getNowPlaying()
-    {
-        return nowPlaying;
+    { 
+        if (player == null)
+            return nowPlaying;
+        else return player.getNowPlaying();
+                    
     }
 
     public void addSongToQue(List<Song> songs)

@@ -44,7 +44,7 @@
                   <ListView fx:id="listViewSongInfo" prefHeight="200.0" prefWidth="199.0" />
                   <VBox prefHeight="200.0" prefWidth="278.0">
                      <children>
-                        <ListView fx:id="listViewQueue" onDragDetected="#quedetected" onDragDone="#quedone" onDragDropped="#quedropped" onDragEntered="#queentered" onDragExited="#queexited" onDragOver="#queover" onMouseDragEntered="#queentered" onMouseDragExited="#queexited" onMouseDragOver="#queover" onMouseDragReleased="#quereleased" onMouseReleased="#queMouseRelease" prefHeight="250.0" prefWidth="280.0" />
+                        <ListView fx:id="listViewQueue" onDragDetected="#quedetected" onDragDone="#quedone" onDragDropped="#quedropped" onDragEntered="#queentered" onDragExited="#queexited" onDragOver="#queover" onMouseClicked="#MouseSelection" onMouseDragEntered="#queentered" onMouseDragExited="#queexited" onMouseDragOver="#queover" onMouseDragReleased="#quereleased" onMouseReleased="#queMouseRelease" prefHeight="250.0" prefWidth="280.0" />
                         <HBox prefHeight="28.0" prefWidth="283.0">
                            <children>
                               <Button mnemonicParsing="false" onAction="#onHandleAdd" prefHeight="25.0" prefWidth="65.0" text="Add" />

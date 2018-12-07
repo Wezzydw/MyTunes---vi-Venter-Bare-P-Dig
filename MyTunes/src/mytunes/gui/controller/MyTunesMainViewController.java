@@ -153,6 +153,7 @@ public class MyTunesMainViewController implements Initializable
     private void onHandleAdd(ActionEvent event) throws IOException
     {
         model.addSongToQue();
+        listNowPlaying.setItems(model.getNowPlaying());
         //listViewQueue.getItems().addAll(model.getQuedSongs());
     }
 
@@ -337,6 +338,12 @@ public class MyTunesMainViewController implements Initializable
     private void queMouseRelease(MouseEvent event)
     {
         System.out.println("hej ");
+    }
+
+    @FXML
+    private void MouseSelection(MouseEvent event)
+    {
+        System.out.println(listViewQueue.getSelectionModel().getSelectedItems());
     }
 
 }
