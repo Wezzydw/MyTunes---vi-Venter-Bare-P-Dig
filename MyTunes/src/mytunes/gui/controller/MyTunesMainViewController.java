@@ -63,8 +63,6 @@ public class MyTunesMainViewController implements Initializable
     private Button btnRemoveSongQue;
     @FXML
     private Button btnRemoveSong;
-    @FXML
-    private MediaView mvMediaView;
     
     Model model;
 
