@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="382.0" prefWidth="438.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.EditSongViewController">
+   <children>
+      <TextField fx:id="txtEditArtist" layoutX="105.0" layoutY="115.0" prefHeight="22.0" prefWidth="239.0" promptText="Edit Artist Here!">
+         <font>
+            <Font name="Berlin Sans FB" size="12.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtEditAlbum" layoutX="105.0" layoutY="165.0" prefHeight="22.0" prefWidth="239.0" promptText="Edit Album Here!">
+         <font>
+            <Font name="Berlin Sans FB" size="12.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtEditTitle" layoutX="105.0" layoutY="65.0" prefHeight="22.0" prefWidth="239.0" promptText="Edit Title Here!">
+         <font>
+            <Font name="Berlin Sans FB" size="12.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtEditYear" layoutX="105.0" layoutY="265.0" promptText="Edit Release Year Here!">
+         <font>
+            <Font name="Berlin Sans FB" size="12.0" />
+         </font>
+      </TextField>
+      <Label layoutX="133.0" layoutY="14.0" text="Song Editor">
+         <font>
+            <Font name="Berlin Sans FB" size="36.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboCategory" layoutX="105.0" layoutY="211.0" prefHeight="25.0" prefWidth="143.0" />
+      <Label layoutX="31.0" layoutY="68.0" text="Title:">
+         <font>
+            <Font name="Berlin Sans FB" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="30.0" layoutY="118.0" text="Artist:">
+         <font>
+            <Font name="Berlin Sans FB" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="30.0" layoutY="168.0" text="Album:">
+         <font>
+            <Font name="Berlin Sans FB" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="30.0" layoutY="215.0" text="Category:">
+         <font>
+            <Font name="Berlin Sans FB" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="30.0" layoutY="268.0" text="Release Year:">
+         <font>
+            <Font name="Berlin Sans FB" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="31.0" layoutY="313.0" text="Filepath:">
+         <font>
+            <Font name="Berlin Sans FB" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblFilepath" layoutX="163.0" layoutY="312.0" text="Label" />
+      <Button fx:id="btnCancel" layoutX="344.0" layoutY="337.0" mnemonicParsing="false" onAction="#onHandleCancelEdit" prefHeight="25.0" prefWidth="50.0" text="Cancel">
+         <font>
+            <Font name="Berlin Sans FB" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnSave" layoutX="292.0" layoutY="337.0" mnemonicParsing="false" onAction="#onHandleSaveEdit" prefHeight="25.0" prefWidth="49.0" text="Save">
+         <font>
+            <Font name="Berlin Sans FB" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
