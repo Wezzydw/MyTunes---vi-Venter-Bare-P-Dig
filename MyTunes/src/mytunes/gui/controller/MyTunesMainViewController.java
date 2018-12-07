@@ -90,8 +90,8 @@ public class MyTunesMainViewController implements Initializable
         listNowPlaying.setItems(model.getNowPlaying());
         listViewAllSongs.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         listViewQueue.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        sliderVol.setValue(model.getSliderVolumeFromDB());
-        System.out.println("Sliderfrom db " + model.getSliderVolumeFromDB());
+        sliderVol.setValue(model.getSliderVolumeFromDB()*100);
+        System.out.println("Slider " + sliderVol.getValue());
         model.changeVolume(model.getSliderVolumeFromDB());
     }
     
@@ -99,7 +99,7 @@ public class MyTunesMainViewController implements Initializable
     private void onHandleSliderVol(MouseEvent event)
     {
         model.changeVolume(sliderVol.getValue());
-        sliderVol.setValue(sliderVol.getValue());
+        //sliderVol.setValue(sliderVol.getValue());
         System.out.println();
         Stage stage = (Stage) borderPane.getScene().getWindow();
         stage.setOnCloseRequest(new EventHandler<WindowEvent>()
