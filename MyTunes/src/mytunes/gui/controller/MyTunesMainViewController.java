@@ -14,7 +14,10 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
@@ -93,6 +96,8 @@ public class MyTunesMainViewController implements Initializable
         sliderVol.setValue(model.getSliderVolumeFromDB()*100);
         System.out.println("Slider " + sliderVol.getValue());
         model.changeVolume(model.getSliderVolumeFromDB());
+        model.sendSliderForPlayback(sliderPlayback);
+        
     }
     
     @FXML
@@ -180,11 +185,7 @@ public class MyTunesMainViewController implements Initializable
         
     }
     
-    @FXML
-    private void onHandleSongEdit(ActionEvent event)
-    {
-        model.editSong();
-    }
+    
     
     @FXML
     private void onHandlePlaylistAdd(ActionEvent event) throws IOException
@@ -349,4 +350,19 @@ public class MyTunesMainViewController implements Initializable
         System.out.println(listViewQueue.getSelectionModel().getSelectedItems());
     }
 
+
+
+    @FXML
+
+    private void onHandleSongEdit(ActionEvent event) throws IOException
+    {
+        
+        Parent ruuut = FXMLLoader.load(getClass().getResource("/mytunes/gui/view/editSongView.fxml"));
+        Scene scene = new Scene(ruuut);
+        Stage anotherStage = new Stage();
+        anotherStage.setScene(scene);
+        anotherStage.show();
+
+    }
+    
 }

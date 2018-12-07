@@ -5,11 +5,13 @@
  */
 package mytunes.gui.controller;
 
+import java.awt.List;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import mytunes.be.Song;
 
 /**
  * FXML Controller class
@@ -54,15 +57,15 @@ public class EditSongViewController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(EditSongViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-//        txtEditAlbum.setText(model.getSongInfo("Album"));
-//        txtEditArtist.setText(value);
-//        txtEditTitle.setText(value);
-//        txtEditYear.setText(value);
+        ObservableList<Song> allSongs = model.getSongs();
+        //txtEditAlbum.setText(model.getSongs().get(0).getAlbum());//get(0) skal peje på den sang du redigerer
+        txtEditArtist.setText(allSongs.get(0).getAuthor());
+        txtEditTitle.setText(allSongs.get(0).getTitle());
+        txtEditYear.setText(allSongs.get(0).getReleaseYear());
 //        comboCategory.setItems(value);
-//        lblFilepath.setText(value);
-//        
-//        
+        lblFilepath.setText(allSongs.get(0).getFilePath());
+        
+        
     }    
 
     @FXML
@@ -74,6 +77,13 @@ public class EditSongViewController implements Initializable {
     @FXML
     private void onHandleSaveEdit(ActionEvent event) {
         
+        
+        System.out.println("save data" );
+        String album = txtEditAlbum.getText();
+        String author = txtEditArtist.getText();
+        String title = txtEditTitle.getText();
+        String year = txtEditYear.getText();
+//        model.UpdateVolume(0); //update song 
         
     }
     

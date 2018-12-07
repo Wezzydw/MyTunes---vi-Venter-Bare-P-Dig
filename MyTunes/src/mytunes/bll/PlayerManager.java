@@ -13,6 +13,7 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Slider;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
 import mytunes.dal.PlaylistDAO;
@@ -34,6 +35,7 @@ public class PlayerManager
     private Player player;
     private SettingsDAO setdao;
     private double volumeFromDB;
+    private Slider sliderPlayback;
 
     public PlayerManager() throws IOException
     {
@@ -43,6 +45,7 @@ public class PlayerManager
         sdao = new SongDAO();
         pDAO = new PlaylistDAO();
         songQueue.addAll(setdao.queueList());
+        
         checkForSongsSomewhere();
     }
 
@@ -57,6 +60,7 @@ public class PlayerManager
                 player.changevolume(volumeFromDB);
                 System.out.println("Er det her?");
                 nowPlaying.addAll(player.getNowPlaying());
+                player.makeSliderForPlayback(sliderPlayback);
             }
         }
     }
@@ -188,5 +192,10 @@ public class PlayerManager
         System.out.println("test");
         songQueue.addAll(sdao.getAllSongsFromDB());
         checkForSongsSomewhere();
+    }
+    
+    public void makeSliderForPlayBack(Slider sliderPlayback)
+    {
+        this.sliderPlayback = sliderPlayback;
     }
 }
