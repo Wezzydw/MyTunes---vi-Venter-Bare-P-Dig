@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
@@ -219,6 +220,11 @@ public class Model
         }
 
         //Do something with view here
+    }
+    
+    public void sendSliderForPlayback(Slider sliderPlayback)
+    {
+        playerManager.makeSliderForPlayBack(sliderPlayback);
     }
 
     

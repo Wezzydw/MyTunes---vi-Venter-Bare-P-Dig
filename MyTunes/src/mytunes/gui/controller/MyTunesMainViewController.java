@@ -65,6 +65,8 @@ public class MyTunesMainViewController implements Initializable
     private Button btnRemoveSong;
     
     Model model;
+    @FXML
+    private Slider sliderPlayback;
 
     /**
      * Initializes the controller class.
@@ -91,6 +93,8 @@ public class MyTunesMainViewController implements Initializable
         sliderVol.setValue(model.getSliderVolumeFromDB()*100);
         System.out.println("Slider " + sliderVol.getValue());
         model.changeVolume(model.getSliderVolumeFromDB());
+        model.sendSliderForPlayback(sliderPlayback);
+        
     }
     
     @FXML
@@ -345,6 +349,10 @@ public class MyTunesMainViewController implements Initializable
     private void MouseSelection(MouseEvent event)
     {
         System.out.println(listViewQueue.getSelectionModel().getSelectedItems());
+    }
+
+    @FXML
+    private void handleSliderPlayback(MouseEvent event) {
     }
     
 }
