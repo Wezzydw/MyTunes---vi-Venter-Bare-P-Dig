@@ -21,21 +21,21 @@
                <effect>
                   <ColorAdjust />
                </effect></ListView>
-            <Slider fx:id="sliderPlayback" prefHeight="39.0" prefWidth="285.0" />
+            <Slider fx:id="sliderPlayback" prefHeight="39.0" prefWidth="285.0" style="-fx-border-color: green;" />
             <HBox prefHeight="0.0" prefWidth="253.0" style="-fx-background-color: black;">
                <children>
-                  <Slider fx:id="sliderVol" blockIncrement="1.0" majorTickUnit="1.0" minorTickCount="1" onMouseDragged="#onHandleSliderVol" prefHeight="14.0" prefWidth="165.0">
+                  <Slider fx:id="sliderVol" blockIncrement="1.0" majorTickUnit="1.0" minorTickCount="1" onMouseDragged="#onHandleSliderVol" prefHeight="14.0" prefWidth="165.0" style="-fx-border-color: green; -fx-background-color: black;">
                      <effect>
                         <ColorAdjust />
                      </effect></Slider>
-                  <Button mnemonicParsing="false" onAction="#onHandleShuffe" style="-fx-background-color: black;" text="Shuffle" textFill="#00ff0d">
+                  <Button mnemonicParsing="false" onAction="#onHandleShuffe" style="-fx-background-color: black; -fx-border-color: green; -fx-effect: serif;" text="Shuffle" textFill="#00ff0d">
                      <effect>
                         <ColorAdjust />
                      </effect>
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Button>
-                  <Button mnemonicParsing="false" onAction="#onHandleRepeat" style="-fx-background-color: black;" text="Repeat" textFill="#00ff1d">
+                  <Button mnemonicParsing="false" onAction="#onHandleRepeat" style="-fx-background-color: black; -fx-border-color: green;" text="Repeat" textFill="#00ff1d">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Button>
@@ -46,23 +46,23 @@
             </HBox>
             <HBox prefHeight="25.0" prefWidth="216.0" style="-fx-background-color: black;">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onHandlePrev" prefWidth="72.0" style="-fx-background-color: black;" text="Prev" textFill="#00ff34">
+                  <Button mnemonicParsing="false" onAction="#onHandlePrev" prefWidth="72.0" style="-fx-background-color: black; -fx-border-color: green;" text="Prev" textFill="#00ff34">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onHandlePlay" prefWidth="72.0" style="-fx-background-color: black;" text="Play" textFill="#01f500">
+                  <Button mnemonicParsing="false" onAction="#onHandlePlay" prefWidth="72.0" style="-fx-background-color: black; -fx-border-color: green;" text="Play" textFill="#01f500">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Button>
-                  <Button mnemonicParsing="false" onAction="#onHandlePause" prefWidth="72.0" style="-fx-background-color: black;" text="Pause" textFill="#00ff2b">
+                  <Button mnemonicParsing="false" onAction="#onHandlePause" prefWidth="72.0" style="-fx-background-color: black; -fx-border-color: green;" text="Pause" textFill="#00ff2b">
                      <effect>
                         <ColorAdjust />
                      </effect>
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Button>
-                  <Button mnemonicParsing="false" onAction="#onHandleNext" prefWidth="72.0" style="-fx-background-color: black;" text="Next" textFill="#00ff2b">
+                  <Button mnemonicParsing="false" onAction="#onHandleNext" prefWidth="72.0" style="-fx-background-color: black; -fx-border-color: green;" text="Next" textFill="#00ff2b">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Button>
@@ -92,17 +92,17 @@
                            </cursor></ListView>
                         <HBox prefHeight="28.0" prefWidth="283.0">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#onHandleAdd" prefHeight="25.0" prefWidth="65.0" style="-fx-background-color: black;" text="Add" textFill="#00ff1d">
+                              <Button mnemonicParsing="false" onAction="#onHandleAdd" prefHeight="25.0" prefWidth="65.0" style="-fx-background-color: black; -fx-border-color: green;" text="Add" textFill="#00ff1d">
                                  <font>
                                     <Font name="System Bold" size="15.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="btnRemoveSongQue" mnemonicParsing="false" onAction="#onHandleRemove" prefWidth="65.0" style="-fx-background-color: black;" text="Remove" textFill="#00ff1d">
+                              <Button fx:id="btnRemoveSongQue" mnemonicParsing="false" onAction="#onHandleRemove" prefWidth="65.0" style="-fx-background-color: black; -fx-border-color: green;" text="Remove" textFill="#00ff1d">
                                  <font>
                                     <Font name="System Bold" size="15.0" />
                                  </font>
                               </Button>
-                              <ComboBox fx:id="comboBoxMisc" onAction="#onHandleMisc" prefWidth="150.0" promptText="Misc">
+                              <ComboBox fx:id="comboBoxMisc" onAction="#onHandleMisc" prefWidth="150.0" promptText="Misc" style="-fx-border-color: green; -fx-background-insets: green;">
                                  <effect>
                                     <ColorAdjust />
                                  </effect>
@@ -119,28 +119,28 @@
             <TextField fx:id="txtFieldSearch" onKeyReleased="#onHandleSearch" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" prefWidth="70.0" style="-fx-background-color: black;" text="Title" textFill="#00ff1d">
+                  <Button mnemonicParsing="false" prefWidth="70.0" style="-fx-background-color: black; -fx-border-color: green;" text="Title" textFill="#00ff1d">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Button>
-                  <Button mnemonicParsing="false" prefWidth="70.0" style="-fx-background-color: black;" text="Album" textFill="#00ff1d">
+                  <Button mnemonicParsing="false" prefWidth="70.0" style="-fx-background-color: black; -fx-border-color: green;" text="Album" textFill="#00ff1d">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" prefWidth="70.0" style="-fx-background-color: black;" text="Categori" textFill="#00ff1d">
+                  <Button mnemonicParsing="false" prefWidth="70.0" style="-fx-background-color: black; -fx-border-color: green;" text="Categori" textFill="#00ff1d">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Button>
-                  <Button mnemonicParsing="false" prefWidth="70.0" style="-fx-background-color: black;" text="Artist" textFill="#00ff1d">
+                  <Button mnemonicParsing="false" prefWidth="70.0" style="-fx-background-color: black; -fx-border-color: green;" text="Artist" textFill="#00ff1d">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Button>
-                  <Button mnemonicParsing="false" prefWidth="70.0" style="-fx-background-color: black;" text="Length" textFill="#00ff1d">
+                  <Button mnemonicParsing="false" prefWidth="70.0" style="-fx-background-color: black; -fx-border-color: green;" text="Length" textFill="#00ff1d">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Button>
-                  <Button mnemonicParsing="false" prefWidth="70.0" style="-fx-background-color: black;" text="ID" textFill="#00ff1d">
+                  <Button mnemonicParsing="false" prefWidth="70.0" style="-fx-background-color: black; -fx-border-color: green;" text="ID" textFill="#00ff1d">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Button>
@@ -149,15 +149,15 @@
             <ListView fx:id="listViewAllSongs" onDragDetected="#allsongsdragdected" onDragDone="#allsongsdragdone" onDragDropped="#allsongsdragdropped" onDragEntered="#allsongsdragentered" onDragExited="#allsongsdragexited" onDragOver="#allsongsdragover" onMouseDragEntered="#allsongsdragentered" onMouseDragExited="#allsongsdragexoted" onMouseDragOver="#allsongsdragover" onMouseDragReleased="#allsongsdragreleased" prefHeight="330.0" prefWidth="476.0" />
             <HBox prefHeight="14.0" prefWidth="476.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onHandleSongEdit" style="-fx-background-color: black;" text="Edit" textFill="#00ff1d">
+                  <Button mnemonicParsing="false" onAction="#onHandleSongEdit" style="-fx-background-color: black; -fx-border-color: green;" text="Edit" textFill="#00ff1d">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Button>
-                  <Button mnemonicParsing="false" onAction="#onHandlePlaylistAdd" style="-fx-background-color: black;" text="Add" textFill="#00ff1d">
+                  <Button mnemonicParsing="false" onAction="#onHandlePlaylistAdd" style="-fx-background-color: black; -fx-border-color: green;" text="Add" textFill="#00ff1d">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Button>
-                  <Button fx:id="btnRemoveSong" mnemonicParsing="false" onAction="#onSongRemove" style="-fx-background-color: black;" text="Remove" textFill="#00ff1d">
+                  <Button fx:id="btnRemoveSong" mnemonicParsing="false" onAction="#onSongRemove" style="-fx-background-color: black; -fx-border-color: green;" text="Remove" textFill="#00ff1d">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Button>
