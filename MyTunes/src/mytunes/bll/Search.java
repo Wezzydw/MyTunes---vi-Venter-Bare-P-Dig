@@ -30,7 +30,7 @@ public class Search
 
         List<Song> song = new ArrayList();
         List<Song> searchResult = new ArrayList();
-        song = sdao.getAllSongs();
+        song = sdao.getAllSongsFromDB();
 
         for (Song song1 : song)
         {

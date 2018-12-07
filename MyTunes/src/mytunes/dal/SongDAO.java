@@ -198,9 +198,9 @@ public class SongDAO
         }
     }
 
-    public List<Song> getAllSongs()
+    public List<Song> getAllSongsFromDB()
     {
-
+        //Jeg vil gerne have et check om filen faktisk eksisterer her;
         List<Song> allSongs = new ArrayList();
         try (Connection con = conProvider.getConnection())
         {
@@ -225,6 +225,11 @@ public class SongDAO
         }
         return allSongs;
     }
+    
+    public List<Song> getAllSongsFromMem()
+    {
+        return songs;
+    }
 
     public Song getSongForPlayback()
     {
@@ -233,9 +238,9 @@ public class SongDAO
 
     public Song getSong(Song song)
     {
-        getAllSongs();
+        //getAllSongsFromDB();
 
-        for (Song MetaSong : getAllSongs())
+        for (Song MetaSong : getAllSongsFromDB())
         {
             if (MetaSong.getId() == song.getId())
             {

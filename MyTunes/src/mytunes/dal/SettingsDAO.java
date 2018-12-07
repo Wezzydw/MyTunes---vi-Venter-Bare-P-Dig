@@ -24,15 +24,16 @@ import mytunes.bll.Player;
 public class SettingsDAO
 {
 
-    DatabaseConnection conProvider;
+    private DatabaseConnection conProvider;
+    private SongDAO sDAO;
 
     public SettingsDAO() throws IOException
 
     {
         conProvider = new DatabaseConnection();
+        sDAO = new SongDAO();
     }
-    Player player;
-    SongDAO sDAO;
+    
 
     public void updateVolume(double vol)
     {
@@ -115,17 +116,18 @@ public class SettingsDAO
         return queueList;
     }
 
-    public List<Song> queueList(String str)
+    public List<Song> queueList()
     {
-        String[] a = str.split(",");
-
+        //String[] a = str.split(",");
+        //Tænker vel bare at det her er fra database, og ikke fra metode input
+        //Btw alle comments her er for at undgå redLines
         List<Song> queSongs = new ArrayList();
-        List<Song> allSongs = sDAO.getAllSongs();
+        List<Song> allSongs = sDAO.getAllSongsFromDB();
         List<Integer> tempId = new ArrayList();
-        for (String string : a)
-        {
-            tempId.add(Integer.valueOf(string));
-        }
+//        for (String string : a)
+//        {
+//            tempId.add(Integer.valueOf(string));
+//        }
 
         for (Song song : allSongs)
         {

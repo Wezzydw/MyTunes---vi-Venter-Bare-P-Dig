@@ -7,6 +7,8 @@ package mytunes.bll;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
 import javafx.scene.media.MediaView;
@@ -27,23 +29,16 @@ public class Player
     private boolean onRepeat = false;
     private double volume;
     private boolean shuffle = false;
+    private ObservableList<String> nowPlaying;
 
-    public Player(Playlist play)
+    public Player(List<Song> songs)
     {
-
-    }
-
-    public Player()
-    {
-        //Tmp tester code, skal slettes når db kan sende en queue
+        System.out.println("tester");
         queue = new Queue();
-        List<Song> songs = new ArrayList();
-        songs.add(new Song("Sang nummer 1", "C:\\Users\\Wezzy Laptop\\Desktop\\Music\\Coone  E Life   Riot (Official Music Video)[1].mp3", 1));
-        songs.add(new Song("Sang nummer 2", "C:\\Users\\Wezzy Laptop\\Desktop\\Music\\Cyber   A New World (Official HQ Preview)[1].mp3", 2));
-        songs.add(new Song("Sang nummer 3", "C:\\Users\\Wezzy Laptop\\Desktop\\Music\\Sephyx   Save Me (Official Video Clip)[1].mp3", 3));
-
         queue.addSelection(songs);
         mp = new MediaPlayer(queue.getMedia(songIndex));
+        nowPlaying = FXCollections.observableArrayList();
+        nowPlaying();
     }
 
     public void playSong()
@@ -51,10 +46,11 @@ public class Player
         System.out.println("queue size" + queue.getAllSongs().size());
         if (mp.getStatus() != Status.PLAYING)
         {
-
+            
             mp.play();
             System.out.println(mp.getStatus());
             mp.setVolume(volume);
+            nowPlaying();
             mp.setOnEndOfMedia(new Runnable()
             {
                 @Override
@@ -169,6 +165,51 @@ public class Player
     public void addSongsToQueue(List<Song> songs)
     {
         queue.addSelection(songs);
+    }
+    public void nowPlaying()
+    {
+        System.out.println("nowplaying and songIndex : " + songIndex);
+        nowPlaying.clear();
+        nowPlaying.addAll(getMetaData(queue.getSong(songIndex)));
+        System.out.println("getNowPlaying" + nowPlaying.get(0));
+    }
+    
+    public List<String> getMetaData(Song son)
+    {
+        List<String> MetaList = FXCollections.observableArrayList();
+        System.out.println("in getmetadata");
+        if (son.getTitle() != null)
+        {
+            MetaList.add("title;" + son.getTitle());
+        }
+        if (son.getAuthor() != null)
+        {
+            MetaList.add("author;" + son.getAuthor());
+        }
+        if (son.getCategori() != null)
+        {
+            MetaList.add("categori;" + son.getCategori());
+        }
+        if (son.getReleaseYear() != null)
+        {
+            MetaList.add("releaseyear;" + son.getReleaseYear());
+        }
+        if (son.getAlbum() != null)
+        {
+            MetaList.add("album;" + son.getAlbum());
+        }
+        if (son.getLength() != null)
+        {
+            MetaList.add("length;" + son.getLength());
+        }
+
+        return MetaList;
+    }
+    
+    public ObservableList<String> getNowPlaying()
+    {
+        System.out.println("getNowPlaying" + nowPlaying.get(0));
+        return nowPlaying;
     }
 
 }

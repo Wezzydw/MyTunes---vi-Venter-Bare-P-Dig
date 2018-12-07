@@ -86,7 +86,7 @@ public class PlaylistDAO
     public Playlist getPlaylist(String query)
     {
         List<Song> playlistSongs = new ArrayList();
-        List<Song> allSongs = sDAO.getAllSongs();
+        List<Song> allSongs = sDAO.getAllSongsFromDB();
         List<Integer> tempId = new ArrayList();
         try (Connection con = conProvider.getConnection())
         {

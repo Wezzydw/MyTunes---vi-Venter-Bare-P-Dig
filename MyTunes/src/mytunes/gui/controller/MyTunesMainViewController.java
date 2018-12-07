@@ -57,7 +57,7 @@ public class MyTunesMainViewController implements Initializable
     @FXML
     private BorderPane borderPane;
 
-    Model model;
+    
     @FXML
     private ListView<String> listNowPlaying;
     @FXML
@@ -66,6 +66,8 @@ public class MyTunesMainViewController implements Initializable
     private Button btnRemoveSong;
     @FXML
     private MediaView mvMediaView;
+    
+    Model model;
 
     /**
      * Initializes the controller class.
@@ -86,7 +88,7 @@ public class MyTunesMainViewController implements Initializable
         listViewSongInfo.setItems(model.getSongInfo());
         listViewQueue.setItems(model.getQuedSongs());
         listViewLibrary.setItems(model.getPlayList());
-        listNowPlaying.setItems(model.getSongInfo());
+        listNowPlaying.setItems(model.getNowPlaying());
         listViewAllSongs.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         listViewQueue.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 

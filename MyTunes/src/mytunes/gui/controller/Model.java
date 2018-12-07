@@ -36,7 +36,7 @@ public class Model
     private ObservableList<Song> queues;
     private ObservableList<String> songinfo;
     private ObservableList<Playlist> playlist;
-    private PlayerManager logiclayer;
+    private PlayerManager playerManager;
     private Search songsearcher;
     private Player player;
     private BorderPane borderPane;
@@ -48,21 +48,18 @@ public class Model
     {
         songinfo = FXCollections.observableArrayList();
         playlist = FXCollections.observableArrayList();
-        queues = FXCollections.observableArrayList();
         songs = FXCollections.observableArrayList();
         songsearcher = new Search();
-        logiclayer = new PlayerManager();
+        playerManager = new PlayerManager();
         sDAO = new SongDAO();
-        player = new Player();
         pDAO = new PlaylistDAO();
         empty = new ArrayList();
-        songinfo = FXCollections.observableArrayList(logiclayer.getMetaData());
-        songs = FXCollections.observableArrayList(logiclayer.getAllSongs());
-        playlist = FXCollections.observableArrayList(logiclayer.getAllPlaylists());
-        queues = FXCollections.observableArrayList(getQuedSongs());
+        //songinfo = FXCollections.observableArrayList(playerManager.getSongInfo());
+        songs = FXCollections.observableArrayList(playerManager.getAllSongs());
+        playlist = FXCollections.observableArrayList(playerManager.getAllPlaylists());
         addPlaylist = new ArrayList();
         setDAO = new SettingsDAO();
-        player.changevolume(setDAO.lastSetVolume());
+        
         System.out.println(setDAO.lastSetVolume());
     }
 
@@ -71,7 +68,8 @@ public class Model
      */
     public ObservableList<String> getSongInfo()
     {
-        return songinfo;
+        //return playerManager.getSongInfo();
+        return null;
     }
 
     public List<Playlist> addPlaylist()
@@ -86,19 +84,22 @@ public class Model
 
     public ObservableList<Song> getQuedSongs()
     {
-        //queues.addAll(songs);
-        return queues;
+        return playerManager.getQueuedSongs();
     }
 
     public ObservableList<Song> getSongs()
     {
 
-        for (Song s : sDAO.getAllSongs())
+        for (Song s : sDAO.getAllSongsFromDB())
         {
             System.out.println(s.getTitle());
             //songs.add(s);
         }
         return songs;
+    }
+    public ObservableList<String> getNowPlaying()
+    {
+       return playerManager.getNowPlaying();
     }
 
     /*
@@ -106,44 +107,43 @@ public class Model
      */
     public void playSong()
     {
-        System.out.println(songs.size());
-        player.playSong();
+        playerManager.playSong();
     }
 
     public void pauseSong()
     {
-        player.pauseSong();
+        playerManager.pauseSong();
     }
 
     public void changeVolume(double vol)
     {
 
-        player.changevolume(vol / 100);
+        playerManager.changeVolume(vol/100);
     }
 
     public void UpdateVolume(double vol)
     {
-        setDAO.updateVolume(vol / 100);
+        playerManager.updateVolume(vol / 100);
     }
 
     public void playPrevSong()
     {
-        player.playPrevSong();
+        playerManager.playPrevSong();
     }
 
     public void playNextSong()
     {
-        player.playNextSong();
+        playerManager.playNextSong();
     }
 
     public void repeatHandler()
     {
-        player.repeatHandler();
+        playerManager.repeatHandler();
     }
 
     public void shuffleHandler()
     {
-        player.shuffleHandler();
+        playerManager.shuffleHandler();
     }
 
     public List<Song> searcher(String query) throws IOException
@@ -164,13 +164,14 @@ public class Model
 
     public void editSong()
     {
-        logiclayer.editSong();
+        playerManager.editSong();
     }
 
     public void addSongToQue()
     {
-        queues.addAll(songs);
-        player.addSongsToQueue(getSongs());
+        playerManager.tmpTester();
+        //queues.addAll(songs);
+        //player.addSongsToQueue(getSongs());
 //       queues.addAll(getSongs());
 //        System.out.println("Queue size out here " + queues.size());
 //       player.addSongsToQueue(queues);
@@ -178,12 +179,12 @@ public class Model
 
     public void removeSongFromQue()
     {
-        logiclayer.removeSongFromQue();
+        playerManager.removeSongFromQue();
     }
 
     public void queComboBox()
     {
-        logiclayer.queMisc();
+        playerManager.queMisc();
 
     }
 
@@ -199,16 +200,18 @@ public class Model
         } else
         {
             String path = selectedDirectory.getAbsolutePath();
-            songs.addAll(logiclayer.SelectedFolder(path));
+            songs.addAll(playerManager.SelectedFolder(path));
         }
 
-        logiclayer.getAllSongs();
-        for (Song s : logiclayer.getAllSongs())
+        playerManager.getAllSongs();
+        for (Song s : playerManager.getAllSongs())
         {
             System.out.println(s.getTitle());
         }
 
         //Do something with view here
     }
+
+    
 
 }
