@@ -20,7 +20,7 @@
                <effect>
                   <ColorAdjust brightness="-1.0" />
                </effect></ListView>
-            <Slider prefHeight="39.0" prefWidth="285.0" />
+            <Slider fx:id="sliderPlayback" prefHeight="39.0" prefWidth="285.0" />
             <HBox prefHeight="0.0" prefWidth="253.0">
                <children>
                   <Slider fx:id="sliderVol" blockIncrement="1.0" majorTickUnit="1.0" minorTickCount="1" onMouseDragged="#onHandleSliderVol" prefHeight="14.0" prefWidth="165.0" />
