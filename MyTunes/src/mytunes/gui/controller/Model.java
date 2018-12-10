@@ -73,9 +73,12 @@ public class Model
         return null;
     }
 
-    public List<Playlist> addPlaylist()
+  
+    public List<Playlist> createPlaylist()
     {
-        return addPlaylist;
+        List<Playlist> playlist = new ArrayList();
+        
+        return playlist;
     }
 
     public ObservableList<Playlist> getPlayList()
