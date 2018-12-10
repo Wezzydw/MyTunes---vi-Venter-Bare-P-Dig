@@ -75,6 +75,25 @@
                <effect>
                   <ColorAdjust />
                </effect></ListView>
+            <HBox prefHeight="59.0" prefWidth="285.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onHandlePlaylistEdit" style="-fx-background-color: black; -fx-border-color: green;" text="Edit" textFill="#00ff1d">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#onHandlePlaylistAdd" style="-fx-background-color: black; -fx-border-color: green;" text="Add" textFill="#00ff1d">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#onHandlePlaylistRemove" style="-fx-background-color: black; -fx-border-color: green;" text="Remove" textFill="#00ff1d">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
          </children>
       </VBox>
    </left>
