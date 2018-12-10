@@ -80,7 +80,7 @@ public class PlayerManager
                     
     }
     /*
-        Tilføjer den valgte sang til qeuedsongs
+        Tilføjer den valgte sang til queuedsongs
     */
     public void addSongToQue(List<Song> songs)
     {
@@ -137,7 +137,7 @@ public class PlayerManager
 //        return nowPlaying;
 //    }
     /*
-    Afspiller en sang
+    Afspiller en sang, hvis en sang ikke spilles.
     */
     public void playSong()
     {
