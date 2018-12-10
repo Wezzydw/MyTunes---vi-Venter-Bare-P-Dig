@@ -28,11 +28,15 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DataFormat;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
@@ -72,7 +76,7 @@ public class MyTunesMainViewController implements Initializable
     @FXML
     private Button btnRemoveSong;
     
-    
+    private static final DataFormat customFormat = new DataFormat("Song.custom");
     Model model;
     @FXML
     private Slider sliderPlayback;
@@ -225,15 +229,17 @@ public class MyTunesMainViewController implements Initializable
 //        }
 //    }
     
-    @FXML
     private void allsongsdragdected(MouseEvent event)
     {
-        System.out.println("0 " + event.MOUSE_RELEASED.getName());
-        System.out.println(" 1 " + event.getTarget().toString());
         System.out.println("songs drag detected");
+        
+        Dragboard db = listViewAllSongs.startDragAndDrop(TransferMode.COPY);
+        ClipboardContent content = new ClipboardContent();
+        //content.put(listViewAllSongs.getSelectionModel().getSelectedItems());
+        content.putString("hej");
+        db.setContent(content);
     }
     
-    @FXML
     private void MouseSelection(MouseEvent event)
     {
         System.out.println(listViewQueue.getSelectionModel().getSelectedItems());
@@ -292,50 +298,6 @@ public class MyTunesMainViewController implements Initializable
         
     }
 
-    @FXML
-    private void allsongsdragentered(MouseDragEvent event)
-    {
-    }
-
-    @FXML
-    private void allsongsdragentered(DragEvent event)
-    {
-    }
-
-    @FXML
-    private void allsongsdragdone(DragEvent event)
-    {
-    }
-
-    @FXML
-    private void allsongsdragexited(DragEvent event)
-    {
-    }
-
-    @FXML
-    private void allsongsdragreleased(MouseDragEvent event)
-    {
-    }
-
-    @FXML
-    private void allsongsdragover(DragEvent event)
-    {
-    }
-
-    @FXML
-    private void allsongsdragexoted(MouseDragEvent event)
-    {
-    }
-
-    @FXML
-    private void allsongsdragover(MouseDragEvent event)
-    {
-    }
-
-    @FXML
-    private void allsongsdragdropped(DragEvent event)
-    {
-    }
 
     @FXML
     private void onHandlePlaylistEdit(ActionEvent event)
@@ -361,6 +323,81 @@ public class MyTunesMainViewController implements Initializable
         {
             model.removeSongsFromQue(listViewQueue.getSelectionModel().getSelectedItems());
         }
+    }
+
+    private void queueMouseReleased(MouseEvent event)
+    {
+        
+        System.out.println("We got into queue");
+    }
+
+    private void queueMouseExit(MouseEvent event)
+    {
+        System.out.println("queueMouseExit");
+    }
+
+    private void queueMouseEnter(MouseEvent event)
+    {
+        System.out.println("queueMouseEnter");
+    }
+
+    @FXML
+    private void allMouseReleased(MouseEvent event)
+    {
+        System.out.println("allMouseReleased");
+        System.out.println(event.getSceneX());
+        System.out.println(event.getSceneY());
+        
+        System.out.println(listViewQueue.getLayoutX());
+        System.out.println("øhm" + listViewQueue.isHover());
+        System.out.println("øhm" + listViewAllSongs.isHover());
+        if(listViewQueue.isHover())
+        {
+            System.out.println("this could work");
+        }
+    }
+
+    @FXML
+    private void queueDragEntered(DragEvent event)
+    {
+        System.out.println("queueDragEntered");
+    }
+
+    @FXML
+    private void queueOnMouseDragEntered(MouseDragEvent event)
+    {System.out.println("hmqueueOnMouseDragEnteredm");
+    }
+
+    @FXML
+    private void queueOnMouseDragOver(MouseDragEvent event)
+    {System.out.println("queueOnMouseDragOver");
+    }
+
+    @FXML
+    private void queueOnDragDetected(MouseEvent event)
+    {System.out.println("queueOnDragDetected");
+    }
+
+    @FXML
+    private void queueOnDragDone(DragEvent event)
+    {System.out.println("hqueueOnDragDonemm");
+    }
+
+    @FXML
+    private void queueOnMouseDragReleased(MouseDragEvent event)
+    {System.out.println("queueOnMouseDragReleasedhmm");
+    }
+
+    @FXML
+    private void queueOnDragOver(DragEvent event)
+    {
+        System.out.println("qeueuondaragover");
+        event.acceptTransferModes(TransferMode.COPY);
+    }
+
+    @FXML
+    private void queueOnDragDropped(DragEvent event)
+    {System.out.println("queueOnDragDropped");
     }
     
 
