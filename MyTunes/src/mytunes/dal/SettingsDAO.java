@@ -116,7 +116,7 @@ public class SettingsDAO
         return queueList;
     }
 
-    public List<Song> queueList()
+    public List<Song> queueList() throws IOException
     {
         //String[] a = str.split(",");
         //Tænker vel bare at det her er fra database, og ikke fra metode input

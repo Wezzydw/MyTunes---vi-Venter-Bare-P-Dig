@@ -5,9 +5,7 @@
  */
 package mytunes.bll;
 
-import java.util.ArrayList;
 import java.util.List;
-import javafx.beans.binding.Bindings;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,7 +15,6 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
 import javafx.scene.media.MediaView;
 import javafx.util.Duration;
-import mytunes.be.Playlist;
 import mytunes.be.Queue;
 import mytunes.be.Song;
 
@@ -44,7 +41,6 @@ public class Player {
         mp = new MediaPlayer(queue.getMedia(songIndex));
         nowPlaying = FXCollections.observableArrayList();
         nowPlaying();
-
     }
 
     public void playSong() {

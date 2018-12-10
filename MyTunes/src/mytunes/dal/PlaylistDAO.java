@@ -83,7 +83,7 @@ public class PlaylistDAO
         return np;
     }
 
-    public Playlist getPlaylist(String query)
+    public Playlist getPlaylist(String query) throws IOException
     {
         List<Song> playlistSongs = new ArrayList();
         List<Song> allSongs = sDAO.getAllSongsFromDB();

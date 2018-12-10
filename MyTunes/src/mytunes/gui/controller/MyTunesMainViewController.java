@@ -85,8 +85,12 @@ public class MyTunesMainViewController implements Initializable
             Logger.getLogger(MyTunesMainViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-//        Stage stage = (Stage) borderPane.getScene().getWindow();
-        listViewAllSongs.setItems(model.getSongs());
+        try {
+            //        Stage stage = (Stage) borderPane.getScene().getWindow();
+            listViewAllSongs.setItems(model.getSongs());
+        } catch (IOException ex) {
+            Logger.getLogger(MyTunesMainViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         listViewSongInfo.setItems(model.getNowPlaying());
         listViewQueue.setItems(model.getQuedSongs());
         listViewLibrary.setItems(model.getPlayList());
@@ -163,6 +167,7 @@ public class MyTunesMainViewController implements Initializable
         listNowPlaying.setItems(model.getNowPlaying());
         listViewSongInfo.setItems(model.getNowPlaying());
         //listViewQueue.getItems().addAll(model.getQuedSongs());
+        
     }
     
     @FXML
@@ -192,6 +197,7 @@ public class MyTunesMainViewController implements Initializable
     {
         Stage stage = (Stage) borderPane.getScene().getWindow();
         model.SelectFolder(stage);
+        
         
     }
     

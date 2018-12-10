@@ -104,7 +104,7 @@ public class PlayerManager
         return pDAO.getAllPlaylists();
     }
 
-    public List<Song> getAllSongs()
+    public List<Song> getAllSongs() throws IOException
     {
         return sdao.getAllSongsFromDB();
     }
@@ -187,7 +187,7 @@ public class PlayerManager
         }
     }
     
-    public void tmpTester()
+    public void tmpTester() throws IOException
     {
         System.out.println("test");
         songQueue.addAll(sdao.getAllSongsFromDB());
