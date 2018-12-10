@@ -27,14 +27,19 @@ public class SettingsDAO
     private DatabaseConnection conProvider;
     private SongDAO sDAO;
 
+    
     public SettingsDAO() throws IOException
-
     {
         conProvider = new DatabaseConnection();
         sDAO = new SongDAO();
     }
     
-
+    /**
+     * 
+     * @param vol 
+     * Opdatere volumen til databasen, i settingstabellen, 
+     * så denne huskes hvis programmet lukkes.
+     */
     public void updateVolume(double vol)
     {
 
@@ -52,7 +57,10 @@ public class SettingsDAO
             ex.printStackTrace();
         }
     }
-
+    
+    /**
+     * Henter sidste værdi for volumen i settingstabellen fra databasen.
+     */
     public double lastSetVolume()
     {
         double vol = 0;
@@ -72,7 +80,12 @@ public class SettingsDAO
         }
         return vol;
     }
-
+    
+    /**
+     * 
+     * @returnerer songId, for den sidstafspillede sang, hentet fra settingstabellen,
+     * i databasen.
+     */
     public int lastPlayedSong()
     {
         int songId = 0;
@@ -91,12 +104,20 @@ public class SettingsDAO
         }
         return songId;
     }
-
+    
+    /**
+     * 
+     * @returnerer den sidst valgte playliste.
+     */
     public Playlist lastPlayedPlaylist()
     {
         return null;
     }
-
+    
+    /**
+     * 
+     * @returnerer queue-listen fra den sidste queue, hentet fra databasen.
+     */
     public String lastPlayedQueue()
     {
         String queueList = "";
@@ -115,7 +136,11 @@ public class SettingsDAO
         }
         return queueList;
     }
-
+    
+    /**
+     * 
+     * @returnerer en liste af sange fra queuen.
+     */
     public List<Song> queueList()
     {
         //String[] a = str.split(",");
