@@ -364,5 +364,15 @@ public class MyTunesMainViewController implements Initializable
         anotherStage.show();
 
     }
+
+    @FXML
+    private void onHandlePlaylistEdit(ActionEvent event)
+    {
+    }
+
+    @FXML
+    private void onHandlePlaylistRemove(ActionEvent event)
+    {
+    }
     
 }
