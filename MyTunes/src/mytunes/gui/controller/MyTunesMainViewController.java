@@ -5,6 +5,7 @@
  */
 package mytunes.gui.controller;
 
+import static java.awt.event.KeyEvent.VK_DELETE;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -28,6 +29,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
@@ -350,6 +352,15 @@ public class MyTunesMainViewController implements Initializable
     private void onHandlePlaylistAdd(ActionEvent event)
     {
 //        listViewSongInfo.setItems(model.get());
+    }
+
+    @FXML
+    private void queueLookForDeleteKey(KeyEvent event)
+    {
+        if(event.getCode().equals(KeyCode.DELETE))
+        {
+            model.removeSongsFromQue(listViewQueue.getSelectionModel().getSelectedItems());
+        }
     }
     
 

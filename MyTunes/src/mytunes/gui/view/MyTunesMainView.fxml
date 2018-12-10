@@ -27,7 +27,8 @@
                   <Slider fx:id="sliderVol" blockIncrement="1.0" majorTickUnit="1.0" minorTickCount="1" onMouseDragged="#onHandleSliderVol" prefHeight="14.0" prefWidth="165.0" style="-fx-border-color: green; -fx-background-color: black;">
                      <effect>
                         <ColorAdjust />
-                     </effect></Slider>
+                     </effect>
+                  </Slider>
                   <Button mnemonicParsing="false" onAction="#onHandleShuffe" style="-fx-background-color: black; -fx-border-color: green; -fx-effect: serif;" text="Shuffle" textFill="#00ff0d">
                      <effect>
                         <ColorAdjust />
@@ -105,7 +106,7 @@
                   <ListView fx:id="listViewSongInfo" fixedCellSize="0.0" prefHeight="200.0" prefWidth="199.0" />
                   <VBox prefHeight="200.0" prefWidth="278.0" style="-fx-background-color: black;">
                      <children>
-                        <ListView fx:id="listViewQueue" onMouseClicked="#MouseSelection" prefHeight="250.0" prefWidth="280.0">
+                        <ListView fx:id="listViewQueue" onKeyPressed="#queueLookForDeleteKey" onMouseClicked="#MouseSelection" prefHeight="250.0" prefWidth="280.0">
                            <cursor>
                               <Cursor fx:constant="CROSSHAIR" />
                            </cursor></ListView>
