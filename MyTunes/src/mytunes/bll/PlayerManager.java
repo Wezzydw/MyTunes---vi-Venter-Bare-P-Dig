@@ -120,6 +120,11 @@ public class PlayerManager
     {
         return sdao.getAllSongsFromDB();
     }
+    public void updateSong(Song song)
+    {
+        sdao.updateSong(song);
+    }
+    
 
   
     

@@ -73,9 +73,12 @@ public class Model
         return null;
     }
 
-    public List<Playlist> addPlaylist()
+  
+    public List<Playlist> createPlaylist()
     {
-        return addPlaylist;
+        List<Playlist> playlist = new ArrayList();
+        
+        return playlist;
     }
 
     public ObservableList<Playlist> getPlayList()
@@ -226,7 +229,9 @@ public class Model
     {
         playerManager.makeSliderForPlayBack(sliderPlayback);
     }
-
-    
+    public void updateSong(Song song)
+    {
+        playerManager.updateSong(song);
+    }
 
 }

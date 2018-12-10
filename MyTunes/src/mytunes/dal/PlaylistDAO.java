@@ -40,10 +40,14 @@ public class PlaylistDAO
 
         try (Connection con = conProvider.getConnection())
         {
-            PreparedStatement statement = (PreparedStatement) con.createStatement();
+            
+          
+            
+           
             for (Song song : songs)
             {
-                statement.executeQuery("INSERT INTO Playlist (Title =" + playlist.getTitle() + ", SongId =" + song.getId() + ";");
+                PreparedStatement pstmt = con.prepareStatement("INSERT INTO Playlist (Title =" + playlist.getTitle() + ", SongId =" + song.getId() + ";");
+                pstmt.execute();
             }
 
         } catch (Exception ex)
@@ -63,7 +67,7 @@ public class PlaylistDAO
         {
             for (Song song : plist.getPlaylist())
             {
-                try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO Playlist (Title, SongId) VALUES ("))
+                try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO Playlist (Title, SongId) VALUES (?,?)"))
                 {
                     pstmt.setString(1, plist.getTitle());
                     pstmt.setInt(2, song.getId());

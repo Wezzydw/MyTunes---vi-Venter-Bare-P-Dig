@@ -182,9 +182,12 @@ public class SongDAO
     {
         try (Connection con = conProvider.getConnection())
         {
-            PreparedStatement statement = (PreparedStatement) con.createStatement();
-            statement.executeQuery("SELECT * FROM Songs;");
-            statement.executeQuery("DELETE FROM Songs WHERE Id =" + song.getId() + ";");
+            String a = "DELETE FROM Songs WHERE Id =" + song.getId() + ";";
+            PreparedStatement prst = con.prepareStatement(a);
+            prst.execute();
+//            Statement statement =  con.createStatement();
+//            statement.executeQuery("SELECT * FROM Songs;");
+//            statement.executeQuery("DELETE FROM Songs WHERE Id =" + song.getId() + ";");
         } catch (SQLException ex)
         {
             ex.printStackTrace();
@@ -195,17 +198,24 @@ public class SongDAO
     */
     public void updateSong(Song song)
     {
+
+        String a = "UPDATE Songs SET Title = ?, Author = ?, Album = ?, Categori = ?, Filepath = ?, Length = ?, ReleaseYear = ? WHERE Id = ?;";
+     
         try (Connection con = conProvider.getConnection())
         {
-            PreparedStatement statement = (PreparedStatement) con.createStatement();
-            statement.executeQuery("SELECT * FROM Songs");
-            statement.executeQuery("UPDATE Songs SET Title = "
-                    + song.getTitle() + ", SET Author = "
-                    + song.getAuthor() + ", SET Album = "
-                    + song.getAlbum() + ", SET Categori = "
-                    + song.getCategori() + ", SET Filepath = "
-                    + song.getFilePath() + ", SET ReleaseYear = "
-                    + song.getReleaseYear() + ";");
+            PreparedStatement pstmt = con.prepareStatement(a);
+
+            pstmt.setString(1, song.getTitle());
+            pstmt.setString(2, song.getAuthor());
+            pstmt.setString(3, song.getAlbum());
+            pstmt.setString(4, song.getCategori());
+            pstmt.setString(5, song.getFilePath());
+            pstmt.setString(6, song.getLength());
+ 
+            pstmt.setString(7, song.getReleaseYear());
+            pstmt.setInt(8, song.getId());
+            pstmt.execute();
+ 
         } catch (SQLException ex)
         {
             ex.printStackTrace();
@@ -219,11 +229,17 @@ public class SongDAO
         //Jeg vil gerne have et check om filen faktisk eksisterer her;
         List<Song> allSongs = new ArrayList();
         try (Connection con = conProvider.getConnection())
-        {
+        {   
+//            String a = "SELECT * FROM Songs;";
+//            PreparedStatement prst = con.prepareStatement(a);
+//            prst.getMoreResults(); //tror dette vil virke i stedet for rs.next
+            
             Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM Songs;");
+            
             while (rs.next())
             {
+                
                 String title = rs.getString("Title");
                 String author = rs.getString("Author");
                 String album = rs.getString("Album");
@@ -278,13 +294,13 @@ public class SongDAO
     {
         //List<Song> allSongs = new SongDAO().getAllSongs();
         System.out.println("WRITECHANGES ");
-        SQLServerDataSource ds = new SQLServerDataSource();
-        ds.setServerName("10.176.111.31");
-        ds.setDatabaseName("MyTunes1");
-        ds.setUser("CS2018A_20");
-        ds.setPassword("CS2018A_20");
+//        SQLServerDataSource ds = new SQLServerDataSource();
+//        ds.setServerName("10.176.111.31");
+//        ds.setDatabaseName("MyTunes1");
+//        ds.setUser("CS2018A_20");
+//        ds.setPassword("CS2018A_20");
         String a = "INSERT INTO Songs (Title, Author, Album, Categori, Filepath, Length, ReleaseYear) VALUES (?,?,?,?,?,?,?);";
-        try (Connection con = ds.getConnection())
+        try (Connection con = conProvider.getConnection())
         {
             for (Song song : allSongs)
             {
