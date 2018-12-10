@@ -36,7 +36,7 @@ public class SongDAO
 
     //File folder = new File("/Users/andreas/Music/");
     List<Song> songs = new ArrayList<>();
-
+    
     public List<Song> addFolder(File folderPath) throws IOException
     {
         listFilesForFolder(folderPath);
@@ -86,6 +86,9 @@ public class SongDAO
             MediaPlayer mp = new MediaPlayer(me);
             mp.setOnReady(new Runnable()
             {
+                /*
+                Metoden angiver længden af sangen
+                */
                 @Override
                 public void run()
                 {
@@ -97,6 +100,9 @@ public class SongDAO
 
         Thread t = new Thread(new Runnable()
         {
+            /*
+            ???++
+            */
             @Override
             public void run()
             {
@@ -131,7 +137,9 @@ public class SongDAO
         t.start();
         return songs;
     }
-
+    /*
+        vi trækker sangen ud af mediet
+    */
     public Song getMediaSong(Media m)
     {
         for (Song song : songs)
@@ -143,7 +151,9 @@ public class SongDAO
         }
         return null;
     }
-
+    /*
+    
+    */
     public List<String> listFilesForFolder(File folder) throws IOException
     {
         File[] listOfFiles = folder.listFiles();
@@ -165,7 +175,9 @@ public class SongDAO
         }
         return filePaths;
     }
-
+    /*
+        giver deleteSong metoden adgang til databasen
+    */
     public void deleteSong(Song song) throws IOException
     {
         try (Connection con = conProvider.getConnection())
@@ -178,7 +190,9 @@ public class SongDAO
             ex.printStackTrace();
         }
     }
-
+    /*
+    giver updateSong connection til databasen og og sender metadatene med??????????
+    */
     public void updateSong(Song song)
     {
 
@@ -204,7 +218,9 @@ public class SongDAO
             ex.printStackTrace();
         }
     }
-
+    /*
+    henter alle sangene ned fra databasen
+    */
     public List<Song> getAllSongsFromDB()
     {
         //Jeg vil gerne have et check om filen faktisk eksisterer her;
@@ -232,17 +248,23 @@ public class SongDAO
         }
         return allSongs;
     }
-    
+    /*
+        Henter alle sange fra et arraylist
+    */
     public List<Song> getAllSongsFromMem()
     {
         return songs;
     }
-
+    /*
+    ???????????
+    */
     public Song getSongForPlayback()
     {
         return null;
     }
-
+    /*
+    returnere en sang fra databasen????
+    */
     public Song getSong(Song song)
     {
         //getAllSongsFromDB();
@@ -256,7 +278,9 @@ public class SongDAO
         }
         return null;
     }
-
+    /*
+    
+    */
     public void writeChanges(List<Song> allSongs) throws IOException
     {
         //List<Song> allSongs = new SongDAO().getAllSongs();

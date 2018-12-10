@@ -70,6 +70,7 @@ public class MyTunesMainViewController implements Initializable
     @FXML
     private Button btnRemoveSong;
     
+    
     Model model;
     @FXML
     private Slider sliderPlayback;
@@ -88,7 +89,7 @@ public class MyTunesMainViewController implements Initializable
             Logger.getLogger(MyTunesMainViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-//        Stage stage = (Stage) borderPane.getScene().getWindow();
+        //        Stage stage = (Stage) borderPane.getScene().getWindow();
         listViewAllSongs.setItems(model.getSongs());
         listViewSongInfo.setItems(model.getNowPlaying());
         listViewQueue.setItems(model.getQuedSongs());
@@ -166,6 +167,7 @@ public class MyTunesMainViewController implements Initializable
         listNowPlaying.setItems(model.getNowPlaying());
         listViewSongInfo.setItems(model.getNowPlaying());
         //listViewQueue.getItems().addAll(model.getQuedSongs());
+        
     }
     
     @FXML
@@ -191,10 +193,11 @@ public class MyTunesMainViewController implements Initializable
     
     
     @FXML
-    private void onHandlePlaylistAdd(ActionEvent event) throws IOException
+    private void onHandleAddFolder(ActionEvent event) throws IOException
     {
         Stage stage = (Stage) borderPane.getScene().getWindow();
         model.SelectFolder(stage);
+        
         
     }
     
@@ -331,4 +334,23 @@ public class MyTunesMainViewController implements Initializable
     private void allsongsdragdropped(DragEvent event)
     {
     }
+
+    @FXML
+    private void onHandlePlaylistEdit(ActionEvent event)
+    {
+    }
+
+    @FXML
+    private void onHandlePlaylistRemove(ActionEvent event)
+    {
+        
+    }
+
+    @FXML
+    private void onHandlePlaylistAdd(ActionEvent event)
+    {
+//        listViewSongInfo.setItems(model.get());
+    }
+    
+
 }

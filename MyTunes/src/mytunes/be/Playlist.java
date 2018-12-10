@@ -16,7 +16,10 @@ public class Playlist
 
     String title;
     List<Song> playlist;
-
+    public List<Song> CreatePlaylist()
+    {
+            return playlist;
+    }
     public String getTitle()
     {
         return title;

@@ -20,7 +20,12 @@ public class DatabaseConnection
 
     //  private static final String PROP_FILE = "database.settings";
     private SQLServerDataSource ds;
-
+    
+    
+    /**
+     * Opretter forbindelse til databasen.
+     * @throws IOException 
+     */
     public DatabaseConnection() throws IOException
     {
         Properties databaseProperties = new Properties();

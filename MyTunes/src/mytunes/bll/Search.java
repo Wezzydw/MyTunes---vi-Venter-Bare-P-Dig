@@ -23,12 +23,11 @@ public class Search
     {
         sdao = new SongDAO();
         song = sdao.getAllSongsFromDB();
-        
     }
+    
     /**
-     * Searches the list of songs for input title, author, categori, release
-     * year or album name. If value is found returns a list if all songs
-     * containing the title input
+     * Søger listen af sange igennem for input: title, author, categori, releaseyear eller album.
+     * hvis inputtet er fundet, returnere den elementer fra listen, der matcher input.
      */
     public List<Song> searcher(String query) throws IOException
     {
