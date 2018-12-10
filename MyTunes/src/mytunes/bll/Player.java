@@ -42,7 +42,14 @@ public class Player {
         nowPlaying = FXCollections.observableArrayList();
         nowPlaying();
     }
-
+    
+    /**
+     * Denne metode står for at afspille en sang. 
+     * SetOnReady laves hver gang sang afspilles, da mediaplayeren loader langsommere
+     * end koden.
+     * Der tjekkes om en sang er færdig, hvis den er, afspilles den næste automatisk,
+     * hvis ikke shuffle eller repeat er aktiveret.
+     */
     public void playSong() {
         System.out.println("status" + mp.getStatus());
         if (mp.getStatus() != Status.PLAYING) {
@@ -90,24 +97,42 @@ public class Player {
             });
         }
     }
-
+    
+    
+    /**
+     * Sætter mediaplayeren på pause.
+     */
     public void pauseSong() {
         mp.pause();
     }
-
+    
+    
+    /**
+     * Går til element i næste index, og fylder i mediaplayeren.
+     */
     private MediaPlayer nextSong() {
         songIndex++;
         mp = new MediaPlayer(queue.getMedia(songIndex));
         mp.pause();
         return mp;
     }
-
+    
+    /**
+     * @param vol 
+     * Skifter volumen i mediaplayeren
+     */
     public void changevolume(double vol) {
         System.out.println("incoming vol " + vol);
         volume = vol;
         mp.setVolume(vol);
     }
-
+    
+    
+    /**
+     * Spiller forrige sang.
+     * Der tjekkes at shuffle ikke er aktiveret.
+     * Hvis ikke, går den en plads tilbage i listen og afspiller elementet på denne plads.
+     */
     public void playPrevSong() {
         if (!shuffle) {
             if (songIndex == 0) {
@@ -122,7 +147,14 @@ public class Player {
         mp = new MediaPlayer(queue.getMedia(songIndex));
         playSong();
     }
-
+    
+    /**
+     * Spiller næste sang.
+     * Der tjekkes at shuffle ikke er aktiveret.
+     * Hvis enden af køen er nået, starter queuen forfra.
+     * Ellers afspilles elementet af næste index.
+     * 
+     */
     public void playNextSong() {
         if (!shuffle) {
             if (songIndex == queue.queueSize() - 1) {
@@ -137,38 +169,58 @@ public class Player {
         mp = new MediaPlayer(queue.getMedia(songIndex));
         playSong();
     }
-
+    
+    /**
+     * Sætter mediaplayeren til at afspille samme element i det index den er nået.
+     */
     private void playOnRepeat() {
         mp = new MediaPlayer(queue.getMedia(songIndex));
     }
-
+    
+    /**
+     * Toggle repeat.
+     */
     public void repeatHandler() {
         onRepeat = !onRepeat;
     }
-
+    
+    /**
+     * Toggle shuffle.
+     */
     public void shuffleHandler() {
         shuffle = !shuffle;
     }
-
+    
+    /**
+     * @returnerer en tilfældig sang fra queue listen.
+     */
     private int getRandom() {
         return (int) (Math.random() * queue.queueSize());
     }
-
-    public void makeView(MediaView mv) {
-        mv = new MediaView(mp);
-    }
-
+    
+    /**
+     * @param songs Tilføjer en, eller valgte sange til queue-listen.
+     */
     public void addSongsToQueue(List<Song> songs) {
         queue.addSelection(songs);
     }
-
+    
+    /**
+     * Viser metadata fra igangværende sang.
+     */
     public void nowPlaying() {
         System.out.println("nowplaying and songIndex : " + songIndex);
         nowPlaying.clear();
         nowPlaying.addAll(getMetaData(queue.getSong(songIndex)));
         System.out.println("getNowPlaying" + nowPlaying.get(0));
     }
-
+    
+    /**
+     * @param Song
+     * @returnerer en MetaList
+     * Tjekker at title, author, categori, releaseyear, album og length ikke er null.
+     * Hvis disse ikke er null, tilføjes de metalisten.
+     */
     public List<String> getMetaData(Song son) {
         List<String> MetaList = FXCollections.observableArrayList();
         System.out.println("in getmetadata");
@@ -193,12 +245,19 @@ public class Player {
 
         return MetaList;
     }
-
+    
+    /**
+     * @returnerer index 0.
+     */
     public ObservableList<String> getNowPlaying() {
         System.out.println("getNowPlaying" + nowPlaying.get(0));
         return nowPlaying;
     }
-
+    
+    /**
+     * @param sliderPlayback = progress bar så brugeren kan se hvor lang, og tilbageværende
+     * tid af mediet.
+     */
     public void makeSliderForPlayback(Slider sliderPlayback) {
         this.sliderPlayback = sliderPlayback;
         //this.sliderPlayback.setMax(mp.getTotalDuration().toSeconds());

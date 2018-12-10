@@ -19,7 +19,11 @@ public class Queue
 
     List<Media> queue = new ArrayList();
     List<Song> songs = new ArrayList();
-
+    
+    /**
+     * @param songs
+     * Tilføjer valgte sange til en queue listen, og laver dem om til et media.
+     */
     public void addSelection(List<Song> songs)
     {
         this.songs = songs;
@@ -27,24 +31,41 @@ public class Queue
         {
             queue.add(new Media(new File(s.getFilePath()).toURI().toString()));
         }
-
     }
-
+    
+    /**
+     * fjerner valgte sange fra listen.
+     */
     public void removeSelection()
     {
 
     }
-
+    
+    /**
+     * 
+     * @param index
+     * @return indexet i queuen.
+     */
     public Media getMedia(int index)
     {
         return queue.get(index);
     }
-
+    
+    /**
+     * 
+     * @param index
+     * @returnerer sangen for indexet.
+     */
     public Song getSong(int index)
     {
         return songs.get(index);
     }
-
+    
+    /**
+     * 
+     * @param index
+     * Tjekker om queuen er slut.
+     */
     public boolean endOfQueue(int index)
     {
         if (queue.size() - 1 == index)
@@ -55,17 +76,29 @@ public class Queue
             return false;
         }
     }
-
+    
+    /**
+     * 
+     * @returnerer længden på queue-listen.
+     */
     public int queueSize()
     {
         return queue.size();
     }
-
+    
+    /**
+     * @returnerer alle elementer i queue-listen.
+     */
     public List<Media> getAllSongs()
     {
         return queue;
     }
-
+    
+    /**
+     * 
+     * @param m
+     * @returnerer et sang-object som et medie.
+     */
     public Song getMediaSong(Media m)
     {
         for (Song s : songs)

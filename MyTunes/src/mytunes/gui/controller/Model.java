@@ -173,7 +173,7 @@ public class Model
         
     }
 
-    public void addSongToQue()
+    public void addSongToQue() throws IOException
     {
         playerManager.tmpTester();
         //queues.addAll(songs);
