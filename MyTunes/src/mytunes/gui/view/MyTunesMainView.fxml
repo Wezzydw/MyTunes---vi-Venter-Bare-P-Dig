@@ -86,7 +86,7 @@
                   <ListView fx:id="listViewSongInfo" fixedCellSize="0.0" prefHeight="200.0" prefWidth="199.0" />
                   <VBox prefHeight="200.0" prefWidth="278.0" style="-fx-background-color: black;">
                      <children>
-                        <ListView fx:id="listViewQueue" onDragDetected="#quedetected" onDragDone="#quedone" onDragDropped="#quedropped" onDragEntered="#queentered" onDragExited="#queexited" onDragOver="#queover" onMouseClicked="#MouseSelection" onMouseDragEntered="#queentered" onMouseDragExited="#queexited" onMouseDragOver="#queover" onMouseDragReleased="#quereleased" onMouseReleased="#queMouseRelease" prefHeight="250.0" prefWidth="280.0">
+                        <ListView fx:id="listViewQueue" onMouseClicked="#MouseSelection" prefHeight="250.0" prefWidth="280.0">
                            <cursor>
                               <Cursor fx:constant="CROSSHAIR" />
                            </cursor></ListView>

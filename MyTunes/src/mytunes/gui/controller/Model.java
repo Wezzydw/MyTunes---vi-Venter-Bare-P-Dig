@@ -226,7 +226,9 @@ public class Model
     {
         playerManager.makeSliderForPlayBack(sliderPlayback);
     }
-
-    
+    public void updateSong(Song song)
+    {
+        playerManager.updateSong(song);
+    }
 
 }
