@@ -45,13 +45,13 @@ public class PlayerManager
         sdao = new SongDAO();
         pDAO = new PlaylistDAO();
         songQueue.addAll(setdao.queueList());
-        
+
         checkForSongsSomewhere();
     }
 
     private void checkForSongsSomewhere()
     {
-        
+
         if (player == null)
         {
             if (!songQueue.isEmpty())
@@ -69,41 +69,55 @@ public class PlayerManager
     {
         return songQueue;
     }
+
     /*
         returner den sang som spiller lige nu
-    */
+     */
     public ObservableList<String> getNowPlaying()
-    { 
+    {
         if (player == null)
+        {
             return nowPlaying;
-        else return player.getNowPlaying();
-                    
+        } else
+        {
+            return player.getNowPlaying();
+        }
+
     }
+
     /*
         Tilføjer den valgte sang til queuedsongs
-    */
+     */
     public void addSongToQue(List<Song> songs)
     {
         System.out.println("hejlle");
+        if (player != null)
+        {
+
+            player.addSongsToQueue(songs);
+        }
         songQueue.addAll(songs);
         checkForSongsSomewhere();
-        player.addSongsToQueue(songs);
     }
+
     /*
         fjerner den valgte sang fra Queuen
-    */
+     */
     public void removeSongFromQue(List<Song> toRemove)
-    {   
+    {
         //Var nødt til at fjerne baglæns ellers gik der ged i det
-        for(int i = toRemove.size() - 1; i >= 0; i--)
+        for (int i = toRemove.size() - 1; i >= 0; i--)
         {
             songQueue.remove(toRemove.get(i));
         }
-            
+        player.removeSongsFromQueue(songQueue);
+        
+
     }
+
     /*
         giver muligheden for at ændrer opsætningen af ens playlist
-    */
+     */
     public void queMisc()
     {
         comboBoxMisc.setItems(FXCollections.observableArrayList("reverseList", "randomiseList", "sortByTitle"));
@@ -113,7 +127,7 @@ public class PlayerManager
 
     /*
     Henter alle playlister ned
-    */
+     */
     public List<Playlist> getAllPlaylists()
     {
         return pDAO.getAllPlaylists();
@@ -121,21 +135,23 @@ public class PlayerManager
 
     /*
     Henter alle sange ned
-    */
+     */
     public List<Song> getAllSongs()
     {
-        if(sdao.getAllSongsFromDB() != null)
+        if (sdao.getAllSongsFromDB() != null)
+        {
             return sdao.getAllSongsFromDB();
-        else return null;
+        } else
+        {
+            return null;
+        }
     }
+
     public void updateSong(Song song)
     {
         sdao.updateSong(song);
     }
-    
 
-  
-    
 //    public void getSongInfo()
 //    {
 ////        System.out.println("in getSongInfo");
@@ -152,7 +168,7 @@ public class PlayerManager
 //    }
     /*
     Afspiller en sang, hvis en sang ikke spilles.
-    */
+     */
     public void playSong()
     {
         if (player != null)
@@ -160,9 +176,10 @@ public class PlayerManager
             player.playSong();
         }
     }
+
     /*
     Sætter den sang der spiller på pause
-    */
+     */
     public void pauseSong()
     {
         if (player != null)
@@ -170,24 +187,26 @@ public class PlayerManager
             player.pauseSong();
         }
     }
+
     /*
     ændrer volumen på lyden er sat på ved brug af en slider
-    */
+     */
     public void changeVolume(double vol)
     {
         if (player != null)
         {
             player.changevolume(vol);
-        }
-        else {
-            
-            volumeFromDB = vol*100;
+        } else
+        {
+
+            volumeFromDB = vol * 100;
             System.out.println("saved volume from db " + volumeFromDB);
         }
     }
+
     /*
     går 1 sang tilbage og afspiller den igen
-    */
+     */
     public void playPrevSong()
     {
         if (player != null)
@@ -195,9 +214,10 @@ public class PlayerManager
             player.playPrevSong();
         }
     }
+
     /*
     Går videre til næste sang og afspiller den
-    */
+     */
     public void playNextSong()
     {
         if (player != null)
@@ -205,9 +225,10 @@ public class PlayerManager
             player.playNextSong();
         }
     }
+
     /*
     Får den nuværende sang til at afspille igen
-    */
+     */
     public void repeatHandler()
     {
         if (player != null)
@@ -215,10 +236,11 @@ public class PlayerManager
             player.repeatHandler();
         }
     }
+
     /*
     Kalder Shuffle metoden, som gør at playlisten bliver randomised ved sang
     skift
-    */
+     */
     public void shuffleHandler()
     {
         if (player != null)
@@ -226,18 +248,20 @@ public class PlayerManager
             player.shuffleHandler();
         }
     }
+
     /*
     en tester ????????
-    */
+     */
     public void tmpTester()
     {
         System.out.println("test");
         songQueue.addAll(sdao.getAllSongsFromDB());
         checkForSongsSomewhere();
     }
+
     /*
     kalder slideren der viser hvor langt sangens spilletid er nået
-    */
+     */
     public void makeSliderForPlayBack(Slider sliderPlayback)
     {
         this.sliderPlayback = sliderPlayback;
