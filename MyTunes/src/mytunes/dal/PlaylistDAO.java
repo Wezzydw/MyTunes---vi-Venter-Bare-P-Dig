@@ -32,7 +32,9 @@ public class PlaylistDAO
     {
         this.conProvider = new DatabaseConnection();
     }
-
+    /*
+        addSelection metoden connectes til databasen og returnere en playlist
+    */
     public Playlist addSelection(List<Song> songs, Playlist playlist)
     {
 
@@ -51,7 +53,9 @@ public class PlaylistDAO
 
         return playlist;
     }
-
+    /*
+    addPlaylist connectes til databasen
+    */
     public void addPlaylist(Playlist plist)
     {
 
@@ -72,7 +76,9 @@ public class PlaylistDAO
             ex.printStackTrace();
         }
     }
-
+    /*
+    Playlist A og Playlist B danner sammen nyPlaylist
+    */
     public Playlist mergePlaylist(Playlist A, Playlist B, String Title)
     {
         Playlist np = new Playlist(Title);
@@ -82,7 +88,9 @@ public class PlaylistDAO
         }
         return np;
     }
-
+    /*
+        bliver connectet til databasen kan tagee en liste af sange og opdatere dem i playlisten 
+    */
     public Playlist getPlaylist(String query)
     {
         List<Song> playlistSongs = new ArrayList();
@@ -123,10 +131,9 @@ public class PlaylistDAO
         return null;
     }
 
-    /**
-     *
-     * @param toBeRemoved
-     */
+    /*
+        connectes til databasen og kan remove de markerede
+    */
     public void removeSelection(List<Song> toBeRemoved)
     {
         try (Connection con = conProvider.getConnection())
@@ -142,7 +149,9 @@ public class PlaylistDAO
             ex.printStackTrace();
         }
     }
-
+    /*
+    connectes til databasen og kan tage fat i alle playlists og laver en ny list
+    */
     public List<Playlist> getAllPlaylists()
     {
 
@@ -168,12 +177,10 @@ public class PlaylistDAO
         return playlists;
     }
 
-    /**
-     *
-     * @param title
-     * @throws IOException
-     * @throws SQLException
-     */
+    /*
+        connectes til databasen og kan delete playlister 
+    */
+ 
     public void deletePlaylist(String title) throws IOException, SQLException
     {
         try (Connection con = conProvider.getConnection())
@@ -194,13 +201,10 @@ public class PlaylistDAO
         }
     }
 
-    /**
-     *
-     * @param title
-     * @param newTitle
-     * @throws SQLException
-     * @throws IOException
-     */
+    /*
+    connectes til databasen og gør det muligt at ændrer navnet på en eksisterende
+    playlist
+    */
     public void renamePlaylist(String title, String newTitle) throws SQLException, IOException
     {
         // Playlist p = getPlaylist(title);  //tilføjet typecast for at få denne til at virke
@@ -226,7 +230,9 @@ public class PlaylistDAO
             ex.printStackTrace();
         }
     }
-
+    /*
+    
+    */
     public void writeChanges() throws IOException
     {
         List<Playlist> allPlaylists = new PlaylistDAO().getAllPlaylists();
