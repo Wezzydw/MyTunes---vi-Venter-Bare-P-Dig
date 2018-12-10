@@ -172,7 +172,7 @@
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Button>
-                  <Button mnemonicParsing="false" onAction="#onHandlePlaylistAdd" style="-fx-background-color: black; -fx-border-color: green;" text="Add" textFill="#00ff1d">
+                  <Button mnemonicParsing="false" onAction="#onHandleAddFolder" style="-fx-background-color: black; -fx-border-color: green;" text="Add" textFill="#00ff1d">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Button>
