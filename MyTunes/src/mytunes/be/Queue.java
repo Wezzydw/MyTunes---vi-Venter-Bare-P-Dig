@@ -26,14 +26,10 @@ public class Queue
      */
     public void addSelection(List<Song> songs)
     {
-        int i = 0;
         this.songs = songs;
         for (Song s : songs)
         {
-
             queue.add(new Media(new File(s.getFilePath()).toURI().toString()));
-            i++;
-
         }
     }
     

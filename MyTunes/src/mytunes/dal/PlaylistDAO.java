@@ -88,10 +88,12 @@ public class PlaylistDAO
         }
         return np;
     }
+
     /*
         bliver connectet til databasen kan tage en liste af sange og opdatere dem i playlisten 
     */
     public Playlist getPlaylist(String query)
+
     {
         List<Song> playlistSongs = new ArrayList();
         List<Song> allSongs = sDAO.getAllSongsFromDB();

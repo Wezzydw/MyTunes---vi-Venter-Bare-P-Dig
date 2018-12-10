@@ -136,7 +136,7 @@ public class SettingsDAO
         }
         return queueList;
     }
-    
+
     /**
      * 
      * @returnerer en liste af sange fra queuen.
