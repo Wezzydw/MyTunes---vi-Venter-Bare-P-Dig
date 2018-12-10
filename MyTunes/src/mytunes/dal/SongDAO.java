@@ -182,9 +182,12 @@ public class SongDAO
     {
         try (Connection con = conProvider.getConnection())
         {
-            Statement statement =  con.createStatement();
-            statement.executeQuery("SELECT * FROM Songs;");
-            statement.executeQuery("DELETE FROM Songs WHERE Id =" + song.getId() + ";");
+            String a = "DELETE FROM Songs WHERE Id =" + song.getId() + ";";
+            PreparedStatement prst = con.prepareStatement(a);
+            prst.execute();
+//            Statement statement =  con.createStatement();
+//            statement.executeQuery("SELECT * FROM Songs;");
+//            statement.executeQuery("DELETE FROM Songs WHERE Id =" + song.getId() + ";");
         } catch (SQLException ex)
         {
             ex.printStackTrace();
@@ -226,11 +229,17 @@ public class SongDAO
         //Jeg vil gerne have et check om filen faktisk eksisterer her;
         List<Song> allSongs = new ArrayList();
         try (Connection con = conProvider.getConnection())
-        {
+        {   
+//            String a = "SELECT * FROM Songs;";
+//            PreparedStatement prst = con.prepareStatement(a);
+//            prst.getMoreResults(); //tror dette vil virke i stedet for rs.next
+            
             Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM Songs;");
+            
             while (rs.next())
             {
+                
                 String title = rs.getString("Title");
                 String author = rs.getString("Author");
                 String album = rs.getString("Album");
@@ -285,13 +294,13 @@ public class SongDAO
     {
         //List<Song> allSongs = new SongDAO().getAllSongs();
         System.out.println("WRITECHANGES ");
-        SQLServerDataSource ds = new SQLServerDataSource();
-        ds.setServerName("10.176.111.31");
-        ds.setDatabaseName("MyTunes1");
-        ds.setUser("CS2018A_20");
-        ds.setPassword("CS2018A_20");
+//        SQLServerDataSource ds = new SQLServerDataSource();
+//        ds.setServerName("10.176.111.31");
+//        ds.setDatabaseName("MyTunes1");
+//        ds.setUser("CS2018A_20");
+//        ds.setPassword("CS2018A_20");
         String a = "INSERT INTO Songs (Title, Author, Album, Categori, Filepath, Length, ReleaseYear) VALUES (?,?,?,?,?,?,?);";
-        try (Connection con = ds.getConnection())
+        try (Connection con = conProvider.getConnection())
         {
             for (Song song : allSongs)
             {
