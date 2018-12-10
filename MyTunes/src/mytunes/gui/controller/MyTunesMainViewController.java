@@ -163,7 +163,7 @@ public class MyTunesMainViewController implements Initializable
     @FXML
     private void onHandleAdd(ActionEvent event) throws IOException
     {
-        model.addSongToQue();
+        model.addSongToQue(listViewAllSongs.getSelectionModel().getSelectedItems());
         listNowPlaying.setItems(model.getNowPlaying());
         listViewSongInfo.setItems(model.getNowPlaying());
         //listViewQueue.getItems().addAll(model.getQuedSongs());
@@ -173,7 +173,7 @@ public class MyTunesMainViewController implements Initializable
     @FXML
     private void onHandleRemove(ActionEvent event) throws IOException
     {
-        model.removeSong(null); //flyttes en sang i fra gui'en.
+        model.removeSongsFromQue(listViewQueue.getSelectionModel().getSelectedItems());
     }
     
     @FXML
@@ -193,7 +193,7 @@ public class MyTunesMainViewController implements Initializable
     
     
     @FXML
-    private void onHandleAddFolder(ActionEvent event) throws IOException
+    private void onHandleAddFolder(ActionEvent event) throws IOException, InterruptedException
     {
         Stage stage = (Stage) borderPane.getScene().getWindow();
         model.SelectFolder(stage);

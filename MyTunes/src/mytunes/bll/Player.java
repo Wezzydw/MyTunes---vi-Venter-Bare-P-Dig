@@ -225,22 +225,22 @@ public class Player {
         List<String> MetaList = FXCollections.observableArrayList();
         System.out.println("in getmetadata");
         if (son.getTitle() != null) {
-            MetaList.add("title;" + son.getTitle());
+            MetaList.add(son.getTitle());
         }
         if (son.getAuthor() != null) {
-            MetaList.add("author;" + son.getAuthor());
+            MetaList.add(son.getAuthor());
         }
         if (son.getCategori() != null) {
-            MetaList.add("categori;" + son.getCategori());
+            MetaList.add(son.getCategori());
         }
         if (son.getReleaseYear() != null) {
-            MetaList.add("releaseyear;" + son.getReleaseYear());
+            MetaList.add(son.getReleaseYear());
         }
         if (son.getAlbum() != null) {
-            MetaList.add("album;" + son.getAlbum());
+            MetaList.add(son.getAlbum());
         }
         if (son.getLength() != null) {
-            MetaList.add("length;" + son.getLength());
+            MetaList.add(son.getLength());
         }
 
         return MetaList;

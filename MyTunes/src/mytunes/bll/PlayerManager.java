@@ -86,14 +86,20 @@ public class PlayerManager
     {
         System.out.println("hejlle");
         songQueue.addAll(songs);
+        checkForSongsSomewhere();
         player.addSongsToQueue(songs);
     }
     /*
         fjerner den valgte sang fra Queuen
     */
-    public void removeSongFromQue()
-    {
-            //To be done
+    public void removeSongFromQue(List<Song> toRemove)
+    {   
+        //Var nødt til at fjerne baglæns ellers gik der ged i det
+        for(int i = toRemove.size() - 1; i >= 0; i--)
+        {
+            songQueue.remove(toRemove.get(i));
+        }
+            
     }
     /*
         giver muligheden for at ændrer opsætningen af ens playlist
@@ -118,7 +124,9 @@ public class PlayerManager
     */
     public List<Song> getAllSongs()
     {
-        return sdao.getAllSongsFromDB();
+        if(sdao.getAllSongsFromDB() != null)
+            return sdao.getAllSongsFromDB();
+        else return null;
     }
     public void updateSong(Song song)
     {

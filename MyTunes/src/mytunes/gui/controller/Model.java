@@ -176,9 +176,9 @@ public class Model
         
     }
 
-    public void addSongToQue() throws IOException
+    public void addSongToQue(ObservableList<Song> toAdd) throws IOException
     {
-        playerManager.tmpTester();
+        playerManager.addSongToQue(toAdd);
         //queues.addAll(songs);
         //player.addSongsToQueue(getSongs());
 //       queues.addAll(getSongs());
@@ -186,9 +186,9 @@ public class Model
 //       player.addSongsToQueue(queues);
     }
 
-    public void removeSongFromQue()
+    public void removeSongsFromQue(List<Song> toRemove)
     {
-        playerManager.removeSongFromQue();
+        playerManager.removeSongFromQue(toRemove);
     }
 
     public void queComboBox()
@@ -197,7 +197,7 @@ public class Model
 
     }
 
-    public void SelectFolder(Stage stage) throws IOException
+    public void SelectFolder(Stage stage) throws IOException, InterruptedException
     {
 
         DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -210,7 +210,29 @@ public class Model
         {
             String path = selectedDirectory.getAbsolutePath();
             File file = new File(path);
-            songs.addAll(sDAO.addFolder(file));
+            List<Song> toBeRenamed = sDAO.addFolder(file);
+            
+            
+            
+             Thread t = new Thread(new Runnable()
+        {
+            
+            /*
+            ???++
+            */
+            @Override
+            public void run()
+            {
+                while(sDAO.getNumberOfUnReadySongs() != 0)
+            {
+                //System.out.println("inModel " + sDAO.getNumberOfUnReadySongs());
+                songs.addAll(toBeRenamed);
+            }
+            }
+        });
+             t.start();
+            
+            
             
             
         //sdao.writeChanges();

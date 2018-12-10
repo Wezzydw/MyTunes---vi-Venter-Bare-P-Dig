@@ -118,6 +118,6 @@ public class Song
 
     public String toString()
     {
-        return "Title: " + title + "Year :" + releaseYear;
+        return title + " " + releaseYear;
     }
 }
