@@ -72,7 +72,7 @@
                   <ColorAdjust />
                </effect>
             </HBox>
-            <ListView fx:id="listViewLibrary" onDragDone="#HandleDragDone" prefHeight="347.0" prefWidth="285.0">
+            <ListView fx:id="listViewLibrary" onDragDone="#HandleDragDone" onMouseClicked="#PlaylistsMouseClick" prefHeight="347.0" prefWidth="285.0">
                <effect>
                   <ColorAdjust />
                </effect></ListView>

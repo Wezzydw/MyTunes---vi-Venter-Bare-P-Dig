@@ -82,16 +82,9 @@ public class Model
     
     public void librarySelection(Playlist selectedPlaylist)
     {
-        System.out.println("here");
-        for (Playlist plist : playlists)
-        {
-            if(selectedPlaylist.equals(plist))
-            {
-                System.out.println("Did it work");
-                songs = FXCollections.observableArrayList(plist.getSongsInPlaylist());
-            }
-        }
-        //songs = FXCollections.observableArrayList(playlists.get(0).getSongsInPlaylist());
+        
+                songs.setAll(selectedPlaylist.getSongsInPlaylist());
+
     }
 
     /**
