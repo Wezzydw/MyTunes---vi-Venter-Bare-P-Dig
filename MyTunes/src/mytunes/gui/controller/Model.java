@@ -188,6 +188,7 @@ public class Model
 
     public void removeSong(Song song) throws IOException
     {
+        System.out.println("er det her delete ligger");
         sDAO.deleteSong(song);
         songs.remove(song);
     }
@@ -283,5 +284,7 @@ public class Model
             }
         }
     }
+    
+    
 
 }
