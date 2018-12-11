@@ -60,6 +60,7 @@ public class PlaylistDAO
     /*
     addPlaylist connectes til databasen
     */
+    // Tilslutter, eller kører vi the julekalender stil?
     public void addPlaylist(Playlist plist)
     {
 
@@ -104,8 +105,9 @@ public class PlaylistDAO
         List<Integer> tempId = new ArrayList();
         try (Connection con = conProvider.getConnection())
         {
-            PreparedStatement statement = (PreparedStatement) con.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM Playlist;");
+            String a = "SELECT * FROM Playlist;";
+            PreparedStatement pstmt = con.prepareStatement(a);
+            ResultSet rs = pstmt.executeQuery();
             while (rs.getString("Title") == query)
             {
                 tempId.add(rs.getInt("SongId"));
@@ -144,11 +146,14 @@ public class PlaylistDAO
     {
         try (Connection con = conProvider.getConnection())
         {
-            PreparedStatement statement = (PreparedStatement) con.createStatement();
-            statement.executeQuery("SELECT * FROM Playlist;");
+            
+            
             for (Song song : toBeRemoved)
             {
-                statement.executeQuery("DELETE FROM Playlist WHERE SongId =" + song.getId() + ";");
+                String a = "DELETE FROM Playlist WHERE SongId =" + song.getId() + ";";
+                PreparedStatement pstmt = con.prepareStatement(a);
+                pstmt.execute();
+                pstmt.close();
             }
         } catch (Exception ex)
         {
@@ -166,11 +171,11 @@ public class PlaylistDAO
         try (Connection con = conProvider.getConnection())
         {
 
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM Playlists;");
+            String a = "SELECT * FROM Playlists;";
+            PreparedStatement pstmt = con.prepareStatement(a);
+            ResultSet rs = pstmt.executeQuery();
             while (rs.next())
             {
-
                 String title = rs.getString("title");
                 Playlist playlist = new Playlist(title);
                 playlists.add(playlist);
@@ -186,11 +191,15 @@ public class PlaylistDAO
     /*
         connectes til databasen og kan delete playlister 
     */
- 
+
+    
+    //Der er noget glat med denne funktion og jeg er ikke helt klar over hvad vi vil have den til at gøre
+    //Hvis den skal slætte en hel playlist, skal den også slette den i DB Playlists? 
     public void deletePlaylist(String title) throws IOException, SQLException
     {
         try (Connection con = conProvider.getConnection())
         {
+            
             Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery("Select * FROM Playlist;");
             {
@@ -216,16 +225,17 @@ public class PlaylistDAO
         // Playlist p = getPlaylist(title);  //tilføjet typecast for at få denne til at virke
         // p.setTitle(newTitle);
 
-        try
+        try(Connection con = conProvider.getConnection())
         {
-            DatabaseConnection dc = new DatabaseConnection();
-            Connection con = dc.getConnection();
+            
             Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery("Select * FROM Playlist;");
+            //Behøver vi et whileloop? og skal den rename to steder? altså i DB Playlist og DB Playlists???
             while (rs.next())
             {
-                PreparedStatement pstmt = con.prepareStatement("UPDATE Playlist SET Title = (?) WHERE movie = (?) AND [user] = (?)");
+                PreparedStatement pstmt = con.prepareStatement("UPDATE Playlist SET Title = (?) WHERE Title = (?) ;");
                 pstmt.setString(1, newTitle);
+                pstmt.setString(2, title);
                 pstmt.execute();
                 pstmt.close();
                 System.out.println("Playlist found - and updated!");
@@ -242,12 +252,8 @@ public class PlaylistDAO
     public void writeChanges() throws IOException
     {
         List<Playlist> allPlaylists = new PlaylistDAO().getAllPlaylists();
-        SQLServerDataSource ds = new SQLServerDataSource();
-        ds.setServerName("10.176.111.31");
-        ds.setDatabaseName("MyTunes1");
-        ds.setUser("CS2018A_20");
-        ds.setPassword("CS2018A_20");
-        try (Connection con = ds.getConnection())
+        
+        try (Connection con = conProvider.getConnection())
         {
             for (Playlist playlist : allPlaylists)
             {

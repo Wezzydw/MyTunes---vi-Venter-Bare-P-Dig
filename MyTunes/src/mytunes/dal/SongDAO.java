@@ -242,12 +242,9 @@ public class SongDAO
         List<Song> allSongs = new ArrayList();
         try (Connection con = conProvider.getConnection())
         {   
-//            String a = "SELECT * FROM Songs;";
-//            PreparedStatement prst = con.prepareStatement(a);
-//            prst.getMoreResults(); //tror dette vil virke i stedet for rs.next
-            
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM Songs;");
+            String a = "SELECT * FROM Songs;";
+            PreparedStatement prst = con.prepareStatement(a);
+            ResultSet rs = prst.executeQuery();
             
             while (rs.next())
             {

@@ -10,7 +10,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import mytunes.be.Playlist;
@@ -66,12 +65,12 @@ public class SettingsDAO
         double vol = 0;
         try (Connection con = conProvider.getConnection())
         {
-//            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Settings;"); test dette og se om det virker
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM Settings;");
+            String a = "SELECT * FROM Settings;";
+            PreparedStatement pstmt = con.prepareStatement(a);
+            ResultSet rs = pstmt.executeQuery();
             while (rs.next())
             {
-//                vol = pstmt.getResultSet().getDouble("Volume");
+
                 vol = rs.getDouble("Volume");
 
             }
@@ -92,13 +91,12 @@ public class SettingsDAO
         int songId = 0;
         try (Connection con = conProvider.getConnection())
         {
-            //PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Settings;");
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM Settings;");
+            String a = "SELECT * FROM Settings;";
+            PreparedStatement pstmt = con.prepareStatement(a);
+            ResultSet rs = pstmt.executeQuery();
             while (rs.next())
             {
                 songId = rs.getInt("lastSong");
-//                songId = pstmt.getResultSet().getInt("lastSong");
             }
         } catch (SQLException ex)
         {
@@ -125,10 +123,9 @@ public class SettingsDAO
         String queueList = "";
         try (Connection con = conProvider.getConnection())
         {
-//            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Settings;");
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM Settings;");
-//            pstmt.getMoreResults(); //tror dette virker i steded for rs.next, men skal prøve det i en af functionerne
+            String a = "SELECT * FROM Settings;";
+            PreparedStatement pstmt = con.prepareStatement(a);
+            ResultSet rs = pstmt.executeQuery();
             while (rs.next())
             {
                 queueList = rs.getString("lastQueue");
