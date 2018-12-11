@@ -65,7 +65,7 @@ public class PlaylistDAO
 
         try (Connection con = conProvider.getConnection())
         {
-            for (Song song : plist.getPlaylist())
+            for (Song song : plist.getSongsInPlaylist())
             {
                 try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO Playlist (Title, SongId) VALUES (?,?)"))
                 {
@@ -88,7 +88,7 @@ public class PlaylistDAO
         Playlist np = new Playlist(Title);
         for (int i = 0; 1 < A.getSize(); i++)
         {
-            np.addSong(A.getSong(i));
+//            np.addSong(A.getSong(i));
         }
         return np;
     }

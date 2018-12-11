@@ -29,6 +29,7 @@ public class PlayerManager
 
     private ObservableList<Song> songQueue;
     private ObservableList<String> nowPlaying;
+    private ObservableList<Playlist> playlists;
     private ComboBox<String> comboBoxMisc;
     private SongDAO sdao;
     private PlaylistDAO pDAO;
@@ -45,8 +46,18 @@ public class PlayerManager
         sdao = new SongDAO();
         pDAO = new PlaylistDAO();
         songQueue.addAll(setdao.queueList());
-
         checkForSongsSomewhere();
+        playlists = FXCollections.observableArrayList();
+        playlists.addAll(getSavedPlaylists());
+    }
+    
+    public List<Playlist> getSavedPlaylists()
+    {
+//        List<Playlist> initPlaylists = new ArrayList();
+//        initPlaylists.add(new Playlist("AllSongs"));
+//        initPlaylists.add(new Playlist("Tester"));
+//        initPlaylists.addAll(pDAO.getAllPlaylists());
+        return pDAO.getAllPlaylists();
     }
 
     private void checkForSongsSomewhere()
@@ -130,7 +141,7 @@ public class PlayerManager
      */
     public List<Playlist> getAllPlaylists()
     {
-        return pDAO.getAllPlaylists();
+        return playlists;
     }
 
     /*

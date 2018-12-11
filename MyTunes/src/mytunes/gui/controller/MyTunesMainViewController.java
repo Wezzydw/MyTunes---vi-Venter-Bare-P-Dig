@@ -99,7 +99,7 @@ public class MyTunesMainViewController implements Initializable
         listViewAllSongs.setItems(model.getSongs());
         listViewSongInfo.setItems(model.getNowPlaying());
         listViewQueue.setItems(model.getQuedSongs());
-        listViewLibrary.setItems(model.getPlayList());
+        listViewLibrary.setItems(model.getPlayLists());
         listNowPlaying.setItems(model.getNowPlaying());
         listViewAllSongs.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         listViewQueue.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -398,6 +398,12 @@ public class MyTunesMainViewController implements Initializable
     @FXML
     private void queueOnDragDropped(DragEvent event)
     {System.out.println("queueOnDragDropped");
+    }
+
+    @FXML
+    private void PlaylistsMouseClick(MouseEvent event)
+    {
+        model.librarySelection(listViewLibrary.getSelectionModel().getSelectedItem());
     }
     
 

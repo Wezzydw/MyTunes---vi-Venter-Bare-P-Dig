@@ -36,7 +36,7 @@ public class Model
     private ObservableList<Song> songs;
     private ObservableList<Song> queues;
     private ObservableList<String> songinfo;
-    private ObservableList<Playlist> playlist;
+    private ObservableList<Playlist> playlists;
     private PlayerManager playerManager;
     private Search songsearcher;
     private Player player;
@@ -48,7 +48,7 @@ public class Model
     public Model() throws IOException
     {
         songinfo = FXCollections.observableArrayList();
-        playlist = FXCollections.observableArrayList();
+        playlists = FXCollections.observableArrayList();
         songs = FXCollections.observableArrayList();
         songsearcher = new Search();
         playerManager = new PlayerManager();
@@ -56,12 +56,42 @@ public class Model
         pDAO = new PlaylistDAO();
         empty = new ArrayList();
         //songinfo = FXCollections.observableArrayList(playerManager.getSongInfo());
-        songs = FXCollections.observableArrayList(playerManager.getAllSongs());
-        playlist = FXCollections.observableArrayList(playerManager.getAllPlaylists());
+        //songs = FXCollections.observableArrayList(playerManager.getAllSongs());
+        playlists = FXCollections.observableArrayList(playerManager.getAllPlaylists());
         addPlaylist = new ArrayList();
         setDAO = new SettingsDAO();
-        
+        playlistInitFilling();
         System.out.println(setDAO.lastSetVolume());
+//        playlists.get(0).addSongSelection(playerManager.getAllSongs());
+//        songs = FXCollections.observableArrayList(playlists.get(0).getSongsInPlaylist());
+    }
+    
+    private void playlistInitFilling()
+    {
+        Playlist tester = new Playlist("TesterAllSogns");
+        System.out.println("Size of getallsongs " + playerManager.getAllSongs().size());
+        playlists.add(tester);
+        tester.addSongSelection(playerManager.getAllSongs());
+        playlists.add(new Playlist("All Songs"));
+        playlists.add(new Playlist("tester"));
+        //playlists.get(0).addSongSelection(playerManager.getAllSongs());
+        System.out.println(playlists.size());
+        songs = FXCollections.observableArrayList(playlists.get(0).getSongsInPlaylist());
+        
+    }
+    
+    public void librarySelection(Playlist selectedPlaylist)
+    {
+        System.out.println("here");
+        for (Playlist plist : playlists)
+        {
+            if(selectedPlaylist.equals(plist))
+            {
+                System.out.println("Did it work");
+                songs = FXCollections.observableArrayList(plist.getSongsInPlaylist());
+            }
+        }
+        //songs = FXCollections.observableArrayList(playlists.get(0).getSongsInPlaylist());
     }
 
     /**
@@ -81,9 +111,9 @@ public class Model
         return playlist;
     }
 
-    public ObservableList<Playlist> getPlayList()
+    public ObservableList<Playlist> getPlayLists()
     {
-        return playlist;
+        return playlists;
     }
 
     public ObservableList<Song> getQuedSongs()
