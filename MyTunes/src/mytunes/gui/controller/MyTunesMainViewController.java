@@ -32,7 +32,9 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyCode;
+import static javafx.scene.input.KeyCode.T;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
@@ -107,6 +109,7 @@ public class MyTunesMainViewController implements Initializable
         System.out.println("Slider " + sliderVol.getValue());
         model.changeVolume(model.getSliderVolumeFromDB());
         model.sendSliderForPlayback(sliderPlayback);
+        listViewLibrary.editableProperty().setValue(Boolean.TRUE);
         
     }
     
@@ -313,7 +316,7 @@ public class MyTunesMainViewController implements Initializable
     @FXML
     private void onHandlePlaylistAdd(ActionEvent event)
     {
-//        listViewSongInfo.setItems(model.get());
+        model.addToPlaylist(listViewLibrary.getSelectionModel().getSelectedItem(), listViewAllSongs.getSelectionModel().getSelectedItems());
     }
 
     @FXML
@@ -400,11 +403,39 @@ public class MyTunesMainViewController implements Initializable
     {System.out.println("queueOnDragDropped");
     }
 
+    Long lastTime = 0L;
     @FXML
     private void PlaylistsMouseClick(MouseEvent event)
     {
-        model.librarySelection(listViewLibrary.getSelectionModel().getSelectedItem());
+        
+        long timeDiff = 0;
+        long currentTime = System.currentTimeMillis();
+        
+        if(lastTime != 0 && currentTime !=0)
+        {
+            timeDiff = currentTime - lastTime;
+            if(timeDiff <= 215)
+                model.librarySelection(listViewLibrary.getSelectionModel().getSelectedItem());
+            else
+                System.out.println("singleclick");
+        }
+        lastTime = currentTime;
+        
     }
+
+
+
+    private void lstTextChanged(InputMethodEvent event)
+    {
+        System.out.println("Tester lige her tak");
+    }
+
+    @FXML
+    private void lstViewTextChanged(InputMethodEvent event)
+    {System.out.println("Tester lige her takny");
+    }
+
+
     
 
 }

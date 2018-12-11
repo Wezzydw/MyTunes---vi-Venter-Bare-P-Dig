@@ -65,7 +65,7 @@ public class Model
 //        playlists.get(0).addSongSelection(playerManager.getAllSongs());
 //        songs = FXCollections.observableArrayList(playlists.get(0).getSongsInPlaylist());
     }
-    
+
     private void playlistInitFilling()
     {
         Playlist tester = new Playlist("TesterAllSogns");
@@ -77,14 +77,12 @@ public class Model
         //playlists.get(0).addSongSelection(playerManager.getAllSongs());
         System.out.println(playlists.size());
         songs = FXCollections.observableArrayList(playlists.get(0).getSongsInPlaylist());
-        
+
     }
-    
+
     public void librarySelection(Playlist selectedPlaylist)
     {
-        
-                songs.setAll(selectedPlaylist.getSongsInPlaylist());
-
+        songs.setAll(selectedPlaylist.getSongsInPlaylist());
     }
 
     /**
@@ -95,13 +93,12 @@ public class Model
         //return playerManager.getSongInfo();
         return null;
     }
+    
+   
 
-  
-    public List<Playlist> createPlaylist()
+    public void createPlaylist()
     {
-        List<Playlist> playlist = new ArrayList();
         
-        return playlist;
     }
 
     public ObservableList<Playlist> getPlayLists()
@@ -124,9 +121,10 @@ public class Model
         }
         return songs;
     }
+
     public ObservableList<String> getNowPlaying()
     {
-       return playerManager.getNowPlaying();
+        return playerManager.getNowPlaying();
     }
 
     /*
@@ -145,14 +143,14 @@ public class Model
     public void changeVolume(double vol)
     {
         //System.out.println("model change volume " + vol);
-        playerManager.changeVolume(vol/100);
+        playerManager.changeVolume(vol / 100);
     }
 
     public void UpdateVolume(double vol)
     {
         setDAO.updateVolume(vol / 100);
     }
-    
+
     public double getSliderVolumeFromDB()
     {
         return setDAO.lastSetVolume();
@@ -180,7 +178,7 @@ public class Model
 
     public void searcher(String query) throws IOException
     {
-       songs.setAll(songsearcher.searcher(query));
+        songs.setAll(songsearcher.searcher(query));
     }
 
     public void addSong(Song song)
@@ -196,7 +194,7 @@ public class Model
 
     public void editSong()
     {
-        
+
     }
 
     public void addSongToQue(ObservableList<Song> toAdd) throws IOException
@@ -234,31 +232,26 @@ public class Model
             String path = selectedDirectory.getAbsolutePath();
             File file = new File(path);
             List<Song> toBeRenamed = sDAO.addFolder(file);
-            
-            
-            
-             Thread t = new Thread(new Runnable()
-        {
-            
-            /*
+
+            Thread t = new Thread(new Runnable()
+            {
+
+                /*
             ???++
-            */
-            @Override
-            public void run()
-            {
-                while(sDAO.getNumberOfUnReadySongs() != 0)
-            {
-                //System.out.println("inModel " + sDAO.getNumberOfUnReadySongs());
-                songs.addAll(toBeRenamed);
-            }
-            }
-        });
-             t.start();
-            
-            
-            
-            
-        //sdao.writeChanges();
+                 */
+                @Override
+                public void run()
+                {
+                    while (sDAO.getNumberOfUnReadySongs() != 0)
+                    {
+                        //System.out.println("inModel " + sDAO.getNumberOfUnReadySongs());
+                        songs.addAll(toBeRenamed);
+                    }
+                }
+            });
+            t.start();
+
+            //sdao.writeChanges();
         }
 
         playerManager.getAllSongs();
@@ -269,14 +262,26 @@ public class Model
 
         //Do something with view here
     }
-    
+
     public void sendSliderForPlayback(Slider sliderPlayback)
     {
         playerManager.makeSliderForPlayBack(sliderPlayback);
     }
+
     public void updateSong(Song song)
     {
         playerManager.updateSong(song);
+    }
+    
+    public void addToPlaylist(Playlist selectedPlaylist, List<Song> songSelection)
+    {
+        for (Playlist playlist : playlists)
+        {
+            if (playlist.equals(selectedPlaylist))
+            {
+                playlist.addSongSelection(songSelection);
+            }
+        }
     }
 
 }
