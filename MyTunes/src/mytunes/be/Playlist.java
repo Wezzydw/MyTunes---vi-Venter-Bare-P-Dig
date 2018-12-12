@@ -5,6 +5,7 @@
  */
 package mytunes.be;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,7 +17,18 @@ public class Playlist
 
     String title;
     List<Song> playlist;
+    
+      public Playlist(String title)
+    {
+        playlist = new ArrayList();
+        this.title = title;
+    }
 
+    
+    public List<Song> CreatePlaylist()
+    {
+            return playlist;
+    }
     public String getTitle()
     {
         return title;
@@ -27,7 +39,7 @@ public class Playlist
         this.title = title;
     }
 
-    public List<Song> getPlaylist()
+    public List<Song> getSongsInPlaylist()
     {
         return playlist;
     }
@@ -37,14 +49,10 @@ public class Playlist
         this.playlist = playlist;
     }
 
-    public Playlist(String title)
+  
+    public void addSongSelection(List<Song> songs)
     {
-        this.title = title;
-    }
-
-    public void addSong(Song song)
-    {
-        playlist.add(song);
+        playlist.addAll(songs);
     }
 
     public void deleteSong(Song song)
@@ -62,4 +70,8 @@ public class Playlist
         return playlist.size();
     }
 
+    public String toString()
+    {
+        return title;
+    }
 }

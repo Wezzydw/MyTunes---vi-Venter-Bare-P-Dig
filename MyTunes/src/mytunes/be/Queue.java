@@ -17,36 +17,63 @@ import javafx.scene.media.Media;
 public class Queue
 {
 
-    List<Media> queue = new ArrayList();
-    List<Song> songs = new ArrayList();
-    
+    List<Media> queue;
+    List<Song> songs;
+
+    public Queue(List<Song> songsToAdd)
+    {
+        System.out.println("Constructor call");
+        queue = new ArrayList();
+        songs = new ArrayList();
+        for (Song s : songsToAdd)
+        {
+            queue.add(new Media(new File(s.getFilePath()).toURI().toString()));
+        }
+        songs.addAll(songsToAdd);
+
+    }
+
     /**
-     * @param songs
-     * Tilføjer valgte sange til en queue listen, og laver dem om til et media.
+     * @param songs Tilføjer valgte sange til en queue listen, og laver dem om
+     * til et media.
      */
     public void addSelection(List<Song> songs)
     {
-        int i = 0;
-        this.songs = songs;
+        System.out.println("add Selection call");
+        this.songs.addAll(songs);
         for (Song s : songs)
         {
-
             queue.add(new Media(new File(s.getFilePath()).toURI().toString()));
-            i++;
-
         }
     }
-    
+
     /**
      * fjerner valgte sange fra listen.
      */
-    public void removeSelection()
+    public void removeSelection(List<Song> songsToBeRemoved)
     {
+        for (Song songsToRemove : songsToBeRemoved)
+        {
+            for (Media m : queue)
+            {
+                if (new File(songsToRemove.getFilePath()).toURI().toString().equals(m.getSource()))
+                {
+                    System.out.println("Removing");
+                    queue.remove(m);
+                    songs.remove(songsToBeRemoved);
+                }
+            }
+        }
+        for (int i = songsToBeRemoved.size() - 1; i >= 0; i--)
+        {
+            //Media m = new Media(new File(songsToBeRemoved.get(i).getFilePath()).toURI().toString());
+            queue.remove(new Media(new File(songsToBeRemoved.get(i).getFilePath()).toURI().toString()));
+        }
 
     }
-    
+
     /**
-     * 
+     *
      * @param index
      * @return indexet i queuen.
      */
@@ -54,9 +81,9 @@ public class Queue
     {
         return queue.get(index);
     }
-    
+
     /**
-     * 
+     *
      * @param index
      * @returnerer sangen for indexet.
      */
@@ -64,11 +91,10 @@ public class Queue
     {
         return songs.get(index);
     }
-    
+
     /**
-     * 
-     * @param index
-     * Tjekker om queuen er slut.
+     *
+     * @param index Tjekker om queuen er slut.
      */
     public boolean endOfQueue(int index)
     {
@@ -80,16 +106,16 @@ public class Queue
             return false;
         }
     }
-    
+
     /**
-     * 
+     *
      * @returnerer længden på queue-listen.
      */
     public int queueSize()
     {
         return queue.size();
     }
-    
+
     /**
      * @returnerer alle elementer i queue-listen.
      */
@@ -97,9 +123,9 @@ public class Queue
     {
         return queue;
     }
-    
+
     /**
-     * 
+     *
      * @param m
      * @returnerer et sang-object som et medie.
      */
@@ -121,4 +147,15 @@ public class Queue
         return null;
     }
 
+    public void setNewQueue(List<Song> songsToSet)
+    {
+        System.out.println("set new queue  call");
+        queue.clear();
+        songs.clear();
+        for (Song songs : songsToSet)
+        {
+            queue.add(new Media(new File(songs.getFilePath()).toURI().toString()));
+            this.songs.add(songs);
+        }
+    }
 }

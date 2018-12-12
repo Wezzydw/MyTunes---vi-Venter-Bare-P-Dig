@@ -36,7 +36,7 @@ public class Model
     private ObservableList<Song> songs;
     private ObservableList<Song> queues;
     private ObservableList<String> songinfo;
-    private ObservableList<Playlist> playlist;
+    private ObservableList<Playlist> playlists;
     private PlayerManager playerManager;
     private Search songsearcher;
     private Player player;
@@ -48,7 +48,7 @@ public class Model
     public Model() throws IOException
     {
         songinfo = FXCollections.observableArrayList();
-        playlist = FXCollections.observableArrayList();
+        playlists = FXCollections.observableArrayList();
         songs = FXCollections.observableArrayList();
         songsearcher = new Search();
         playerManager = new PlayerManager();
@@ -56,12 +56,33 @@ public class Model
         pDAO = new PlaylistDAO();
         empty = new ArrayList();
         //songinfo = FXCollections.observableArrayList(playerManager.getSongInfo());
-        songs = FXCollections.observableArrayList(playerManager.getAllSongs());
-        playlist = FXCollections.observableArrayList(playerManager.getAllPlaylists());
+        //songs = FXCollections.observableArrayList(playerManager.getAllSongs());
+        playlists = FXCollections.observableArrayList(playerManager.getAllPlaylists());
         addPlaylist = new ArrayList();
         setDAO = new SettingsDAO();
-        
+        playlistInitFilling();
         System.out.println(setDAO.lastSetVolume());
+//        playlists.get(0).addSongSelection(playerManager.getAllSongs());
+//        songs = FXCollections.observableArrayList(playlists.get(0).getSongsInPlaylist());
+    }
+
+    private void playlistInitFilling()
+    {
+        Playlist tester = new Playlist("TesterAllSogns");
+        System.out.println("Size of getallsongs " + playerManager.getAllSongs().size());
+        playlists.add(tester);
+        tester.addSongSelection(playerManager.getAllSongs());
+        playlists.add(new Playlist("All Songs"));
+        playlists.add(new Playlist("tester"));
+        //playlists.get(0).addSongSelection(playerManager.getAllSongs());
+        System.out.println(playlists.size());
+        songs = FXCollections.observableArrayList(playlists.get(0).getSongsInPlaylist());
+
+    }
+
+    public void librarySelection(Playlist selectedPlaylist)
+    {
+        songs.setAll(selectedPlaylist.getSongsInPlaylist());
     }
 
     /**
@@ -72,15 +93,17 @@ public class Model
         //return playerManager.getSongInfo();
         return null;
     }
+    
+   
 
-    public List<Playlist> addPlaylist()
+    public void createPlaylist()
     {
-        return addPlaylist;
+        
     }
 
-    public ObservableList<Playlist> getPlayList()
+    public ObservableList<Playlist> getPlayLists()
     {
-        return playlist;
+        return playlists;
     }
 
     public ObservableList<Song> getQuedSongs()
@@ -98,9 +121,10 @@ public class Model
         }
         return songs;
     }
+
     public ObservableList<String> getNowPlaying()
     {
-       return playerManager.getNowPlaying();
+        return playerManager.getNowPlaying();
     }
 
     /*
@@ -119,14 +143,14 @@ public class Model
     public void changeVolume(double vol)
     {
         //System.out.println("model change volume " + vol);
-        playerManager.changeVolume(vol/100);
+        playerManager.changeVolume(vol / 100);
     }
 
     public void UpdateVolume(double vol)
     {
         setDAO.updateVolume(vol / 100);
     }
-    
+
     public double getSliderVolumeFromDB()
     {
         return setDAO.lastSetVolume();
@@ -154,7 +178,7 @@ public class Model
 
     public void searcher(String query) throws IOException
     {
-       songs.setAll(songsearcher.searcher(query));
+        songs.setAll(songsearcher.searcher(query));
     }
 
     public void addSong(Song song)
@@ -164,18 +188,19 @@ public class Model
 
     public void removeSong(Song song) throws IOException
     {
+        System.out.println("er det her delete ligger");
         sDAO.deleteSong(song);
         songs.remove(song);
     }
 
     public void editSong()
     {
-        
+
     }
 
-    public void addSongToQue()
+    public void addSongToQue(ObservableList<Song> toAdd) throws IOException
     {
-        playerManager.tmpTester();
+        playerManager.addSongToQue(toAdd);
         //queues.addAll(songs);
         //player.addSongsToQueue(getSongs());
 //       queues.addAll(getSongs());
@@ -183,9 +208,9 @@ public class Model
 //       player.addSongsToQueue(queues);
     }
 
-    public void removeSongFromQue()
+    public void removeSongsFromQue(List<Song> toRemove)
     {
-        playerManager.removeSongFromQue();
+        playerManager.removeSongFromQue(toRemove);
     }
 
     public void queComboBox()
@@ -194,7 +219,7 @@ public class Model
 
     }
 
-    public void SelectFolder(Stage stage) throws IOException
+    public void SelectFolder(Stage stage) throws IOException, InterruptedException
     {
 
         DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -207,10 +232,27 @@ public class Model
         {
             String path = selectedDirectory.getAbsolutePath();
             File file = new File(path);
-            songs.addAll(sDAO.addFolder(file));
-            
-            
-        //sdao.writeChanges();
+            List<Song> toBeRenamed = sDAO.addFolder(file);
+
+            Thread t = new Thread(new Runnable()
+            {
+
+                /*
+            ???++
+                 */
+                @Override
+                public void run()
+                {
+                    while (sDAO.getNumberOfUnReadySongs() != 0)
+                    {
+                        //System.out.println("inModel " + sDAO.getNumberOfUnReadySongs());
+                        songs.addAll(toBeRenamed);
+                    }
+                }
+            });
+            t.start();
+
+            //sdao.writeChanges();
         }
 
         playerManager.getAllSongs();
@@ -221,12 +263,28 @@ public class Model
 
         //Do something with view here
     }
-    
+
     public void sendSliderForPlayback(Slider sliderPlayback)
     {
         playerManager.makeSliderForPlayBack(sliderPlayback);
     }
 
+    public void updateSong(Song song)
+    {
+        playerManager.updateSong(song);
+    }
+    
+    public void addToPlaylist(Playlist selectedPlaylist, List<Song> songSelection)
+    {
+        for (Playlist playlist : playlists)
+        {
+            if (playlist.equals(selectedPlaylist))
+            {
+                playlist.addSongSelection(songSelection);
+            }
+        }
+    }
+    
     
 
 }

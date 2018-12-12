@@ -10,6 +10,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -40,7 +41,7 @@ public class EditSongViewController implements Initializable {
     @FXML
     private TextField txtEditYear;
     @FXML
-    private ComboBox<?> comboCategory;
+    private ComboBox<String> comboCategory;
     @FXML
     private Label lblFilepath;
     @FXML
@@ -49,7 +50,11 @@ public class EditSongViewController implements Initializable {
     private Button btnSave;
     
     Model model;
-
+    private Song selectedSong;
+    private String d2;
+    private int Id;
+    private int songIndex;
+    private ObservableList<String> comBox;
     /**
      * Initializes the controller class.
      */
@@ -60,13 +65,17 @@ public class EditSongViewController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(EditSongViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ObservableList<Song> allSongs = model.getSongs();
+        //ObservableList<Song> allSongs = model.getSongs();
+        System.out.println("nu er vi inde i edit" );
+        comBox = FXCollections.observableArrayList();
         //txtEditAlbum.setText(model.getSongs().get(0).getAlbum());//get(0) skal peje på den sang du redigerer
-        txtEditArtist.setText(allSongs.get(0).getAuthor());
-        txtEditTitle.setText(allSongs.get(0).getTitle());
-        txtEditYear.setText(allSongs.get(0).getReleaseYear());
-//        comboCategory.setItems(value);
-        lblFilepath.setText(allSongs.get(0).getFilePath());
+       
+        comBox.add("Rock");
+        comBox.add("Hardstyle");
+        comBox.add("Pop");
+        comBox.add("Andet");
+        comboCategory.setItems(comBox);
+        
         
         
     }    
@@ -88,8 +97,41 @@ public class EditSongViewController implements Initializable {
         String author = txtEditArtist.getText();
         String title = txtEditTitle.getText();
         String year = txtEditYear.getText();
-//        model.UpdateVolume(0); //update song 
+        String categori = comboCategory.getSelectionModel().getSelectedItem();
+        String length = d2; 
+        int id = Id;
+        String filepath = lblFilepath.getText();
+        Song s = new Song(title, author, length, year, categori, filepath, album, id);
+        model.updateSong(s); //update song
         
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/mytunes/gui/view/MyTunesMainView.fxml"));
+        
+        try
+        {
+            loader.load();
+        } catch (IOException ex)
+        {
+            Logger.getLogger(EditSongViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        MyTunesMainViewController display = loader.getController();
+        display.updateView(s, songIndex);
+        System.out.println("album =" + album + ", artist=" + author + ", title=" + title + ", year=" + year + ", length=" + length + ", id=" +id);
+        
+    }
+    public void setSong(Song song, int songIndex)
+    {
+        selectedSong = song;
+        txtEditArtist.setText(selectedSong.getAuthor());
+        txtEditAlbum.setText(selectedSong.getAlbum());
+        txtEditTitle.setText(selectedSong.getTitle());
+        txtEditYear.setText(selectedSong.getReleaseYear());
+        lblFilepath.setText(selectedSong.getFilePath());
+        this.d2 = selectedSong.getLength();
+        System.out.println(d2);
+        this.Id = selectedSong.getId();
+        this.songIndex = songIndex;
     }
     
     

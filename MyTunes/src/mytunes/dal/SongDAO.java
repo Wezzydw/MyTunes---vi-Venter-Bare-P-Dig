@@ -26,18 +26,19 @@ import mytunes.be.Song;
  */
 public class SongDAO
 {
-
+    int nonReadySongs;
     DatabaseConnection conProvider;
 
     public SongDAO() throws IOException
     {
+        
         conProvider = new DatabaseConnection();
     }
 
     //File folder = new File("/Users/andreas/Music/");
     List<Song> songs = new ArrayList<>();
     
-    public List<Song> addFolder(File folderPath) throws IOException
+    public List<Song> addFolder(File folderPath) throws IOException, InterruptedException
     {
         listFilesForFolder(folderPath);
         List<Media> songsToAdd = new ArrayList<>();
@@ -49,7 +50,7 @@ public class SongDAO
             songsToAdd.add(m1);
             counter++;
         }
-
+        nonReadySongs = songsToAdd.size();
         for (Media me : songsToAdd)
         {
             //me.getMetadata().size(); Kunne måske være en måde at tjekke for hvornår den er færdig
@@ -92,14 +93,17 @@ public class SongDAO
                 @Override
                 public void run()
                 {
+                    System.out.println("Tester --;");
+                    System.out.println(nonReadySongs);
+                    nonReadySongs--;
                     String duration = "" + me.getDuration().toMinutes();
                     getMediaSong(me).setLength(duration);
                 }
             });
         }
-
         Thread t = new Thread(new Runnable()
         {
+            
             /*
             ???++
             */
@@ -107,16 +111,15 @@ public class SongDAO
             public void run()
             {
                 System.out.println("Before Time");
-                Long currentTime = System.currentTimeMillis();
-                Long expectedTime = currentTime + 5000L;
 
                 try
                 {
 
-                    while (currentTime < expectedTime)
+                    while (nonReadySongs != 0)
                     {
-                        currentTime = System.currentTimeMillis();
+                        System.out.println("in Thread " + nonReadySongs);
                     }
+                    System.out.println("in Thead done");
                     for (Song song : songs)
                     {
                         if (song.getTitle().contains("song nummber"))
@@ -135,7 +138,16 @@ public class SongDAO
             }
         });
         t.start();
+//        while(tester != 0)
+//        {
+//            //System.out.println("tester" + tester);
+//        }
         return songs;
+    }
+    
+    public int getNumberOfUnReadySongs()
+    {
+        return nonReadySongs;
     }
     /*
         vi trækker sangen ud af mediet
@@ -182,9 +194,12 @@ public class SongDAO
     {
         try (Connection con = conProvider.getConnection())
         {
-            PreparedStatement statement = (PreparedStatement) con.createStatement();
-            statement.executeQuery("SELECT * FROM Songs;");
-            statement.executeQuery("DELETE FROM Songs WHERE Id =" + song.getId() + ";");
+            String a = "DELETE FROM Songs WHERE Id =" + song.getId() + ";";
+            PreparedStatement prst = con.prepareStatement(a);
+            prst.execute();
+//            Statement statement =  con.createStatement();
+//            statement.executeQuery("SELECT * FROM Songs;");
+//            statement.executeQuery("DELETE FROM Songs WHERE Id =" + song.getId() + ";");
         } catch (SQLException ex)
         {
             ex.printStackTrace();
@@ -195,17 +210,24 @@ public class SongDAO
     */
     public void updateSong(Song song)
     {
+
+        String a = "UPDATE Songs SET Title = ?, Author = ?, Album = ?, Categori = ?, Filepath = ?, Length = ?, ReleaseYear = ? WHERE Id = ?;";
+     
         try (Connection con = conProvider.getConnection())
         {
-            PreparedStatement statement = (PreparedStatement) con.createStatement();
-            statement.executeQuery("SELECT * FROM Songs");
-            statement.executeQuery("UPDATE Songs SET Title = "
-                    + song.getTitle() + ", SET Author = "
-                    + song.getAuthor() + ", SET Album = "
-                    + song.getAlbum() + ", SET Categori = "
-                    + song.getCategori() + ", SET Filepath = "
-                    + song.getFilePath() + ", SET ReleaseYear = "
-                    + song.getReleaseYear() + ";");
+            PreparedStatement pstmt = con.prepareStatement(a);
+
+            pstmt.setString(1, song.getTitle());
+            pstmt.setString(2, song.getAuthor());
+            pstmt.setString(3, song.getAlbum());
+            pstmt.setString(4, song.getCategori());
+            pstmt.setString(5, song.getFilePath());
+            pstmt.setString(6, song.getLength());
+ 
+            pstmt.setString(7, song.getReleaseYear());
+            pstmt.setInt(8, song.getId());
+            pstmt.execute();
+ 
         } catch (SQLException ex)
         {
             ex.printStackTrace();
@@ -219,11 +241,14 @@ public class SongDAO
         //Jeg vil gerne have et check om filen faktisk eksisterer her;
         List<Song> allSongs = new ArrayList();
         try (Connection con = conProvider.getConnection())
-        {
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM Songs;");
+        {   
+            String a = "SELECT * FROM Songs;";
+            PreparedStatement prst = con.prepareStatement(a);
+            ResultSet rs = prst.executeQuery();
+            
             while (rs.next())
             {
+                
                 String title = rs.getString("Title");
                 String author = rs.getString("Author");
                 String album = rs.getString("Album");
@@ -278,17 +303,24 @@ public class SongDAO
     {
         //List<Song> allSongs = new SongDAO().getAllSongs();
         System.out.println("WRITECHANGES ");
-        SQLServerDataSource ds = new SQLServerDataSource();
-        ds.setServerName("10.176.111.31");
-        ds.setDatabaseName("MyTunes1");
-        ds.setUser("CS2018A_20");
-        ds.setPassword("CS2018A_20");
+//        SQLServerDataSource ds = new SQLServerDataSource();
+//        ds.setServerName("10.176.111.31");
+//        ds.setDatabaseName("MyTunes1");
+//        ds.setUser("CS2018A_20");
+//        ds.setPassword("CS2018A_20");
+
+
+
+
+
         String a = "INSERT INTO Songs (Title, Author, Album, Categori, Filepath, Length, ReleaseYear) VALUES (?,?,?,?,?,?,?);";
-        try (Connection con = ds.getConnection())
+        try (Connection con = conProvider.getConnection())
         {
+            
+            
             for (Song song : allSongs)
             {
-                System.out.println(allSongs.size());
+                System.out.println("WriteChanges plus size: " + allSongs.size());
                 PreparedStatement pstmt = con.prepareStatement(a);
                 pstmt.setString(1, song.getTitle());
                 pstmt.setString(2, song.getAuthor());

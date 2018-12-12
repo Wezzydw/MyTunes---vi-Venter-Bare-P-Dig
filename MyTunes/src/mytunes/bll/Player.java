@@ -5,9 +5,7 @@
  */
 package mytunes.bll;
 
-import java.util.ArrayList;
 import java.util.List;
-import javafx.beans.binding.Bindings;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,7 +15,6 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
 import javafx.scene.media.MediaView;
 import javafx.util.Duration;
-import mytunes.be.Playlist;
 import mytunes.be.Queue;
 import mytunes.be.Song;
 
@@ -39,12 +36,13 @@ public class Player {
 
     public Player(List<Song> songs) {
         System.out.println("tester");
-        queue = new Queue();
-        queue.addSelection(songs);
+        queue = new Queue(songs);
+        //queue.addSelection(songs);
+        System.out.println("queue size on init " +queue.queueSize());
         mp = new MediaPlayer(queue.getMedia(songIndex));
         nowPlaying = FXCollections.observableArrayList();
         nowPlaying();
-
+        System.out.println("queue size on init2 " +queue.queueSize());
     }
     
     /**
@@ -55,9 +53,10 @@ public class Player {
      * hvis ikke shuffle eller repeat er aktiveret.
      */
     public void playSong() {
+        System.out.println("queue size on init 3" +queue.queueSize());
         System.out.println("status" + mp.getStatus());
-        if (mp.getStatus() != Status.PLAYING) {
-
+        if (mp.getStatus() != Status.PLAYING && queue.queueSize() > 0) {
+            System.out.println("queue size on start " + queue.queueSize());
             mp.play();
             System.out.println(mp.getStatus());
             mp.setVolume(volume);
@@ -138,6 +137,7 @@ public class Player {
      * Hvis ikke, går den en plads tilbage i listen og afspiller elementet på denne plads.
      */
     public void playPrevSong() {
+        if(queue.queueSize() > 0){
         if (!shuffle) {
             if (songIndex == 0) {
                 songIndex = queue.queueSize() - 1;
@@ -150,6 +150,7 @@ public class Player {
         mp.stop();
         mp = new MediaPlayer(queue.getMedia(songIndex));
         playSong();
+        }
     }
     
     /**
@@ -160,6 +161,7 @@ public class Player {
      * 
      */
     public void playNextSong() {
+        if(queue.queueSize() > 0){
         if (!shuffle) {
             if (songIndex == queue.queueSize() - 1) {
                 songIndex = 0;
@@ -172,6 +174,7 @@ public class Player {
         mp.stop();
         mp = new MediaPlayer(queue.getMedia(songIndex));
         playSong();
+        }
     }
     
     /**
@@ -229,22 +232,22 @@ public class Player {
         List<String> MetaList = FXCollections.observableArrayList();
         System.out.println("in getmetadata");
         if (son.getTitle() != null) {
-            MetaList.add("title;" + son.getTitle());
+            MetaList.add(son.getTitle());
         }
         if (son.getAuthor() != null) {
-            MetaList.add("author;" + son.getAuthor());
+            MetaList.add(son.getAuthor());
         }
         if (son.getCategori() != null) {
-            MetaList.add("categori;" + son.getCategori());
+            MetaList.add(son.getCategori());
         }
         if (son.getReleaseYear() != null) {
-            MetaList.add("releaseyear;" + son.getReleaseYear());
+            MetaList.add(son.getReleaseYear());
         }
         if (son.getAlbum() != null) {
-            MetaList.add("album;" + son.getAlbum());
+            MetaList.add(son.getAlbum());
         }
         if (son.getLength() != null) {
-            MetaList.add("length;" + son.getLength());
+            MetaList.add(son.getLength());
         }
 
         return MetaList;
@@ -265,6 +268,16 @@ public class Player {
     public void makeSliderForPlayback(Slider sliderPlayback) {
         this.sliderPlayback = sliderPlayback;
         //this.sliderPlayback.setMax(mp.getTotalDuration().toSeconds());
+    }
+    
+    public void removeSongsFromQueue(List<Song> songsToBeRemoved)
+    {
+        queue.setNewQueue(songsToBeRemoved);
+        if(songIndex > queue.queueSize())
+        {
+            songIndex = 0;
+            mp = new MediaPlayer(queue.getMedia(songIndex));
+        }
     }
 
 }

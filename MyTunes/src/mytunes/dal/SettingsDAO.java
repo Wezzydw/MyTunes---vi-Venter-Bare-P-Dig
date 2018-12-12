@@ -10,7 +10,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import mytunes.be.Playlist;
@@ -45,12 +44,12 @@ public class SettingsDAO
 
         try (Connection con = conProvider.getConnection())
         {
-            Statement statement = con.createStatement();
             PreparedStatement pstmt = con.prepareStatement("UPDATE Settings SET Volume = (?)");
             pstmt.setDouble(1, vol);
             pstmt.execute();
             pstmt.close();
             System.out.println("Diller found - and updated!");
+            
         } catch (SQLException ex)
         {
 
@@ -66,11 +65,12 @@ public class SettingsDAO
         double vol = 0;
         try (Connection con = conProvider.getConnection())
         {
-            //PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Settings;");
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM Settings;");
+            String a = "SELECT * FROM Settings;";
+            PreparedStatement pstmt = con.prepareStatement(a);
+            ResultSet rs = pstmt.executeQuery();
             while (rs.next())
             {
+
                 vol = rs.getDouble("Volume");
 
             }
@@ -91,9 +91,9 @@ public class SettingsDAO
         int songId = 0;
         try (Connection con = conProvider.getConnection())
         {
-            //PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Settings;");
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM Settings;");
+            String a = "SELECT * FROM Settings;";
+            PreparedStatement pstmt = con.prepareStatement(a);
+            ResultSet rs = pstmt.executeQuery();
             while (rs.next())
             {
                 songId = rs.getInt("lastSong");
@@ -123,12 +123,14 @@ public class SettingsDAO
         String queueList = "";
         try (Connection con = conProvider.getConnection())
         {
-            //PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Settings;");
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM Settings;");
+            String a = "SELECT * FROM Settings;";
+            PreparedStatement pstmt = con.prepareStatement(a);
+            ResultSet rs = pstmt.executeQuery();
             while (rs.next())
             {
                 queueList = rs.getString("lastQueue");
+//                queueList = pstmt.getResultSet().getString("lastQueue");
+                
             }
         } catch (SQLException ex)
         {
@@ -136,14 +138,16 @@ public class SettingsDAO
         }
         return queueList;
     }
-    
+
     /**
      * 
      * @returnerer en liste af sange fra queuen.
      */
     public List<Song> queueList()
     {
-        //String[] a = str.split(",");
+        //tilføj String str som en parameter inde i metoden queueList, som tager denne String quelist
+        //og laver den om til en liste af sange
+//        String[] a = str.split(",");
         //Tænker vel bare at det her er fra database, og ikke fra metode input
         //Btw alle comments her er for at undgå redLines
         List<Song> queSongs = new ArrayList();

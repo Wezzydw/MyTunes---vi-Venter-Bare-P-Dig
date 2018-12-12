@@ -27,7 +27,8 @@
                   <Slider fx:id="sliderVol" blockIncrement="1.0" majorTickUnit="1.0" minorTickCount="1" onMouseDragged="#onHandleSliderVol" prefHeight="14.0" prefWidth="165.0" style="-fx-border-color: green; -fx-background-color: black;">
                      <effect>
                         <ColorAdjust />
-                     </effect></Slider>
+                     </effect>
+                  </Slider>
                   <Button mnemonicParsing="false" onAction="#onHandleShuffe" style="-fx-background-color: black; -fx-border-color: green; -fx-effect: serif;" text="Shuffle" textFill="#00ff0d">
                      <effect>
                         <ColorAdjust />
@@ -71,10 +72,29 @@
                   <ColorAdjust />
                </effect>
             </HBox>
-            <ListView fx:id="listViewLibrary" onDragDone="#HandleDragDone" prefHeight="347.0" prefWidth="285.0">
+            <ListView fx:id="listViewLibrary" onMouseClicked="#PlaylistsMouseClick" prefHeight="347.0" prefWidth="285.0">
                <effect>
                   <ColorAdjust />
                </effect></ListView>
+            <HBox prefHeight="59.0" prefWidth="285.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onHandlePlaylistEdit" style="-fx-background-color: black; -fx-border-color: green;" text="Edit" textFill="#00ff1d">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#onHandlePlaylistAdd" style="-fx-background-color: black; -fx-border-color: green;" text="Add" textFill="#00ff1d">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#onHandlePlaylistRemove" style="-fx-background-color: black; -fx-border-color: green;" text="Remove" textFill="#00ff1d">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
          </children>
       </VBox>
    </left>
@@ -86,9 +106,12 @@
                   <ListView fx:id="listViewSongInfo" fixedCellSize="0.0" prefHeight="200.0" prefWidth="199.0" />
                   <VBox prefHeight="200.0" prefWidth="278.0" style="-fx-background-color: black;">
                      <children>
+
                         <ListView fx:id="listViewQueue" prefHeight="250.0" prefWidth="280.0">
+
+                       
                            <cursor>
-                              <Cursor fx:constant="CROSSHAIR" />
+                              
                            </cursor></ListView>
                         <HBox prefHeight="28.0" prefWidth="283.0">
                            <children>
@@ -146,14 +169,18 @@
                      </font></Button>
                </children>
             </HBox>
+
             <ListView fx:id="listViewAllSongs" prefHeight="330.0" prefWidth="476.0" />
+
+
+
             <HBox prefHeight="14.0" prefWidth="476.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#onHandleSongEdit" style="-fx-background-color: black; -fx-border-color: green;" text="Edit" textFill="#00ff1d">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Button>
-                  <Button mnemonicParsing="false" onAction="#onHandlePlaylistAdd" style="-fx-background-color: black; -fx-border-color: green;" text="Add" textFill="#00ff1d">
+                  <Button mnemonicParsing="false" onAction="#onHandleAddFolder" style="-fx-background-color: black; -fx-border-color: green;" text="Add" textFill="#00ff1d">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Button>
