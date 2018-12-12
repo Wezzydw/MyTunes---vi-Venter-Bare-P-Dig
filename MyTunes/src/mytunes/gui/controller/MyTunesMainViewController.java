@@ -86,6 +86,7 @@ public class MyTunesMainViewController implements Initializable
     /**
      * Initializes the controller class.
      */
+    
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
@@ -209,8 +210,6 @@ public class MyTunesMainViewController implements Initializable
         
         
     }
-    
-    @FXML
     
     private void HandleDragDone(DragEvent event)
     {
@@ -360,48 +359,6 @@ public class MyTunesMainViewController implements Initializable
         }
     }
 
-    @FXML
-    private void queueDragEntered(DragEvent event)
-    {
-        System.out.println("queueDragEntered");
-    }
-
-    @FXML
-    private void queueOnMouseDragEntered(MouseDragEvent event)
-    {System.out.println("hmqueueOnMouseDragEnteredm");
-    }
-
-    @FXML
-    private void queueOnMouseDragOver(MouseDragEvent event)
-    {System.out.println("queueOnMouseDragOver");
-    }
-
-    @FXML
-    private void queueOnDragDetected(MouseEvent event)
-    {System.out.println("queueOnDragDetected");
-    }
-
-    @FXML
-    private void queueOnDragDone(DragEvent event)
-    {System.out.println("hqueueOnDragDonemm");
-    }
-
-    @FXML
-    private void queueOnMouseDragReleased(MouseDragEvent event)
-    {System.out.println("queueOnMouseDragReleasedhmm");
-    }
-
-    @FXML
-    private void queueOnDragOver(DragEvent event)
-    {
-        System.out.println("qeueuondaragover");
-        event.acceptTransferModes(TransferMode.COPY);
-    }
-
-    @FXML
-    private void queueOnDragDropped(DragEvent event)
-    {System.out.println("queueOnDragDropped");
-    }
 
     Long lastTime = 0L;
     @FXML
@@ -430,9 +387,16 @@ public class MyTunesMainViewController implements Initializable
         System.out.println("Tester lige her tak");
     }
 
-    @FXML
     private void lstViewTextChanged(InputMethodEvent event)
     {System.out.println("Tester lige her takny");
+    }
+
+    @FXML
+    private void queueMouseClick(MouseEvent event) {
+    }
+
+    @FXML
+    private void allSongsMouseClicked(MouseEvent event) {
     }
 
 

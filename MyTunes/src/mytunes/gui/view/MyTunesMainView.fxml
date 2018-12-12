@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane id="BorderPane" fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.MyTunesMainViewController">
+<BorderPane id="BorderPane" fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.MyTunesMainViewController">
 
    <left>
       <VBox prefHeight="375.0" prefWidth="285.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
@@ -113,9 +113,8 @@
                   <VBox prefHeight="200.0" prefWidth="278.0" style="-fx-background-color: black;">
                      <children>
 
-                        <ListView fx:id="listViewQueue" prefHeight="250.0" prefWidth="280.0">
+                        <ListView fx:id="listViewQueue" onKeyPressed="#queueLookForDeleteKey" onMouseClicked="#queueMouseClick" prefHeight="250.0" prefWidth="280.0">
 
-                       
                            <cursor>
                               
                            </cursor></ListView>
@@ -146,6 +145,7 @@
                </effect>
             </HBox>
             <TextField fx:id="txtFieldSearch" onKeyReleased="#onHandleSearch" />
+
             <ImageView fitHeight="24.0" fitWidth="472.0">
                <image>
                   <Image url="@../../../../../../../../../Desktop/download.jpg" />
@@ -155,6 +155,38 @@
 
             <ListView fx:id="listViewAllSongs" prefHeight="353.0" prefWidth="476.0" />
 
+
+
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" prefWidth="70.0" style="-fx-background-color: black; -fx-border-color: green;" text="Title" textFill="#00ff1d">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font></Button>
+                  <Button mnemonicParsing="false" prefWidth="70.0" style="-fx-background-color: black; -fx-border-color: green;" text="Album" textFill="#00ff1d">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" prefWidth="70.0" style="-fx-background-color: black; -fx-border-color: green;" text="Categori" textFill="#00ff1d">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font></Button>
+                  <Button mnemonicParsing="false" prefWidth="70.0" style="-fx-background-color: black; -fx-border-color: green;" text="Artist" textFill="#00ff1d">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font></Button>
+                  <Button mnemonicParsing="false" prefWidth="70.0" style="-fx-background-color: black; -fx-border-color: green;" text="Length" textFill="#00ff1d">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font></Button>
+                  <Button mnemonicParsing="false" prefWidth="70.0" style="-fx-background-color: black; -fx-border-color: green;" text="ID" textFill="#00ff1d">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font></Button>
+               </children>
+            </HBox>
+           
 
 
             <HBox prefHeight="14.0" prefWidth="476.0">
