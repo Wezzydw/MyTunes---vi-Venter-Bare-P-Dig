@@ -116,6 +116,9 @@ public class EditSongViewController implements Initializable {
         }
         
         MyTunesMainViewController display = loader.getController();
+        //model = display.getThisModel();
+        //display.updateView(s, songIndex);
+        display.model.updateSong(s);
 //        display.updateView(s, songIndex);
         Stage stage = (Stage) btnSave.getScene().getWindow();
         stage.close();
@@ -134,6 +137,12 @@ public class EditSongViewController implements Initializable {
         System.out.println(d2);
         this.Id = selectedSong.getId();
         this.songIndex = songIndex;
+    }
+    public void setModel(Model model)
+    {
+        
+        System.out.println("øhm");
+        this.model = model;
     }
     
 }

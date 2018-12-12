@@ -5,7 +5,9 @@
  */
 package mytunes.gui.controller;
 
+import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,7 +29,8 @@ public class EditPlaylistViewController implements Initializable
     private TextField txtTitle;
     @FXML
     private Label lblTitle;
-
+    
+    private Model model;
     /**
      * Initializes the controller class.
      */
@@ -38,9 +41,12 @@ public class EditPlaylistViewController implements Initializable
     }    
 
     @FXML
-    private void onHandleSave(ActionEvent event)
+    private void onHandleSave(ActionEvent event) throws IOException, SQLException
     {
-        
+        System.out.println("save data" );
+        String title = txtTitle.getText();
+        Playlist plist = new Playlist(title);
+        model.renamePlaylist(lblTitle.getText(), title);
     }
 
     @FXML
@@ -49,10 +55,11 @@ public class EditPlaylistViewController implements Initializable
         Stage stage = (Stage) lblTitle.getScene().getWindow();
         stage.close();
     }
-    public void setPlistTitle(Playlist plist)
+    public void setPlistTitle(Playlist plist, Model model)
     {
         txtTitle.setText(plist.getTitle());
         lblTitle.setText(plist.getTitle());
+        this.model = model;
     }
     
 }
