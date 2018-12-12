@@ -285,6 +285,16 @@ public class Model
         }
     }
     
+    public void playNowSelectedSong(Song song)
+    {
+        playerManager.playIncomingSong(song);
+    }
+    
+    public void changeToThisSong(Song song)
+    {
+        playerManager.changeToThisSong(song);
+    }
+    
     
 
 }

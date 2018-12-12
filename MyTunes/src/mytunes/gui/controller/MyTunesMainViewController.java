@@ -80,12 +80,14 @@ public class MyTunesMainViewController implements Initializable
     
     private static final DataFormat customFormat = new DataFormat("Song.custom");
     Model model;
+    Long lastTime;
     @FXML
     private Slider sliderPlayback;
 
     /**
      * Initializes the controller class.
      */
+    
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
@@ -110,6 +112,7 @@ public class MyTunesMainViewController implements Initializable
         model.changeVolume(model.getSliderVolumeFromDB());
         model.sendSliderForPlayback(sliderPlayback);
         listViewLibrary.editableProperty().setValue(Boolean.TRUE);
+        lastTime = 0L;
         
     }
     
@@ -342,7 +345,6 @@ public class MyTunesMainViewController implements Initializable
         System.out.println("queueMouseEnter");
     }
 
-    @FXML
     private void allMouseReleased(MouseEvent event)
     {
         System.out.println("allMouseReleased");
@@ -358,50 +360,8 @@ public class MyTunesMainViewController implements Initializable
         }
     }
 
-    @FXML
-    private void queueDragEntered(DragEvent event)
-    {
-        System.out.println("queueDragEntered");
-    }
 
-    @FXML
-    private void queueOnMouseDragEntered(MouseDragEvent event)
-    {System.out.println("hmqueueOnMouseDragEnteredm");
-    }
-
-    @FXML
-    private void queueOnMouseDragOver(MouseDragEvent event)
-    {System.out.println("queueOnMouseDragOver");
-    }
-
-    @FXML
-    private void queueOnDragDetected(MouseEvent event)
-    {System.out.println("queueOnDragDetected");
-    }
-
-    @FXML
-    private void queueOnDragDone(DragEvent event)
-    {System.out.println("hqueueOnDragDonemm");
-    }
-
-    @FXML
-    private void queueOnMouseDragReleased(MouseDragEvent event)
-    {System.out.println("queueOnMouseDragReleasedhmm");
-    }
-
-    @FXML
-    private void queueOnDragOver(DragEvent event)
-    {
-        System.out.println("qeueuondaragover");
-        event.acceptTransferModes(TransferMode.COPY);
-    }
-
-    @FXML
-    private void queueOnDragDropped(DragEvent event)
-    {System.out.println("queueOnDragDropped");
-    }
-
-    Long lastTime = 0L;
+    
     @FXML
     private void PlaylistsMouseClick(MouseEvent event)
     {
@@ -431,6 +391,40 @@ public class MyTunesMainViewController implements Initializable
     private void lstViewTextChanged(InputMethodEvent event)
     {System.out.println("Tester lige her takny");
     }
+
+    @FXML
+    private void queueMouseClick(MouseEvent event) {
+        long timeDiff = 0;
+        long currentTime = System.currentTimeMillis();
+        
+        if(lastTime != 0 && currentTime !=0)
+        {
+            timeDiff = currentTime - lastTime;
+            if(timeDiff <= 215)
+                model.changeToThisSong(listViewQueue.getSelectionModel().getSelectedItem());
+            else
+                System.out.println("singleclick");
+        }
+        lastTime = currentTime;
+    }
+
+
+
+    private void allSongsMouseClicked(MouseEvent event) {
+        long timeDiff = 0;
+        long currentTime = System.currentTimeMillis();
+        
+        if(lastTime != 0 && currentTime !=0)
+        {
+            timeDiff = currentTime - lastTime;
+            if(timeDiff <= 215)
+                model.playNowSelectedSong(listViewAllSongs.getSelectionModel().getSelectedItem());
+            else
+                System.out.println("singleclick");
+        }
+        lastTime = currentTime;
+    }
+
 
 
     

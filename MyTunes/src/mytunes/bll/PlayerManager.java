@@ -277,4 +277,14 @@ public class PlayerManager
     {
         this.sliderPlayback = sliderPlayback;
     }
+    
+    public void playIncomingSong(Song song)
+    {
+        player.playIncomingSong(song);
+    }
+    
+    public void changeToThisSong(Song song)
+    {
+        player.changeToThisSong(song);
+    }
 }
