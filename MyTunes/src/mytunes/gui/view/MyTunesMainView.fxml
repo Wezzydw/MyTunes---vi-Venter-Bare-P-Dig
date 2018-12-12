@@ -86,7 +86,7 @@
                   <ListView fx:id="listViewSongInfo" fixedCellSize="0.0" prefHeight="200.0" prefWidth="199.0" />
                   <VBox prefHeight="200.0" prefWidth="278.0" style="-fx-background-color: black;">
                      <children>
-                        <ListView fx:id="listViewQueue" onDragDetected="#quedetected" onDragDone="#quedone" onDragDropped="#quedropped" onDragEntered="#queentered" onDragExited="#queexited" onDragOver="#queover" onMouseClicked="#MouseSelection" onMouseDragEntered="#queentered" onMouseDragExited="#queexited" onMouseDragOver="#queover" onMouseDragReleased="#quereleased" onMouseReleased="#queMouseRelease" prefHeight="250.0" prefWidth="280.0">
+                        <ListView fx:id="listViewQueue" prefHeight="250.0" prefWidth="280.0">
                            <cursor>
                               <Cursor fx:constant="CROSSHAIR" />
                            </cursor></ListView>
@@ -146,7 +146,7 @@
                      </font></Button>
                </children>
             </HBox>
-            <ListView fx:id="listViewAllSongs" onDragDetected="#allsongsdragdected" onDragDone="#allsongsdragdone" onDragDropped="#allsongsdragdropped" onDragEntered="#allsongsdragentered" onDragExited="#allsongsdragexited" onDragOver="#allsongsdragover" onMouseDragEntered="#allsongsdragentered" onMouseDragExited="#allsongsdragexoted" onMouseDragOver="#allsongsdragover" onMouseDragReleased="#allsongsdragreleased" prefHeight="330.0" prefWidth="476.0" />
+            <ListView fx:id="listViewAllSongs" prefHeight="330.0" prefWidth="476.0" />
             <HBox prefHeight="14.0" prefWidth="476.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#onHandleSongEdit" style="-fx-background-color: black; -fx-border-color: green;" text="Edit" textFill="#00ff1d">
