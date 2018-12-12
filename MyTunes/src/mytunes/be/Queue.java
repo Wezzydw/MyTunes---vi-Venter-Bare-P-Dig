@@ -32,6 +32,12 @@ public class Queue
         songs.addAll(songsToAdd);
 
     }
+    
+    public Queue()
+    {
+                queue = new ArrayList();
+        songs = new ArrayList();
+    }
 
     /**
      * @param songs Tilføjer valgte sange til en queue listen, og laver dem om

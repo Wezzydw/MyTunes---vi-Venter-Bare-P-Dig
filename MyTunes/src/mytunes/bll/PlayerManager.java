@@ -53,7 +53,7 @@ public class PlayerManager
         playlists = FXCollections.observableArrayList();
         playlists.addAll(getSavedPlaylists());
     }
-    
+
     public List<Playlist> getSavedPlaylists()
     {
 //        List<Playlist> initPlaylists = new ArrayList();
@@ -98,16 +98,18 @@ public class PlayerManager
             return player.getNowPlaying();
         }
     }
+
     public ObservableList<String> getNowPlaylingTitle()
     {
-    if (player == null)
-    {
-        return getSongName;
-    }else
-    {
-    return player.getNowPlayingTitle();
+        if (player == null)
+        {
+            return getSongName;
+        } else
+        {
+            return player.getNowPlayingTitle();
+        }
     }
-    }
+
     /*
         Tilføjer den valgte sang til queuedsongs
      */
@@ -134,7 +136,6 @@ public class PlayerManager
             songQueue.remove(toRemove.get(i));
         }
         player.removeSongsFromQueue(songQueue);
-        
 
     }
 
@@ -294,37 +295,49 @@ public class PlayerManager
     {
         pDAO.addSelection(selectedSongs, plist);
     }
-    
+
     public void playIncomingSong(Song song)
     {
-        if (songQueue.size() == 0)
+        System.out.println("Error?");
+//        if (songQueue.size() == 0)
+//        {
+//            songQueue.add(song);
+//        }
+//        checkForSongsSomewhere();
+        if (player == null)
         {
-            songQueue.add(song);
+            player = new Player(song);
+            player.makeSliderForPlayback(sliderPlayback);
         }
-        checkForSongsSomewhere();
-        
+
+        System.out.println("Er det her?");
+        nowPlaying.addAll(player.getNowPlaying());
+        getSongName.addAll(player.getNowPlayingTitle());
+
         player.playIncomingSong(song);
     }
-    
+
     public void changeToThisSong(Song song)
     {
         player.changeToThisSong(song);
 
     }
 
-    
     public ObservableList<String> getSongName()
     {
-    return getSongName;
+        return getSongName;
     }
+
     public void renamePlaylist(String title, String newTitle) throws IOException, SQLException
     {
         pDAO.renamePlaylist(title, newTitle);
     }
+
     public void createPlaylist(Playlist plist) throws IOException
     {
         pDAO.createPlaylist(plist);
     }
+
     public void removePlaylist(Playlist plist) throws IOException, SQLException
     {
         pDAO.deletePlaylist(plist.getTitle());
