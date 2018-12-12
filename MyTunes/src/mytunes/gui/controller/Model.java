@@ -78,6 +78,7 @@ public class Model
         playlists.add(0, new Playlist("All Songs"));
 //        playlists.add(new Playlist("tester"));
         playlists.get(0).addSongSelection(playerManager.getAllSongs());
+        
         System.out.println(playlists.size());
         songs = FXCollections.observableArrayList(playlists.get(0).getSongsInPlaylist());
 
@@ -253,9 +254,10 @@ public class Model
                 {
                     while (sDAO.getNumberOfUnReadySongs() != 0)
                     {
-                        //System.out.println("inModel " + sDAO.getNumberOfUnReadySongs());
-                        songs.addAll(toBeRenamed);
+                        System.out.println("inModel " + sDAO.getNumberOfUnReadySongs());
+                        
                     }
+                    songs.addAll(toBeRenamed);
                 }
             });
             t.start();
