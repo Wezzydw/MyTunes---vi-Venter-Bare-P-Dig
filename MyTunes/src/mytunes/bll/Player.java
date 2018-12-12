@@ -36,6 +36,7 @@ public class Player {
     private boolean isPlayingIncomingSong = false;
     private Song incomingSong;
     private Slider sliderPlayback;
+    private ObservableList<String> nowPlayingTitle;
     
     public Player(List<Song> songs) {
         System.out.println("tester");
@@ -44,8 +45,10 @@ public class Player {
         System.out.println("queue size on init " + queue.queueSize());
         mp = new MediaPlayer(queue.getMedia(songIndex));
         nowPlaying = FXCollections.observableArrayList();
+        nowPlayingTitle = FXCollections.observableArrayList();
         nowPlaying();
         System.out.println("queue size on init2 " + queue.queueSize());
+        
     }
 
     /**
@@ -226,8 +229,18 @@ public class Player {
         nowPlaying.clear();
         nowPlaying.addAll(getMetaData(queue.getSong(songIndex)));
         System.out.println("getNowPlaying" + nowPlaying.get(0));
+        nowPlayingTitle.clear();
+        nowPlayingTitle.addAll(getTitle(queue.getSong(songIndex)));
     }
-
+    
+    
+    public List<String> getTitle(Song titleSong){
+        List<String> MetaList = FXCollections.observableArrayList();
+         if (titleSong.getTitle() != null) {
+            MetaList.add(titleSong.getTitle());
+         }
+         return MetaList;
+    }
     /**
      * @param Song
      * @returnerer en MetaList Tjekker at title, author, categori, releaseyear,
@@ -267,6 +280,10 @@ public class Player {
         return nowPlaying;
     }
 
+    public ObservableList<String> getNowPlayingTitle() {
+        return nowPlayingTitle;
+    }
+    
     /**
      * @param sliderPlayback = progress bar så brugeren kan se hvor lang, og
      * tilbageværende tid af mediet.

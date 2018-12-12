@@ -101,7 +101,6 @@ public class MyTunesMainViewController implements Initializable
 
         //        Stage stage = (Stage) borderPane.getScene().getWindow();
         listViewAllSongs.setItems(model.getSongs());
-        listViewSongInfo.setItems(model.getNowPlaying());
         listViewQueue.setItems(model.getQuedSongs());
         listViewLibrary.setItems(model.getPlayLists());
         listNowPlaying.setItems(model.getNowPlaying());
@@ -113,7 +112,7 @@ public class MyTunesMainViewController implements Initializable
         model.sendSliderForPlayback(sliderPlayback);
         listViewLibrary.editableProperty().setValue(Boolean.TRUE);
         lastTime = 0L;
-        
+        listViewSongInfo.setItems(model.getSongName());
     }
     
     @FXML
@@ -176,7 +175,7 @@ public class MyTunesMainViewController implements Initializable
     private void onHandleAdd(ActionEvent event) throws IOException
     {
         model.addSongToQue(listViewAllSongs.getSelectionModel().getSelectedItems());
-        listNowPlaying.setItems(model.getNowPlaying());
+        listNowPlaying.setItems(model.getSongName());
         listViewSongInfo.setItems(model.getNowPlaying());
         //listViewQueue.getItems().addAll(model.getQuedSongs());
         

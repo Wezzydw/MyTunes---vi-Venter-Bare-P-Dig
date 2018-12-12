@@ -30,6 +30,7 @@ public class PlayerManager
     private ObservableList<Song> songQueue;
     private ObservableList<String> nowPlaying;
     private ObservableList<Playlist> playlists;
+    private ObservableList<String> getSongName;
     private ComboBox<String> comboBoxMisc;
     private SongDAO sdao;
     private PlaylistDAO pDAO;
@@ -42,6 +43,7 @@ public class PlayerManager
     {
         songQueue = FXCollections.observableArrayList();
         nowPlaying = FXCollections.observableArrayList();
+        getSongName = FXCollections.observableArrayList();
         setdao = new SettingsDAO();
         sdao = new SongDAO();
         pDAO = new PlaylistDAO();
@@ -71,6 +73,7 @@ public class PlayerManager
                 player.changevolume(volumeFromDB);
                 System.out.println("Er det her?");
                 nowPlaying.addAll(player.getNowPlaying());
+                getSongName.addAll(player.getNowPlayingTitle());
                 player.makeSliderForPlayback(sliderPlayback);
             }
         }
@@ -93,9 +96,17 @@ public class PlayerManager
         {
             return player.getNowPlaying();
         }
-
     }
-
+    public ObservableList<String> getNowPlaylingTitle()
+    {
+    if (player == null)
+    {
+        return getSongName;
+    }else
+    {
+    return player.getNowPlayingTitle();
+    }
+    }
     /*
         Tilføjer den valgte sang til queuedsongs
      */
@@ -292,5 +303,10 @@ public class PlayerManager
     {
         player.changeToThisSong(song);
 
+    }
+    
+    public ObservableList<String> getSongName()
+    {
+    return getSongName;
     }
 }

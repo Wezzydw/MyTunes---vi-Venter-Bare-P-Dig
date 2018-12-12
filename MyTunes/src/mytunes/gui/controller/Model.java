@@ -8,6 +8,7 @@ package mytunes.gui.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import static java.util.Collections.list;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -298,7 +299,10 @@ public class Model
     {
         playerManager.changeToThisSong(song);
     }
-    
-    
+    public ObservableList<String> getSongName()
+     
+    {
+        return playerManager.getNowPlaylingTitle();
+    }
 
 }
