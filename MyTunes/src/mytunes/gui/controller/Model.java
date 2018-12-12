@@ -304,6 +304,10 @@ public class Model
             }
         }
     }
+    public void addPlaylistToDB(List<Song> selectedSongs, Playlist plist)
+    {
+        playerManager.playlistToDB(plist, selectedSongs);
+    }
     
     public void playNowSelectedSong(Song song)
     {

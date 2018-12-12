@@ -37,16 +37,15 @@ public class PlaylistDAO
     */
     public Playlist addSelection(List<Song> songs, Playlist playlist)
     {
-
+        String a = "INSERT INTO Playlist (Title, SongId) VALUES (?,?);";
+        
         try (Connection con = conProvider.getConnection())
-        {
-            
-          
-            
-           
+        { 
             for (Song song : songs)
             {
-                PreparedStatement pstmt = con.prepareStatement("INSERT INTO Playlist (Title =" + playlist.getTitle() + ", SongId =" + song.getId() + ";");
+                PreparedStatement pstmt = con.prepareStatement(a);
+                pstmt.setString(1, playlist.getTitle());
+                pstmt.setInt(2, song.getId());
                 pstmt.execute();
             }
 
@@ -108,10 +107,12 @@ public class PlaylistDAO
             String a = "SELECT * FROM Playlist;";
             PreparedStatement pstmt = con.prepareStatement(a);
             ResultSet rs = pstmt.executeQuery();
-            while (rs.getString("Title") == query)
+            while (rs.next())
             {
-                tempId.add(rs.getInt("SongId"));
-
+                if (rs.getString("Title") == query)
+                {
+                    tempId.add(rs.getInt("SongId"));
+                }
             }
             for (Song song : allSongs)
             {
