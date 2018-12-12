@@ -156,7 +156,7 @@
            
 
 
-            <HBox prefHeight="14.0" prefWidth="476.0">
+            <HBox alignment="TOP_RIGHT" prefHeight="14.0" prefWidth="476.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#onHandleSongEdit" style="-fx-background-color: black; -fx-border-color: green;" text="Edit" textFill="#00ff1d">
                      <font>

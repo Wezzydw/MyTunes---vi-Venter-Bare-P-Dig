@@ -410,7 +410,6 @@ public class MyTunesMainViewController implements Initializable
 
 
 
-    @FXML
     private void allSongsMouseClicked(MouseEvent event) {
         long timeDiff = 0;
         long currentTime = System.currentTimeMillis();
