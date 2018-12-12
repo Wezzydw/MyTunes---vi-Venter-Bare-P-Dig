@@ -19,6 +19,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -40,9 +42,11 @@ import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javax.swing.text.Position;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
 
@@ -222,7 +226,13 @@ public class MyTunesMainViewController implements Initializable
     @FXML
     private void onSongRemove(ActionEvent event)
     {
-        
+        try
+        {
+            model.removeSong(listViewAllSongs.getSelectionModel().getSelectedItem());
+        } catch (IOException ex)
+        {
+            System.out.println("fejl 115");
+        }
     }
 
 //    private void dragSelected(DragEvent event) {
@@ -444,9 +454,77 @@ public class MyTunesMainViewController implements Initializable
         }
         lastTime = currentTime;
     }
-
-
-
     
+    public void startCreatePlist(Stage primaryStage)
+        {
+            Button btn = new Button();
+            btn.setText("Say 'Hello World'");
+            btn.setOnAction(new EventHandler<ActionEvent>()
+            {
+            
+                @Override
+                public void handle(ActionEvent event)
+                {
+                    System.out.println("Hello World!");
+                }
+            });
+        
+            StackPane root = new StackPane();
+            root.getChildren().add(btn);
+        
+            Scene scene = new Scene(root, 300, 250);
+        
+            primaryStage.setTitle("Hello World!");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        }
+    @FXML
+    private void onHandlePlaylistCreate(ActionEvent event)
+    {
+        TextField txtTitle = new TextField();
+        txtTitle.setText("Playlist name");
+        System.out.println(txtTitle.getBaselineOffset());
+        
+        Button btn = new Button();
+        btn.setText("Create playlist");
+        StackPane root = new StackPane();
+//        root.getChildren().add(btn);
+//        txtTitle.setTranslateX(100);
+//        txtTitle.setTranslateY(100);
+        
+        root.setAlignment(txtTitle, Pos.TOP_CENTER);
+        root.setAlignment(btn ,Pos.BOTTOM_CENTER);
+        Pos p1 = btn.getAlignment();
+        root.getChildren().addAll(txtTitle, btn);
 
+        Scene scene = new Scene(root, 200, 50);
+        Stage stage = new Stage();
+        stage.setTitle("create playlist");
+        stage.setScene(scene);
+        stage.show();
+        List<Playlist> allPlaylists = model.getPlayLists();
+        btn.setOnAction(new EventHandler<ActionEvent>()
+            {
+            
+                @Override
+                public void handle(ActionEvent event)
+                {
+                    System.out.println(txtTitle.getText());
+                    System.out.println("Hello World!");
+                    try
+                    {
+                        
+                        model.createPlaylist(new Playlist(txtTitle.getText()));
+                    } catch (IOException ex)
+                    {
+                        System.out.println("fejl 1111111");
+                    }
+                    Stage stage = (Stage) txtTitle.getScene().getWindow();
+                    stage.close();
+                }
+            });
+        
+        
+    }
+    
 }

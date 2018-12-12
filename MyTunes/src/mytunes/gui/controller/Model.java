@@ -7,6 +7,7 @@ package mytunes.gui.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
@@ -96,9 +97,9 @@ public class Model
     
    
 
-    public void createPlaylist()
+    public void createPlaylist(Playlist plist) throws IOException
     {
-        
+        playerManager.createPlaylist(plist);
     }
 
     public ObservableList<Playlist> getPlayLists()
@@ -189,6 +190,7 @@ public class Model
     public void removeSong(Song song) throws IOException
     {
         System.out.println("er det her delete ligger");
+        pDAO.deleteSongFromAllPlaylists(song);
         sDAO.deleteSong(song);
         songs.remove(song);
     }
@@ -298,7 +300,9 @@ public class Model
     {
         playerManager.changeToThisSong(song);
     }
-    
-    
+    public void renamePlaylist(String title, String newTitle) throws IOException, SQLException
+    {
+        playerManager.renamePlaylist(title, newTitle);
+    }
 
 }

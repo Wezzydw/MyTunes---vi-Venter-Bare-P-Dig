@@ -8,6 +8,7 @@ package mytunes.bll;
 import java.io.File;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
@@ -292,5 +293,13 @@ public class PlayerManager
     {
         player.changeToThisSong(song);
 
+    }
+    public void renamePlaylist(String title, String newTitle) throws IOException, SQLException
+    {
+        pDAO.renamePlaylist(title, newTitle);
+    }
+    public void createPlaylist(Playlist plist) throws IOException
+    {
+        pDAO.createPlaylist(plist);
     }
 }
