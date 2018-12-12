@@ -305,6 +305,25 @@ public class MyTunesMainViewController implements Initializable
     @FXML
     private void onHandlePlaylistEdit(ActionEvent event)
     {
+        Playlist plist = listViewLibrary.getSelectionModel().getSelectedItem();
+        System.out.println("dette er titlen for p " + plist.getTitle());
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/mytunes/gui/view/EditPlaylistView.fxml"));
+        
+        try
+        {
+            loader.load();
+        } catch (IOException ex)
+        {
+            Logger.getLogger(MyTunesMainViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        EditPlaylistViewController display = loader.getController();
+        display.setPlistTitle(plist);
+        Parent p = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(p));
+        stage.showAndWait();
     }
 
     @FXML
@@ -317,6 +336,7 @@ public class MyTunesMainViewController implements Initializable
     private void onHandlePlaylistAdd(ActionEvent event)
     {
         model.addToPlaylist(listViewLibrary.getSelectionModel().getSelectedItem(), listViewAllSongs.getSelectionModel().getSelectedItems());
+        model.addPlaylistToDB(listViewAllSongs.getSelectionModel().getSelectedItems(), listViewLibrary.getSelectionModel().getSelectedItem());
     }
 
     @FXML

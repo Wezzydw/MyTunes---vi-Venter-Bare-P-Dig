@@ -277,4 +277,8 @@ public class PlayerManager
     {
         this.sliderPlayback = sliderPlayback;
     }
+    public void playlistToDB(Playlist plist, List<Song> selectedSongs)
+    {
+        pDAO.addSelection(selectedSongs, plist);
+    }
 }
