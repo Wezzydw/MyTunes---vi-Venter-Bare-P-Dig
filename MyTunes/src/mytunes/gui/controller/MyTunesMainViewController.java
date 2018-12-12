@@ -210,8 +210,6 @@ public class MyTunesMainViewController implements Initializable
         
     }
     
-    @FXML
-    
     private void HandleDragDone(DragEvent event)
     {
         event.getDragboard().getFiles().clear();
@@ -430,7 +428,6 @@ public class MyTunesMainViewController implements Initializable
         System.out.println("Tester lige her tak");
     }
 
-    @FXML
     private void lstViewTextChanged(InputMethodEvent event)
     {System.out.println("Tester lige her takny");
     }
