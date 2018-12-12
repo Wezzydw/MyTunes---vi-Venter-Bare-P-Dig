@@ -327,7 +327,8 @@ public class MyTunesMainViewController implements Initializable
         }
         
         EditPlaylistViewController display = loader.getController();
-        display.setPlistTitle(plist, model);
+        display.setPlistTitle(plist);
+        display.setModel(model);
         Parent p = loader.getRoot();
         Stage stage = new Stage();
         stage.setScene(new Scene(p));
