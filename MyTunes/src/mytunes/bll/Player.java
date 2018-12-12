@@ -6,6 +6,7 @@
 package mytunes.bll;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -83,19 +84,28 @@ public class Player {
             
             mp.setOnEndOfMedia(new Runnable() {
                 @Override
-                public void run() {
-                    if (queue.endOfQueue(songIndex)) {
-                        songIndex = 0;
-                    }
-                    if (onRepeat) {
+
+                public void run()
+                {
+                    mp.stop();
+
+                    if (onRepeat)
+                    {
+
                         playOnRepeat();
                         playSong();
                         
                     } else if (shuffle) {
                         songIndex = getRandom();
                         playSong();
-                    } else {
-                        nextSong();
+
+                    } else
+                    {
+                        if (!isPlayingIncomingSong)
+                        {
+                            nextSong();
+                        }
+
                         playSong();
                     }
                 }
@@ -113,8 +123,17 @@ public class Player {
     /**
      * Går til element i næste index, og fylder i mediaplayeren.
      */
-    private MediaPlayer nextSong() {
-        songIndex++;
+    private MediaPlayer nextSong()
+    {
+        isPlayingIncomingSong = false;
+        if (queue.endOfQueue(songIndex))
+        {
+            songIndex = 0;
+        } else
+        {
+            songIndex++;
+        }
+
         mp = new MediaPlayer(queue.getMedia(songIndex));
         mp.pause();
         return mp;
@@ -134,10 +153,17 @@ public class Player {
      * ikke, går den en plads tilbage i listen og afspiller elementet på denne
      * plads.
      */
-    public void playPrevSong() {
-        if (queue.queueSize() > 0) {
-            if (!shuffle) {
-                if (songIndex == 0) {
+
+    public void playPrevSong()
+    {
+        isPlayingIncomingSong = false;
+        if (queue.queueSize() > 0)
+        {
+            if (!shuffle)
+            {
+                if (songIndex == 0)
+                {
+
                     songIndex = queue.queueSize() - 1;
                 } else {
                     songIndex--;
@@ -157,10 +183,17 @@ public class Player {
      * næste index.
      *
      */
-    public void playNextSong() {
-        if (queue.queueSize() > 0) {
-            if (!shuffle) {
-                if (songIndex == queue.queueSize() - 1) {
+
+    public void playNextSong()
+    {
+
+        if (queue.queueSize() > 0)
+        {
+            if (!shuffle)
+            {
+                if (songIndex == queue.queueSize() - 1)
+                {
+
                     songIndex = 0;
                 } else {
                     songIndex++;
@@ -221,6 +254,7 @@ public class Player {
     /**
      * Viser metadata fra igangværende sang.
      */
+
     public void nowPlaying() {
         System.out.println("nowplaying and songIndex : " + songIndex);
         nowPlaying.clear();
@@ -283,6 +317,7 @@ public class Player {
             mp = new MediaPlayer(queue.getMedia(songIndex));
         }
     }
+
     
     public void playIncomingSong(Song song) {
         isPlayingIncomingSong = true;
@@ -295,8 +330,16 @@ public class Player {
     
     public void changeToThisSong(Song song) {
         mp.stop();
-        songIndex = queue.getIndex(song);
-        playSong();
+        mp.setOnStopped(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                songIndex = queue.getIndex(song);
+                playSong();
+            }
+        });;
+
     }
     
 }
