@@ -152,7 +152,7 @@
                </image>
             </ImageView>
 
-            <ListView fx:id="listViewAllSongs" onMouseClicked="#allSongsMouseClicked" prefHeight="265.0" prefWidth="476.0" />
+            <ListView fx:id="listViewAllSongs" prefHeight="265.0" prefWidth="476.0" />
            
 
 

@@ -266,7 +266,6 @@ public class MyTunesMainViewController implements Initializable
         
         EditSongViewController display = loader.getController();
         display.setSong(s, songIndex);
-        display.setModel(model);
         Parent p = loader.getRoot();
         Stage stage = new Stage();
         stage.setScene(new Scene(p));
@@ -276,25 +275,26 @@ public class MyTunesMainViewController implements Initializable
     }
     public void updateView(Song song, int songIndex)
     {
-//playerManager.updateSong(song);
-//        for(Playlist p : playlists)
-//        {
-//            
-//        for(Song s : p.getSongsInPlaylist())
-//        {
-//            if(s.getId() == song.getId())
-//            {
-//                s.setAlbum(song.getAlbum());
-//                s.setAuthor(song.getAuthor());
-//                s.setCategori(song.getCategori());
-//                s.setReleaseYear(song.getReleaseYear());
-//                s.setTitle(s.getTitle());
-//                
-//                return;
-//            }
-//        }
-//        
-//        }
+        System.out.println(songIndex);
+        System.out.println(song.getTitle());
+        
+        List<Song> tmpSongs = model.getSongs();
+        tmpSongs.set(songIndex, song);
+        System.out.println(tmpSongs.get(songIndex).getTitle());
+//        tmpSongs.set(songIndex, song);
+//        System.out.println(tmpSongs.get(songIndex).getTitle());
+        model.getSongs().set(songIndex, song);
+        try
+        {
+            model.removeSong(song);
+        } catch (IOException ex)
+        {
+            System.out.println("fejl 11102");
+        }
+        
+        listViewAllSongs.setItems(model.getSongs());
+        
+        
     }
 
 
@@ -425,7 +425,6 @@ public class MyTunesMainViewController implements Initializable
 
 
 
-    @FXML
     private void allSongsMouseClicked(MouseEvent event) {
         long timeDiff = 0;
         long currentTime = System.currentTimeMillis();
@@ -440,8 +439,6 @@ public class MyTunesMainViewController implements Initializable
         }
         lastTime = currentTime;
     }
-    
-    
 
 
 

@@ -50,7 +50,7 @@ public class PlayerManager
         playlists = FXCollections.observableArrayList();
         playlists.addAll(getSavedPlaylists());
     }
-
+    
     public List<Playlist> getSavedPlaylists()
     {
 //        List<Playlist> initPlaylists = new ArrayList();
@@ -122,6 +122,7 @@ public class PlayerManager
             songQueue.remove(toRemove.get(i));
         }
         player.removeSongsFromQueue(songQueue);
+        
 
     }
 
@@ -160,8 +161,6 @@ public class PlayerManager
     public void updateSong(Song song)
     {
         sdao.updateSong(song);
-        System.out.println("in beforeEditor1 " + playlists.size());
-  
     }
 
 //    public void getSongInfo()
@@ -279,23 +278,16 @@ public class PlayerManager
         this.sliderPlayback = sliderPlayback;
     }
 
-
     public void playlistToDB(Playlist plist, List<Song> selectedSongs)
     {
         pDAO.addSelection(selectedSongs, plist);
     }
-
+    
     public void playIncomingSong(Song song)
     {
-        if (songQueue.size() == 0)
-        {
-            songQueue.add(song);
-        }
-        checkForSongsSomewhere();
-
         player.playIncomingSong(song);
     }
-
+    
     public void changeToThisSong(Song song)
     {
         player.changeToThisSong(song);
