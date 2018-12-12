@@ -343,7 +343,6 @@ public class MyTunesMainViewController implements Initializable
         System.out.println("queueMouseEnter");
     }
 
-    @FXML
     private void allMouseReleased(MouseEvent event)
     {
         System.out.println("allMouseReleased");
@@ -395,9 +394,6 @@ public class MyTunesMainViewController implements Initializable
     private void queueMouseClick(MouseEvent event) {
     }
 
-    @FXML
-    private void allSongsMouseClicked(MouseEvent event) {
-    }
 
 
     
