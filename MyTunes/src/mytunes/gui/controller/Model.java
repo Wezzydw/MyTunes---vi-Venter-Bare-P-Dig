@@ -58,7 +58,7 @@ public class Model
         empty = new ArrayList();
         //songinfo = FXCollections.observableArrayList(playerManager.getSongInfo());
         //songs = FXCollections.observableArrayList(playerManager.getAllSongs());
-        playlists = FXCollections.observableArrayList(playerManager.getAllPlaylists());
+        playlists.setAll(playerManager.getAllPlaylists());
         addPlaylist = new ArrayList();
         setDAO = new SettingsDAO();
         playlistInitFilling();
@@ -76,7 +76,7 @@ public class Model
         playlists.add(new Playlist("All Songs"));
         playlists.add(new Playlist("tester"));
         //playlists.get(0).addSongSelection(playerManager.getAllSongs());
-        System.out.println(playlists.size());
+        System.out.println("init playlist size " + playlists.size());
         songs = FXCollections.observableArrayList(playlists.get(0).getSongsInPlaylist());
 
     }
@@ -99,7 +99,11 @@ public class Model
 
     public void createPlaylist(Playlist plist) throws IOException
     {
+
         playerManager.createPlaylist(plist);
+
+        songs.clear();
+
     }
 
     public ObservableList<Playlist> getPlayLists()
@@ -114,12 +118,6 @@ public class Model
 
     public ObservableList<Song> getSongs()
     {
-
-        for (Song s : sDAO.getAllSongsFromDB())
-        {
-            System.out.println(s.getTitle());
-            //songs.add(s);
-        }
         return songs;
     }
 
@@ -197,7 +195,7 @@ public class Model
 
     public void editSong()
     {
-
+        System.out.println("playlistSize" + playlists.size());
     }
 
     public void addSongToQue(ObservableList<Song> toAdd) throws IOException
@@ -273,7 +271,33 @@ public class Model
 
     public void updateSong(Song song)
     {
-        playerManager.updateSong(song);
+        //songs.clear();
+       playerManager.updateSong(song);
+       //songs.clear();
+       
+        System.out.println("playlist size here" + playlists.size());
+        for(Playlist p : playlists)
+        {
+           
+        for(Song s : p.getSongsInPlaylist())
+        {
+            if(s.getId() == song.getId())
+            {
+                System.out.println("We are in here" + songs.size());
+                s.setAlbum(song.getAlbum());
+                s.setAuthor(song.getAuthor());
+                s.setCategori(song.getCategori());
+                s.setReleaseYear(song.getReleaseYear());
+                s.setTitle(song.getTitle());
+                System.out.println(s.getTitle());
+//                
+//                songs.clear();
+                songs.setAll(p.getSongsInPlaylist());
+                return;
+            }
+        }
+//        
+        }
     }
     
     public void addToPlaylist(Playlist selectedPlaylist, List<Song> songSelection)
@@ -300,9 +324,11 @@ public class Model
     {
         playerManager.changeToThisSong(song);
     }
+
     public void renamePlaylist(String title, String newTitle) throws IOException, SQLException
     {
         playerManager.renamePlaylist(title, newTitle);
     }
+
 
 }
