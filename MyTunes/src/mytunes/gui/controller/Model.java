@@ -312,6 +312,9 @@ public class Model
     {
         playerManager.renamePlaylist(title, newTitle);
     }
-
+    public void removePlaylist(Playlist plist) throws IOException, SQLException
+    {
+        playerManager.removePlaylist(plist);
+    }
 
 }

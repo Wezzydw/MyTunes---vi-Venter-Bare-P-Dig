@@ -8,6 +8,7 @@ package mytunes.gui.controller;
 import static java.awt.event.KeyEvent.VK_DELETE;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -333,9 +334,18 @@ public class MyTunesMainViewController implements Initializable
     }
 
     @FXML
-    private void onHandlePlaylistRemove(ActionEvent event)
+    private void onHandlePlaylistRemove(ActionEvent event) 
     {
-        
+        try
+        {
+            model.removePlaylist(listViewLibrary.getSelectionModel().getSelectedItem());
+        } catch (IOException ex)
+        {
+            System.out.println("could not find playlist");
+        } catch (SQLException ex)
+        {
+            System.out.println("could not connect to server, fejl 102");
+        }
     }
 
     @FXML

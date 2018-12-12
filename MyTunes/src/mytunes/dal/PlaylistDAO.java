@@ -200,17 +200,25 @@ public class PlaylistDAO
     {
         try (Connection con = conProvider.getConnection())
         {
+            String a = "DELETE FROM Playlists WHERE Title = (?);";
+            PreparedStatement pstmt = con.prepareStatement(a);
+            pstmt.setString(1, title);
+            pstmt.execute();
+            pstmt.close();
             
             Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery("Select * FROM Playlist;");
+            while(rs.next())
             {
-                {
-                    PreparedStatement pstmt = con.prepareStatement("DELETE FROM Playlist WHERE Title=()");
+                    a = "DELETE FROM Playlist WHERE Title = (?);";
+                    pstmt = con.prepareStatement(a);
                     pstmt.setString(1, title);
                     pstmt.execute();
-                    pstmt.close();
-                }
+                    System.out.println("den kommer hertil");
+//                    pstmt.close();
+                
             }
+            
 
         } catch (SQLServerException ex)
         {

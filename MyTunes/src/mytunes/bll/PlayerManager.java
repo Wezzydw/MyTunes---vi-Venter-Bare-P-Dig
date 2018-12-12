@@ -302,4 +302,8 @@ public class PlayerManager
     {
         pDAO.createPlaylist(plist);
     }
+    public void removePlaylist(Playlist plist) throws IOException, SQLException
+    {
+        pDAO.deletePlaylist(plist.getTitle());
+    }
 }
