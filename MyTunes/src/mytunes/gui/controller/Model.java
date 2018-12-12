@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import static java.util.Collections.list;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -334,11 +335,16 @@ public class Model
         playerManager.changeToThisSong(song);
     }
 
+    public ObservableList<String> getSongName()
+     
+    {
+        return playerManager.getNowPlaylingTitle();
+    }
 
-    
     public void removePlaylist(Playlist plist) throws IOException, SQLException
     {
         playerManager.removePlaylist(plist);
+
     }
     public void renamePlaylist(String title, String newTitle) throws IOException, SQLException
     {
