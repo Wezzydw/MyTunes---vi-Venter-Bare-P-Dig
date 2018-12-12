@@ -339,17 +339,32 @@ public class Model
      
     {
         return playerManager.getNowPlaylingTitle();
+    }
 
+    public void removePlaylist(Playlist plist) throws IOException, SQLException
+    {
+        playerManager.removePlaylist(plist);
 
     }
     public void renamePlaylist(String title, String newTitle) throws IOException, SQLException
     {
         playerManager.renamePlaylist(title, newTitle);
-    }
-    public void removePlaylist(Playlist plist) throws IOException, SQLException
-    {
-        playerManager.removePlaylist(plist);
+        //songs.clear();
 
+       
+        System.out.println("er vi der snart" + playlists.size());
+        for(Playlist p : playlists)
+        {
+            System.out.println(p.getTitle());
+            if(p.getTitle()==title)
+            {
+                p.setTitle(newTitle);
+                playlists.setAll(playlists);
+                return;
+            }
+        
+        }
+        
     }
 
 }

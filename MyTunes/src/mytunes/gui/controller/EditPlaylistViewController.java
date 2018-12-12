@@ -44,9 +44,15 @@ public class EditPlaylistViewController implements Initializable
     private void onHandleSave(ActionEvent event) throws IOException, SQLException
     {
         System.out.println("save data" );
-        String title = txtTitle.getText();
-        Playlist plist = new Playlist(title);
-        model.renamePlaylist(lblTitle.getText(), title);
+        String newtitle = txtTitle.getText();
+//        Playlist plist = new Playlist(title);
+        System.out.println(newtitle);
+        System.out.println(lblTitle.getText());
+        model.renamePlaylist(lblTitle.getText(), newtitle);
+        System.out.println(newtitle);
+        
+        Stage stage = (Stage) lblTitle.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
@@ -55,11 +61,15 @@ public class EditPlaylistViewController implements Initializable
         Stage stage = (Stage) lblTitle.getScene().getWindow();
         stage.close();
     }
-    public void setPlistTitle(Playlist plist, Model model)
+    public void setPlistTitle(Playlist plist)
     {
         txtTitle.setText(plist.getTitle());
         lblTitle.setText(plist.getTitle());
+    }
+    public void setModel(Model model)
+    {
+        
+        System.out.println("øhm");
         this.model = model;
     }
-    
 }
