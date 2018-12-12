@@ -106,9 +106,11 @@
                   <ListView fx:id="listViewSongInfo" fixedCellSize="0.0" prefHeight="200.0" prefWidth="199.0" />
                   <VBox prefHeight="200.0" prefWidth="278.0" style="-fx-background-color: black;">
                      <children>
+
                         <ListView fx:id="listViewQueue" onKeyPressed="#queueLookForDeleteKey" onMouseClicked="#queueMouseClick" prefHeight="250.0" prefWidth="280.0">
+
                            <cursor>
-                              <Cursor fx:constant="CROSSHAIR" />
+                              
                            </cursor></ListView>
                         <HBox prefHeight="28.0" prefWidth="283.0">
                            <children>
@@ -167,6 +169,7 @@
                </children>
             </HBox>
             <ListView fx:id="listViewAllSongs" onMouseClicked="#allSongsMouseClicked" onMouseReleased="#allMouseReleased" prefHeight="330.0" prefWidth="476.0" />
+
             <HBox prefHeight="14.0" prefWidth="476.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#onHandleSongEdit" style="-fx-background-color: black; -fx-border-color: green;" text="Edit" textFill="#00ff1d">
