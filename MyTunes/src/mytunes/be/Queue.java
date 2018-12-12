@@ -158,4 +158,15 @@ public class Queue
             this.songs.add(songs);
         }
     }
+    
+    public int getIndex(Song song)
+    {
+        for(int i = 0; i < songs.size(); i++)
+        {
+            if(songs.get(i).equals(song))
+                return i;
+        }
+        
+        return -1;
+    }
 }

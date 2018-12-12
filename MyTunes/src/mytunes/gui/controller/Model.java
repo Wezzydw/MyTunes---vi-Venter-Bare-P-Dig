@@ -289,6 +289,16 @@ public class Model
         playerManager.playlistToDB(plist, selectedSongs);
     }
     
+    public void playNowSelectedSong(Song song)
+    {
+        playerManager.playIncomingSong(song);
+    }
+    
+    public void changeToThisSong(Song song)
+    {
+        playerManager.changeToThisSong(song);
+    }
+    
     
 
 }
