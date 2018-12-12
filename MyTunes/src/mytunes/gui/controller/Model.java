@@ -58,7 +58,8 @@ public class Model
         empty = new ArrayList();
         //songinfo = FXCollections.observableArrayList(playerManager.getSongInfo());
         //songs = FXCollections.observableArrayList(playerManager.getAllSongs());
-        playlists = FXCollections.observableArrayList(playerManager.getAllPlaylists());
+//        playlists = FXCollections.observableArrayList(playerManager.getAllPlaylists());
+        playlists.setAll(playerManager.getAllPlaylists());
         addPlaylist = new ArrayList();
         setDAO = new SettingsDAO();
         playlistInitFilling();
@@ -279,7 +280,33 @@ public class Model
 
     public void updateSong(Song song)
     {
-        playerManager.updateSong(song);
+        //songs.clear();
+       playerManager.updateSong(song);
+       //songs.clear();
+       
+        System.out.println("playlist size here" + playlists.size());
+        for(Playlist p : playlists)
+        {
+           
+        for(Song s : p.getSongsInPlaylist())
+        {
+            if(s.getId() == song.getId())
+            {
+                System.out.println("We are in here" + songs.size());
+                s.setAlbum(song.getAlbum());
+                s.setAuthor(song.getAuthor());
+                s.setCategori(song.getCategori());
+                s.setReleaseYear(song.getReleaseYear());
+                s.setTitle(song.getTitle());
+                System.out.println(s.getTitle());
+//                
+//                songs.clear();
+                songs.setAll(p.getSongsInPlaylist());
+                return;
+            }
+//        playerManager.updateSong(song);
+        }
+        }
     }
     
     public void addToPlaylist(Playlist selectedPlaylist, List<Song> songSelection)

@@ -286,6 +286,12 @@ public class PlayerManager
     
     public void playIncomingSong(Song song)
     {
+        if (songQueue.size() == 0)
+        {
+            songQueue.add(song);
+        }
+        checkForSongsSomewhere();
+        
         player.playIncomingSong(song);
     }
     

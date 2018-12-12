@@ -55,10 +55,11 @@ public class EditPlaylistViewController implements Initializable
         Stage stage = (Stage) lblTitle.getScene().getWindow();
         stage.close();
     }
-    public void setPlistTitle(Playlist plist)
+    public void setPlistTitle(Playlist plist, Model model)
     {
         txtTitle.setText(plist.getTitle());
         lblTitle.setText(plist.getTitle());
+        this.model = model;
     }
     
 }

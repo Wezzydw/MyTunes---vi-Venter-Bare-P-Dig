@@ -105,7 +105,7 @@ public class Player {
                         {
                             nextSong();
                         }
-
+                        
                         playSong();
                     }
                 }
