@@ -80,6 +80,7 @@ public class MyTunesMainViewController implements Initializable
     
     private static final DataFormat customFormat = new DataFormat("Song.custom");
     Model model;
+    Long lastTime;
     @FXML
     private Slider sliderPlayback;
 
@@ -111,6 +112,7 @@ public class MyTunesMainViewController implements Initializable
         model.changeVolume(model.getSliderVolumeFromDB());
         model.sendSliderForPlayback(sliderPlayback);
         listViewLibrary.editableProperty().setValue(Boolean.TRUE);
+        lastTime = 0L;
         
     }
     
@@ -359,7 +361,7 @@ public class MyTunesMainViewController implements Initializable
     }
 
 
-    Long lastTime = 0L;
+    
     @FXML
     private void PlaylistsMouseClick(MouseEvent event)
     {
@@ -392,6 +394,36 @@ public class MyTunesMainViewController implements Initializable
 
     @FXML
     private void queueMouseClick(MouseEvent event) {
+        long timeDiff = 0;
+        long currentTime = System.currentTimeMillis();
+        
+        if(lastTime != 0 && currentTime !=0)
+        {
+            timeDiff = currentTime - lastTime;
+            if(timeDiff <= 215)
+                model.changeToThisSong(listViewQueue.getSelectionModel().getSelectedItem());
+            else
+                System.out.println("singleclick");
+        }
+        lastTime = currentTime;
+    }
+
+
+
+    @FXML
+    private void allSongsMouseClicked(MouseEvent event) {
+        long timeDiff = 0;
+        long currentTime = System.currentTimeMillis();
+        
+        if(lastTime != 0 && currentTime !=0)
+        {
+            timeDiff = currentTime - lastTime;
+            if(timeDiff <= 215)
+                model.playNowSelectedSong(listViewAllSongs.getSelectionModel().getSelectedItem());
+            else
+                System.out.println("singleclick");
+        }
+        lastTime = currentTime;
     }
 
 
