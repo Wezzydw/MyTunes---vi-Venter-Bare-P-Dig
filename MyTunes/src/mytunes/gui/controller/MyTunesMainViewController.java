@@ -270,12 +270,7 @@ public class MyTunesMainViewController implements Initializable
         Stage stage = new Stage();
         stage.setScene(new Scene(p));
         stage.showAndWait();
-//        Parent ruuut = FXMLLoader.load(getClass().getResource("/mytunes/gui/view/editSongView.fxml"));
-//        
-//        Scene scene = new Scene(ruuut);
-//        Stage anotherStage = new Stage();
-//        anotherStage.setScene(scene);
-//        anotherStage.show();
+
 
     }
     public void updateView(Song song, int songIndex)

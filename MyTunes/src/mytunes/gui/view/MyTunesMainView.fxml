@@ -148,7 +148,7 @@
             <TextField fx:id="txtFieldSearch" onKeyReleased="#onHandleSearch" prefHeight="17.0" prefWidth="476.0" />
             <ImageView cache="true" depthTest="ENABLE" fitHeight="29.0" fitWidth="477.0">
                <image>
-                  <Image url="@../../../../Images/green-hd-wallpaper-PIC-MCH069905.jpg" />
+                  <Image url="file:/C:/Users/marce/Dropbox/programmering/GitHub/MyTunes---vi-Venter-Bare-P-Dig/MyTunes/Images/green-hd-wallpaper-PIC-MCH069905.jpg" />
                </image>
             </ImageView>
 
