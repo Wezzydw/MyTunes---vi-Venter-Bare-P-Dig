@@ -254,8 +254,9 @@ public class Model
                 {
                     while (sDAO.getNumberOfUnReadySongs() != 0)
                     {
-                        System.out.println("inModel " + sDAO.getNumberOfUnReadySongs());
-                        
+                        sDAO.getNumberOfUnReadySongs();
+                        //doNothing();
+                        System.out.println("Retard");
                     }
                     songs.addAll(toBeRenamed);
                 }
@@ -274,6 +275,10 @@ public class Model
         //Do something with view here
     }
 
+    public void doNothing()
+    {
+        
+    }
     public void sendSliderForPlayback(Slider sliderPlayback)
     {
         playerManager.makeSliderForPlayBack(sliderPlayback);
