@@ -60,7 +60,11 @@ public class EditSongViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-  
+        try {
+            model = new Model();
+        } catch (IOException ex) {
+            Logger.getLogger(EditSongViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         //ObservableList<Song> allSongs = model.getSongs();
         System.out.println("nu er vi inde i edit" );
         comBox = FXCollections.observableArrayList();
@@ -71,11 +75,10 @@ public class EditSongViewController implements Initializable {
         comBox.add("Pop");
         comBox.add("Andet");
         comboCategory.setItems(comBox);
-
+        
         
         
     }    
-    
 
     @FXML
     private void onHandleCancelEdit(ActionEvent event) throws IOException {
@@ -113,15 +116,9 @@ public class EditSongViewController implements Initializable {
         }
         
         MyTunesMainViewController display = loader.getController();
-
-        //model = display.getThisModel();
-        //display.updateView(s, songIndex);
-        display.model.updateSong(s);
-
 //        display.updateView(s, songIndex);
         Stage stage = (Stage) btnSave.getScene().getWindow();
         stage.close();
-
         System.out.println("album =" + album + ", artist=" + author + ", title=" + title + ", year=" + year + ", length=" + length + ", id=" +id);
         
     }
@@ -137,13 +134,6 @@ public class EditSongViewController implements Initializable {
         System.out.println(d2);
         this.Id = selectedSong.getId();
         this.songIndex = songIndex;
-    }
-
-    public void setModel(Model model)
-    {
-        
-        System.out.println("øhm");
-        this.model = model;
     }
     
 }
