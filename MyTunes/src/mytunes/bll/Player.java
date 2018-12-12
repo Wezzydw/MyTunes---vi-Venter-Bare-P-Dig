@@ -6,6 +6,7 @@
 package mytunes.bll;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -49,7 +50,6 @@ public class Player
         nowPlaying();
         System.out.println("queue size on init2 " + queue.queueSize());
     }
-
 
     /**
      * Denne metode står for at afspille en sang. SetOnReady laves hver gang
@@ -96,7 +96,7 @@ public class Player
                 public void run()
                 {
                     mp.stop();
-                  
+
                     if (onRepeat)
                     {
                         playOnRepeat();
@@ -108,8 +108,10 @@ public class Player
                         playSong();
                     } else
                     {
-                        if(!isPlayingIncomingSong)
+                        if (!isPlayingIncomingSong)
+                        {
                             nextSong();
+                        }
                         playSong();
                     }
                 }
@@ -130,12 +132,14 @@ public class Player
      */
     private MediaPlayer nextSong()
     {
-          if (queue.endOfQueue(songIndex))
-                    {
-                        songIndex = 0;
-                    }
-        else
+        isPlayingIncomingSong = false;
+        if (queue.endOfQueue(songIndex))
+        {
+            songIndex = 0;
+        } else
+        {
             songIndex++;
+        }
         mp = new MediaPlayer(queue.getMedia(songIndex));
         mp.pause();
         return mp;
@@ -158,6 +162,7 @@ public class Player
      */
     public void playPrevSong()
     {
+        isPlayingIncomingSong = false;
         if (queue.queueSize() > 0)
         {
             if (!shuffle)
@@ -187,6 +192,7 @@ public class Player
      */
     public void playNextSong()
     {
+        isPlayingIncomingSong = false;
         if (queue.queueSize() > 0)
         {
             if (!shuffle)
@@ -267,10 +273,20 @@ public class Player
      */
     public void nowPlaying()
     {
-        System.out.println("nowplaying and songIndex : " + songIndex);
-        nowPlaying.clear();
-        nowPlaying.addAll(getMetaData(queue.getSong(songIndex)));
-        System.out.println("getNowPlaying" + nowPlaying.get(0));
+        if (!isPlayingIncomingSong)
+        {
+            System.out.println("nowplaying and songIndex : " + songIndex);
+            nowPlaying.clear();
+            nowPlaying.addAll(getMetaData(queue.getSong(songIndex)));
+            System.out.println("getNowPlaying" + nowPlaying.get(0));
+        } else
+        {
+            System.out.println("lets' see");
+            nowPlaying.clear();
+            nowPlaying.setAll(getMetaData(incomingSong));
+            System.out.println("getNowPlaying" + nowPlaying.get(0));
+        }
+
     }
 
     /**
@@ -342,20 +358,85 @@ public class Player
 
     public void playIncomingSong(Song song)
     {
+        List<Song> tmpList = new ArrayList();
+        tmpList.add(song);
         System.out.println("here In playincmonig song");
-        isPlayingIncomingSong = false;
+        isPlayingIncomingSong = true;
         incomingSong = song;
         mp.stop();
-        mp = new MediaPlayer(new Media(new File(song.getFilePath()).toURI().toString()));
-        playSong();
+        if(queue.queueSize() == 0)
+        {
+            queue.addSelection(tmpList);
+        }
+        if(queue.queueSize() == 1)
+        {
+            System.out.println("Trying new queue");
+            queue.setNewQueue(tmpList);
+        }
+        System.out.println("Mp status: " + mp.getStatus());
+        mp.setOnStopped(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                mp = new MediaPlayer(new Media(new File(song.getFilePath()).toURI().toString()));
+                mp.setOnReady(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
 
+                        System.out.println("Det kan vi da godt");
+
+                        nowPlaying();
+                        System.out.println(mp.getMedia().toString());
+//                nowPlaying.clear();
+//                nowPlaying.addAll(getMetaData(song));
+                        playSong();
+                    }
+                });;
+
+            }
+        });;
+        
+        if(mp.getStatus() == Status.UNKNOWN)
+        {
+            mp = new MediaPlayer(new Media(new File(song.getFilePath()).toURI().toString()));
+        }
+        
+        mp.setOnReady(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+
+                        System.out.println("Det kan vi da godt");
+
+                        nowPlaying();
+                        System.out.println(mp.getMedia().toString());
+//                nowPlaying.clear();
+//                nowPlaying.addAll(getMetaData(song));
+                        playSong();
+                        nowPlaying();
+                    }
+                });;
+        
     }
 
     public void changeToThisSong(Song song)
     {
+        isPlayingIncomingSong = false;
         mp.stop();
-        songIndex = queue.getIndex(song);
-        playSong();
+        mp.setOnStopped(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                songIndex = queue.getIndex(song);
+                playSong();
+            }
+        });;
+
     }
 
 }
