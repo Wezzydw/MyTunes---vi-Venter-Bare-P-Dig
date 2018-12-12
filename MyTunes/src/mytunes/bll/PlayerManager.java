@@ -311,8 +311,8 @@ public class PlayerManager
         }
 
         System.out.println("Er det her?");
-        nowPlaying.addAll(player.getNowPlaying());
-        getSongName.addAll(player.getNowPlayingTitle());
+//        nowPlaying.addAll(player.getNowPlaying());
+//        getSongName.addAll(player.getNowPlayingTitle());
 
         player.playIncomingSong(song);
     }
