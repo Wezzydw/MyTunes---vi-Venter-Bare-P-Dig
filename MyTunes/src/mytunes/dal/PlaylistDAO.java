@@ -250,19 +250,16 @@ public class PlaylistDAO
     /*
     
     */
-    public void writeChanges() throws IOException
+    public void createPlaylist(Playlist plist) throws IOException
     {
-        List<Playlist> allPlaylists = new PlaylistDAO().getAllPlaylists();
+//        List<Playlist> allPlaylists = new PlaylistDAO().getAllPlaylists();
         
         try (Connection con = conProvider.getConnection())
         {
-            for (Playlist playlist : allPlaylists)
+            try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO Playlists (Title) VALUES (?)"))
             {
-                try (PreparedStatement pstmt = con.prepareStatement("INSERT INTO Playlist (Title, SongId, FilePath ) VALUES ("))
-                {
-                    pstmt.setString(1, playlist.getTitle());
-                    pstmt.execute();
-                }
+                pstmt.setString(1, plist.getTitle());
+                pstmt.execute();
             }
         } catch (SQLException ex)
         {
@@ -271,4 +268,26 @@ public class PlaylistDAO
 
     }
 
+    public void deleteSongFromAllPlaylists(Song song)
+    {
+        try (Connection con = conProvider.getConnection())
+        {
+            String a = "SELECT * FROM Playlist;";
+            PreparedStatement pstmt = con.prepareStatement(a);
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next())
+            {
+                if(song.getId()==rs.getInt("SongId"))
+                {
+                    a = "DELETE FROM Playlist WHERE SongId = " + song.getId() + ";";
+                    PreparedStatement prst = con.prepareStatement(a);
+                    prst.execute();
+                }
+            }
+            
+        } catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+    }
 }

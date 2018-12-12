@@ -95,7 +95,7 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" style="-fx-background-color: black; -fx-border-color: green;" text="CreatePlayl" textFill="#00ff1d">
+                  <Button mnemonicParsing="false" onAction="#onHandlePlaylistCreate" style="-fx-background-color: black; -fx-border-color: green;" text="CreatePlayl" textFill="#00ff1d">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -148,11 +148,11 @@
             <TextField fx:id="txtFieldSearch" onKeyReleased="#onHandleSearch" prefHeight="17.0" prefWidth="476.0" />
             <ImageView cache="true" depthTest="ENABLE" fitHeight="29.0" fitWidth="477.0">
                <image>
-                  <Image url="file:/C:/Users/marce/Dropbox/programmering/GitHub/MyTunes---vi-Venter-Bare-P-Dig/MyTunes/Images/green-hd-wallpaper-PIC-MCH069905.jpg" />
+                  <Image url="@../../../Images/green-hd-wallpaper-PIC-MCH069905.jpg" />
                </image>
             </ImageView>
 
-            <ListView fx:id="listViewAllSongs" onMouseClicked="#allSongsMouseClicked" prefHeight="265.0" prefWidth="476.0" />
+            <ListView fx:id="listViewAllSongs" prefHeight="265.0" prefWidth="476.0" />
            
 
 
