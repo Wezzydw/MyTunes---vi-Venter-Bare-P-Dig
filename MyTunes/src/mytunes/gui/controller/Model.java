@@ -193,7 +193,6 @@ public class Model
     }
 
     public void removeSongs(List<Song> song, Playlist playlist) throws IOException
-
     {
         if (playlist == null)
         {
