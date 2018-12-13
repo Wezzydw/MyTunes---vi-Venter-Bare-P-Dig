@@ -99,4 +99,9 @@ public class Queue {
         }
         return -1;
     }
+    
+    public List<Song> getWholeQueue()
+    {
+        return songs;
+    }
 }

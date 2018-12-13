@@ -240,4 +240,14 @@ public class PlayerManager {
     public void removePlaylist(Playlist plist) throws IOException, SQLException {
         pDAO.deletePlaylist(plist.getTitle());
     }
+    
+    public void currentQueueToString()
+    {
+        String ids = "";
+        for(Song s : player.getWholeQueue())
+        {
+            ids += "," + s.getId();
+        }
+        
+    }
 }
