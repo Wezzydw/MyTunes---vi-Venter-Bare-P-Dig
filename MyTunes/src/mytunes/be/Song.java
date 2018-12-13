@@ -9,8 +9,7 @@ package mytunes.be;
  *
  * @author Wezzy Laptop
  */
-public class Song
-{
+public class Song {
 
     String title;
     String author;
@@ -21,8 +20,7 @@ public class Song
     String filePath;
     int id;
 
-    public Song(String title, String author, String length, String releaseYear, String categori, String filePath, String album, int id)
-    {
+    public Song(String title, String author, String length, String releaseYear, String categori, String filePath, String album, int id) {
         this.title = title;
         this.author = author;
         this.length = length;
@@ -33,91 +31,69 @@ public class Song
         this.id = id;
     }
 
-    public Song(String title, String filePath, int id)
-    {
+    public Song(String title, String filePath, int id) {
         this.title = title;
         this.filePath = filePath;
         this.id = id;
     }
 
-    public String getReleaseYear()
-    {
+    public String getReleaseYear() {
         return releaseYear;
     }
 
-    public void setReleaseYear(String releaseYear)
-    {
+    public void setReleaseYear(String releaseYear) {
         this.releaseYear = releaseYear;
     }
 
-    public String getAlbum()
-    {
+    public String getAlbum() {
         return album;
     }
 
-    public void setAlbum(String album)
-    {
+    public void setAlbum(String album) {
         this.album = album;
     }
 
-    public String getTitle()
-    {
+    public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title)
-    {
+    public void setTitle(String title) {
         this.title = title;
     }
 
-    public String getAuthor()
-    {
+    public String getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author)
-    {
+    public void setAuthor(String author) {
         this.author = author;
     }
 
-    public String getLength()
-    {
+    public String getLength() {
         return length;
     }
 
-    public void setLength(String length)
-    {
+    public void setLength(String length) {
         this.length = length;
     }
 
-    public String getCategori()
-    {
+    public String getCategori() {
         return categori;
     }
 
-    public void setCategori(String categori)
-    {
+    public void setCategori(String categori) {
         this.categori = categori;
     }
 
-    public String getFilePath()
-    {
+    public String getFilePath() {
         return filePath;
     }
 
-    public void setFilePath(String filePath)
-    {
-        this.filePath = filePath;
-    }
-
-    public int getId()
-    {
+    public int getId() {
         return id;
-
     }
 
-    public String toString()
-    {
+    public String toString() {
         return title + " " + releaseYear;
     }
 }

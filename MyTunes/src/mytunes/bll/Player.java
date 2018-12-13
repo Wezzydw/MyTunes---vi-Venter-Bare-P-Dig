@@ -350,5 +350,10 @@ public class Player {
             playSong();
         }
     }
+    
+    public List<Song> getWholeQueue()
+    {
+        return queue.getWholeQueue();
+    }
 
 }

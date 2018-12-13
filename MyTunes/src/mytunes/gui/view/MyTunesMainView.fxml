@@ -126,7 +126,7 @@
                                     <Font name="System Bold" size="15.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="btnRemoveSongQue" mnemonicParsing="false" onAction="#onHandleRemove" prefWidth="65.0" style="-fx-background-color: black; -fx-border-color: green;" text="Remove" textFill="#00ff1d">
+                              <Button mnemonicParsing="false" onAction="#onHandleRemove" prefWidth="65.0" style="-fx-background-color: black; -fx-border-color: green;" text="Remove" textFill="#00ff1d">
                                  <font>
                                     <Font name="System Bold" size="15.0" />
                                  </font>
@@ -166,7 +166,7 @@
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Button>
-                  <Button fx:id="btnRemoveSong" mnemonicParsing="false" onAction="#onSongRemove" style="-fx-background-color: black; -fx-border-color: green;" text="Remove" textFill="#00ff1d">
+                  <Button mnemonicParsing="false" onAction="#onSongRemove" style="-fx-background-color: black; -fx-border-color: green;" text="Remove" textFill="#00ff1d">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Button>

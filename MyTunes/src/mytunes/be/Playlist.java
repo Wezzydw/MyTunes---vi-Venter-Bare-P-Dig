@@ -12,66 +12,45 @@ import java.util.List;
  *
  * @author Wezzy Laptop
  */
-public class Playlist
-{
+public class Playlist {
 
     String title;
     List<Song> playlist;
-    
-      public Playlist(String title)
-    {
+
+    public Playlist(String title) {
         playlist = new ArrayList();
         this.title = title;
     }
 
-    
-    public List<Song> CreatePlaylist()
-    {
-            return playlist;
-    }
-    public String getTitle()
-    {
+    public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title)
-    {
+    public void setTitle(String title) {
         this.title = title;
     }
 
-    public List<Song> getSongsInPlaylist()
-    {
+    public List<Song> getSongsInPlaylist() {
         return playlist;
     }
 
-    public void setPlaylist(List<Song> playlist)
-    {
+    public void setPlaylist(List<Song> playlist) {
         this.playlist = playlist;
     }
 
-  
-    public void addSongSelection(List<Song> songs)
-    {
+    public void addSongSelection(List<Song> songs) {
         playlist.addAll(songs);
     }
 
-    public void deleteSongs(List<Song> songs)
-    {
+    public void deleteSongs(List<Song> songs) {
         playlist.removeAll(songs);
     }
 
-    public Song getSong(int i)
-    {
-        return playlist.get(i);
-    }
-
-    public int getSize()
-    {
+    public int getSize() {
         return playlist.size();
     }
 
-    public String toString()
-    {
+    public String toString() {
         return title;
     }
 }
