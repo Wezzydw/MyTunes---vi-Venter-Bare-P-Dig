@@ -343,4 +343,8 @@ public class PlayerManager
         pDAO.deletePlaylist(plist.getTitle());
 
     }
+    public Playlist getPlaylist(Playlist plist)
+    {
+        return pDAO.getPlaylist(plist);
+    }
 }

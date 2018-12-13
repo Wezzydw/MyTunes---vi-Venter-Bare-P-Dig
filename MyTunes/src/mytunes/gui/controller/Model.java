@@ -78,7 +78,15 @@ public class Model
         playlists.add(0, new Playlist("All Songs"));
 //        playlists.add(new Playlist("tester"));
         playlists.get(0).addSongSelection(playerManager.getAllSongs());
-        
+        System.out.println(playlists.size());
+        for (int i = 1; i < playlists.size(); i++)
+        {
+            System.out.println(playlists.get(i).getTitle());
+            playlists.get(i).getSongsInPlaylist();
+
+            playerManager.getPlaylist(playlists.get(i));
+            System.out.println("vores playlister" +  "mængde af sange i playlisten ");
+        }
         System.out.println(playlists.size());
         songs = FXCollections.observableArrayList(playlists.get(0).getSongsInPlaylist());
 
@@ -102,6 +110,7 @@ public class Model
     {
         System.out.println("222");
         playlists.add(new Playlist(plist.getTitle()));
+        playerManager.createPlaylist(plist);
     }
 
     public void playlistDump()
@@ -407,6 +416,10 @@ public class Model
 
         }
         }
+    }
+    public void updateAll()
+    {
+//        UpdateVolume(Slider.);
     }
 
 }
