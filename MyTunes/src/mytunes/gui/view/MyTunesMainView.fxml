@@ -131,7 +131,7 @@
                                     <Font name="System Bold" size="15.0" />
                                  </font>
                               </Button>
-                              <ComboBox fx:id="comboBoxMisc" onAction="#onHandleMisc" prefHeight="34.0" prefWidth="150.0" promptText="Misc" style="-fx-border-color: green; -fx-background-insets: green;">
+                              <ComboBox fx:id="comboBoxMisc" onAction="#onHandleMisc" prefHeight="34.0" prefWidth="150.0" promptText="Misc" style="-fx-border-color: green;">
                                  <effect>
                                     <ColorAdjust />
                                  </effect>
