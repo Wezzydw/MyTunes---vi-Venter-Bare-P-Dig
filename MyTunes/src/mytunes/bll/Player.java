@@ -222,17 +222,17 @@ public class Player {
      */
     public void nowPlaying() {
         if (queue != null) {
-            //nowPlaying.clear();
+            nowPlaying.clear();
             nowPlaying.addAll(getMetaData(queue.getSong(songIndex)));
-            //nowPlayingTitle.clear();
+            nowPlayingTitle.clear();
             nowPlayingTitle.addAll(getTitle(queue.getSong(songIndex)));
         }
     }
 
     public void nowPlayingFromInterrupt(Song song) {
-        //nowPlaying.clear();
+        nowPlaying.clear();
         nowPlaying.setAll(getMetaData(song));
-        //nowPlayingTitle.clear();
+        nowPlayingTitle.clear();
         nowPlayingTitle.setAll(getTitle(song));
     }
 
