@@ -58,7 +58,7 @@ import mytunes.be.Song;
  */
 public class MyTunesMainViewController implements Initializable
 {
-    
+
     @FXML
     private Slider sliderVol;
     @FXML
@@ -75,14 +75,14 @@ public class MyTunesMainViewController implements Initializable
     private ListView<Song> listViewAllSongs;
     @FXML
     private BorderPane borderPane;
-    
+
     @FXML
     private ListView<String> listNowPlaying;
     @FXML
     private Button btnRemoveSongQue;
     @FXML
     private Button btnRemoveSong;
-    
+
     private static final DataFormat customFormat = new DataFormat("Song.custom");
     Model model;
     Long lastTime;
@@ -92,7 +92,6 @@ public class MyTunesMainViewController implements Initializable
     /**
      * Initializes the controller class.
      */
-    
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
@@ -111,7 +110,7 @@ public class MyTunesMainViewController implements Initializable
         listNowPlaying.setItems(model.getNowPlaying());
         listViewAllSongs.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         listViewQueue.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        sliderVol.setValue(model.getSliderVolumeFromDB()*100);
+        sliderVol.setValue(model.getSliderVolumeFromDB() * 100);
         System.out.println("Slider " + sliderVol.getValue());
         model.changeVolume(model.getSliderVolumeFromDB());
         model.sendSliderForPlayback(sliderPlayback);
@@ -119,7 +118,7 @@ public class MyTunesMainViewController implements Initializable
         lastTime = 0L;
         listViewSongInfo.setItems(model.getSongName());
     }
-    
+
     @FXML
     private void onHandleSliderVol(MouseEvent event)
     {
@@ -136,46 +135,46 @@ public class MyTunesMainViewController implements Initializable
                 model.UpdateVolume(sliderVol.getValue());
             }
         });
-        
+
     }
-    
+
     @FXML
     private void onHandleShuffe(ActionEvent event)
     {
         model.shuffleHandler();
     }
-    
+
     @FXML
     private void onHandleRepeat(ActionEvent event)
     {
         model.repeatHandler();
     }
-    
+
     @FXML
     private void onHandlePrev(ActionEvent event)
     {
         model.playPrevSong();
     }
-    
+
     @FXML
     private void onHandlePlay(ActionEvent event)
     {
-        
+
         model.playSong();
     }
-    
+
     @FXML
     private void onHandlePause(ActionEvent event)
     {
         model.pauseSong();
     }
-    
+
     @FXML
     private void onHandleNext(ActionEvent event)
     {
         model.playNextSong();
     }
-    
+
     @FXML
     private void onHandleAdd(ActionEvent event) throws IOException
     {
@@ -183,46 +182,43 @@ public class MyTunesMainViewController implements Initializable
         listNowPlaying.setItems(model.getSongName());
         listViewSongInfo.setItems(model.getNowPlaying());
         //listViewQueue.getItems().addAll(model.getQuedSongs());
-        
+
     }
-    
+
     @FXML
     private void onHandleRemove(ActionEvent event) throws IOException
     {
         model.removeSongsFromQue(listViewQueue.getSelectionModel().getSelectedItems());
     }
-    
+
     @FXML
     private void onHandleMisc(ActionEvent event)
     {
         comboBoxMisc.setItems(FXCollections.observableArrayList("reverseList", "randomiseList", "sortByTitle"));
         comboBoxMisc.setVisibleRowCount(3);
     }
-    
+
     @FXML
     private void onHandleSearch(KeyEvent event) throws IOException
     {
         model.searcher(txtFieldSearch.getText());
-        
+
     }
-    
-    
-    
+
     @FXML
     private void onHandleAddFolder(ActionEvent event) throws IOException, InterruptedException
     {
         Stage stage = (Stage) borderPane.getScene().getWindow();
         model.SelectFolder(stage);
-        
-        
+
     }
-    
+
     private void HandleDragDone(DragEvent event)
     {
         event.getDragboard().getFiles().clear();
-        
+
     }
-    
+
     @FXML
     private void onSongRemove(ActionEvent event)
     {
@@ -242,38 +238,35 @@ public class MyTunesMainViewController implements Initializable
 //            listViewQueue.getItems().add(song);
 //        }
 //    }
-    
     private void allsongsdragdected(MouseEvent event)
     {
         System.out.println("songs drag detected");
-        
+
         Dragboard db = listViewAllSongs.startDragAndDrop(TransferMode.COPY);
         ClipboardContent content = new ClipboardContent();
         //content.put(listViewAllSongs.getSelectionModel().getSelectedItems());
         content.putString("hej");
         db.setContent(content);
     }
-    
+
     private void MouseSelection(MouseEvent event)
     {
         System.out.println(listViewQueue.getSelectionModel().getSelectedItems());
     }
 
-
-
     @FXML
 
     private void onHandleSongEdit(ActionEvent event) throws IOException
     {
-        
+
         Song s = listViewAllSongs.getSelectionModel().getSelectedItem();
         int songIndex = listViewAllSongs.getSelectionModel().getSelectedIndex();
         System.out.println("dette er titlen for s " + s.getTitle());
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/mytunes/gui/view/editSongView.fxml"));
-        
+
         loader.load();
-        
+
         EditSongViewController display = loader.getController();
         display.setSong(s, songIndex);
         display.setModel(model);
@@ -282,8 +275,8 @@ public class MyTunesMainViewController implements Initializable
         stage.setScene(new Scene(p));
         stage.showAndWait();
 
-
     }
+
     public void updateView(Song song, int songIndex)
     {
 //        System.out.println(songIndex);
@@ -305,9 +298,8 @@ public class MyTunesMainViewController implements Initializable
 //        
 //        listViewAllSongs.setItems(model.getSongs());
 //        
-        
-    }
 
+    }
 
     @FXML
     private void onHandlePlaylistEdit(ActionEvent event)
@@ -316,7 +308,7 @@ public class MyTunesMainViewController implements Initializable
         System.out.println("dette er titlen for p " + plist.getTitle());
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/mytunes/gui/view/EditPlaylistView.fxml"));
-        
+
         try
         {
             loader.load();
@@ -324,9 +316,10 @@ public class MyTunesMainViewController implements Initializable
         {
             Logger.getLogger(MyTunesMainViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         EditPlaylistViewController display = loader.getController();
-        display.setPlistTitle(plist, model);
+        display.setPlistTitle(plist);
+        display.setModel(model);
         Parent p = loader.getRoot();
         Stage stage = new Stage();
         stage.setScene(new Scene(p));
@@ -334,7 +327,7 @@ public class MyTunesMainViewController implements Initializable
     }
 
     @FXML
-    private void onHandlePlaylistRemove(ActionEvent event) 
+    private void onHandlePlaylistRemove(ActionEvent event)
     {
         try
         {
@@ -358,7 +351,7 @@ public class MyTunesMainViewController implements Initializable
     @FXML
     private void queueLookForDeleteKey(KeyEvent event)
     {
-        if(event.getCode().equals(KeyCode.DELETE))
+        if (event.getCode().equals(KeyCode.DELETE))
         {
             model.removeSongsFromQue(listViewQueue.getSelectionModel().getSelectedItems());
         }
@@ -366,7 +359,7 @@ public class MyTunesMainViewController implements Initializable
 
     private void queueMouseReleased(MouseEvent event)
     {
-        
+
         System.out.println("We got into queue");
     }
 
@@ -385,38 +378,37 @@ public class MyTunesMainViewController implements Initializable
         System.out.println("allMouseReleased");
         System.out.println(event.getSceneX());
         System.out.println(event.getSceneY());
-        
+
         System.out.println(listViewQueue.getLayoutX());
         System.out.println("øhm" + listViewQueue.isHover());
         System.out.println("øhm" + listViewAllSongs.isHover());
-        if(listViewQueue.isHover())
+        if (listViewQueue.isHover())
         {
             System.out.println("this could work");
         }
     }
 
-
-    
     @FXML
     private void PlaylistsMouseClick(MouseEvent event)
     {
-        
+
         long timeDiff = 0;
         long currentTime = System.currentTimeMillis();
-        
-        if(lastTime != 0 && currentTime !=0)
+
+        if (lastTime != 0 && currentTime != 0)
         {
             timeDiff = currentTime - lastTime;
-            if(timeDiff <= 215)
+            if (timeDiff <= 215)
+            {
                 model.librarySelection(listViewLibrary.getSelectionModel().getSelectedItem());
-            else
+            } else
+            {
                 System.out.println("singleclick");
+            }
         }
         lastTime = currentTime;
-        
+
     }
-
-
 
     private void lstTextChanged(InputMethodEvent event)
     {
@@ -424,58 +416,68 @@ public class MyTunesMainViewController implements Initializable
     }
 
     private void lstViewTextChanged(InputMethodEvent event)
-    {System.out.println("Tester lige her takny");
+    {
+        System.out.println("Tester lige her takny");
     }
 
     @FXML
-    private void queueMouseClick(MouseEvent event) {
+    private void queueMouseClick(MouseEvent event)
+    {
         long timeDiff = 0;
         long currentTime = System.currentTimeMillis();
-        
-        if(lastTime != 0 && currentTime !=0)
+
+        if (lastTime != 0 && currentTime != 0)
         {
             timeDiff = currentTime - lastTime;
-            if(timeDiff <= 215)
+            if (timeDiff <= 215)
+            {
                 model.changeToThisSong(listViewQueue.getSelectionModel().getSelectedItem());
-            else
+            } else
+            {
                 System.out.println("singleclick");
+            }
         }
         lastTime = currentTime;
     }
 
-
-
-    private void allSongsMouseClicked(MouseEvent event) {
+    @FXML
+    private void allSongsMouseClicked(MouseEvent event)
+    {
         long timeDiff = 0;
         long currentTime = System.currentTimeMillis();
-        
-        if(lastTime != 0 && currentTime !=0)
+
+        if (lastTime != 0 && currentTime != 0)
         {
             timeDiff = currentTime - lastTime;
-            if(timeDiff <= 215)
+            if (timeDiff <= 215)
+            {
                 model.playNowSelectedSong(listViewAllSongs.getSelectionModel().getSelectedItem());
-            else
+                listNowPlaying.setItems(model.getSongName());
+                listViewSongInfo.setItems(model.getNowPlaying());
+            } else
+            {
                 System.out.println("singleclick");
+            }
         }
         lastTime = currentTime;
     }
-    
+
     @FXML
     private void onHandlePlaylistCreate(ActionEvent event)
     {
         TextField txtTitle = new TextField();
         txtTitle.setText("Playlist name");
         System.out.println(txtTitle.getBaselineOffset());
-        
+
         Button btn = new Button();
         btn.setText("Create playlist");
         StackPane root = new StackPane();
 //        root.getChildren().add(btn);
 //        txtTitle.setTranslateX(100);
 //        txtTitle.setTranslateY(100);
-        
+
         root.setAlignment(txtTitle, Pos.TOP_CENTER);
-        root.setAlignment(btn ,Pos.BOTTOM_CENTER);
+        root.setAlignment(btn, Pos.BOTTOM_CENTER);
         Pos p1 = btn.getAlignment();
         root.getChildren().addAll(txtTitle, btn);
 
@@ -486,27 +488,26 @@ public class MyTunesMainViewController implements Initializable
         stage.show();
         List<Playlist> allPlaylists = model.getPlayLists();
         btn.setOnAction(new EventHandler<ActionEvent>()
+        {
+
+            @Override
+            public void handle(ActionEvent event)
             {
-            
-                @Override
-                public void handle(ActionEvent event)
+                System.out.println(txtTitle.getText());
+                System.out.println("Hello World!");
+                try
                 {
-                    System.out.println(txtTitle.getText());
-                    System.out.println("Hello World!");
-                    try
-                    {
-                        
-                        model.createPlaylist(new Playlist(txtTitle.getText()));
-                    } catch (IOException ex)
-                    {
-                        System.out.println("fejl 1111111");
-                    }
-                    Stage stage = (Stage) txtTitle.getScene().getWindow();
-                    stage.close();
+
+                    model.createPlaylist(new Playlist(txtTitle.getText()));
+                } catch (IOException ex)
+                {
+                    System.out.println("fejl 1111111");
                 }
-            });
-        
-        
+                Stage stage = (Stage) txtTitle.getScene().getWindow();
+                stage.close();
+            }
+        });
+
     }
-    
+
 }

@@ -171,12 +171,13 @@ public class PlaylistDAO
 
         try (Connection con = conProvider.getConnection())
         {
-
+            
             String a = "SELECT * FROM Playlists;";
             PreparedStatement pstmt = con.prepareStatement(a);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next())
             {
+                
                 String title = rs.getString("title");
                 Playlist playlist = new Playlist(title);
                 playlists.add(playlist);
@@ -236,15 +237,22 @@ public class PlaylistDAO
 
         try(Connection con = conProvider.getConnection())
         {
-            
+            String a = "UPDATE Playlists SET Title = (?) WHERE Title = (?);";
+            PreparedStatement pstmt = con.prepareStatement(a);
+            pstmt.setString(1, newTitle);
+            pstmt.setString(2, title);
+            pstmt.execute();
+            pstmt.close();
             Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery("Select * FROM Playlist;");
             //Behøver vi et whileloop? og skal den rename to steder? altså i DB Playlist og DB Playlists???
             while (rs.next())
             {
-                PreparedStatement pstmt = con.prepareStatement("UPDATE Playlist SET Title = (?) WHERE Title = (?) ;");
+                a = "UPDATE Playlist SET Title = (?) WHERE Title = (?) ;";
+                pstmt = con.prepareStatement(a);
                 pstmt.setString(1, newTitle);
                 pstmt.setString(2, title);
+                
                 pstmt.execute();
                 pstmt.close();
                 System.out.println("Playlist found - and updated!");
