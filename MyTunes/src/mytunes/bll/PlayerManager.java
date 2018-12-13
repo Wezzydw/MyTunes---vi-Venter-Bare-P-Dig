@@ -248,6 +248,10 @@ public class PlayerManager {
         {
             ids += "," + s.getId();
         }
-        
+    }
+    
+    public void currentQueueIndex()
+    {
+        player.currentQueueIndex();
     }
 }

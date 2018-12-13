@@ -85,8 +85,7 @@ public class Player {
                 @Override
 
                 public void run() {
-                    mp.stop();
-
+               
                     if (onRepeat) {
                         playOnRepeat();
                         playSong();
@@ -354,6 +353,10 @@ public class Player {
     public List<Song> getWholeQueue()
     {
         return queue.getWholeQueue();
+    }
+
+    public int currentQueueIndex() {
+        return songIndex;
     }
 
 }
