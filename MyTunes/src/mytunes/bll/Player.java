@@ -339,11 +339,13 @@ public class Player {
             mp.setOnStopped(new Runnable() {
                 @Override
                 public void run() {
+                    mp = new MediaPlayer(new Media(new File(song.getFilePath()).toURI().toString()));
                     songIndex = queue.getIndex(song);
                     playSong();
                 }
             });;
         } else {
+            mp = new MediaPlayer(new Media(new File(song.getFilePath()).toURI().toString()));
             songIndex = queue.getIndex(song);
             playSong();
         }
