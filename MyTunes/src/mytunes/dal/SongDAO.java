@@ -190,13 +190,17 @@ public class SongDAO
     /*
         giver deleteSong metoden adgang til databasen
     */
-    public void deleteSong(Song song) throws IOException
+    public void deleteSongs(List<Song> selectedSongs) throws IOException
     {
         try (Connection con = conProvider.getConnection())
         {
-            String a = "DELETE FROM Songs WHERE Id =" + song.getId() + ";";
-            PreparedStatement prst = con.prepareStatement(a);
-            prst.execute();
+            for (Song song : selectedSongs)
+            {
+                String a = "DELETE FROM Songs WHERE Id =" + song.getId() + ";";
+                PreparedStatement prst = con.prepareStatement(a);
+                prst.execute(); 
+            }
+            
 //            Statement statement =  con.createStatement();
 //            statement.executeQuery("SELECT * FROM Songs;");
 //            statement.executeQuery("DELETE FROM Songs WHERE Id =" + song.getId() + ";");

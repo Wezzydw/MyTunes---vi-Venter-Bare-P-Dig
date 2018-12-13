@@ -284,7 +284,7 @@ public class PlaylistDAO
 
     }
 
-    public void deleteSongFromAllPlaylists(Song song)
+    public void deleteSongFromAllPlaylists(List<Song> selectedSongs)
     {
         try (Connection con = conProvider.getConnection())
         {
@@ -293,12 +293,16 @@ public class PlaylistDAO
             ResultSet rs = pstmt.executeQuery();
             while(rs.next())
             {
-                if(song.getId()==rs.getInt("SongId"))
+                for (Song song : selectedSongs)
                 {
-                    a = "DELETE FROM Playlist WHERE SongId = " + song.getId() + ";";
-                    PreparedStatement prst = con.prepareStatement(a);
-                    prst.execute();
+                    if(song.getId()==rs.getInt("SongId"))
+                    {
+                        a = "DELETE FROM Playlist WHERE SongId = " + song.getId() + ";";
+                        PreparedStatement prst = con.prepareStatement(a);
+                        prst.execute();
+                    }
                 }
+                
             }
             
         } catch (SQLException ex)

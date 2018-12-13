@@ -224,7 +224,12 @@ public class MyTunesMainViewController implements Initializable
     {
         try
         {
-            model.removeSong(listViewAllSongs.getSelectionModel().getSelectedItem());
+            
+            for (Song selectedItem : listViewAllSongs.getSelectionModel().getSelectedItems())
+            {
+                System.out.println(selectedItem.getTitle());
+            }
+            model.removeSong(listViewAllSongs.getSelectionModel().getSelectedItems());
         } catch (IOException ex)
         {
             System.out.println("fejl 115");
@@ -345,7 +350,7 @@ public class MyTunesMainViewController implements Initializable
     private void onHandlePlaylistAdd(ActionEvent event)
     {
         model.addToPlaylist(listViewLibrary.getSelectionModel().getSelectedItem(), listViewAllSongs.getSelectionModel().getSelectedItems());
-        model.addPlaylistToDB(listViewAllSongs.getSelectionModel().getSelectedItems(), listViewLibrary.getSelectionModel().getSelectedItem());
+        //model.addPlaylistToDB(listViewAllSongs.getSelectionModel().getSelectedItems(), listViewLibrary.getSelectionModel().getSelectedItem());
     }
 
     @FXML

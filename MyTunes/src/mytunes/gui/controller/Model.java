@@ -194,12 +194,17 @@ public class Model
         songs.add(song);
     }
 
-    public void removeSong(Song song) throws IOException
+    public void removeSong(List<Song> selectedSongs) throws IOException
     {
         System.out.println("er det her delete ligger");
-        pDAO.deleteSongFromAllPlaylists(song);
-        sDAO.deleteSong(song);
-        songs.remove(song);
+        for (Song selectedSong : selectedSongs)
+        {
+            System.out.println(selectedSong.getTitle());
+            System.out.println("slet sang fra mem");
+            songs.remove(selectedSong);
+        }
+        pDAO.deleteSongFromAllPlaylists(selectedSongs);
+        sDAO.deleteSongs(selectedSongs);
     }
 
     public void editSong()
