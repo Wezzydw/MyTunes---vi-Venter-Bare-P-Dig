@@ -5,11 +5,8 @@
  */
 package mytunes.bll;
 
-import java.io.File;
-
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,8 +22,7 @@ import mytunes.dal.SongDAO;
  *
  * @author Wezzy Laptop
  */
-public class PlayerManager
-{
+public class PlayerManager {
 
     private ObservableList<Song> songQueue;
     private ObservableList<String> nowPlaying;
@@ -40,8 +36,7 @@ public class PlayerManager
     private double volumeFromDB;
     private Slider sliderPlayback;
 
-    public PlayerManager() throws IOException
-    {
+    public PlayerManager() throws IOException {
         songQueue = FXCollections.observableArrayList();
         nowPlaying = FXCollections.observableArrayList();
         getSongName = FXCollections.observableArrayList();
@@ -54,25 +49,15 @@ public class PlayerManager
         playlists.addAll(getSavedPlaylists());
     }
 
-    public List<Playlist> getSavedPlaylists()
-    {
-//        List<Playlist> initPlaylists = new ArrayList();
-//        initPlaylists.add(new Playlist("AllSongs"));
-//        initPlaylists.add(new Playlist("Tester"));
-//        initPlaylists.addAll(pDAO.getAllPlaylists());
+    public List<Playlist> getSavedPlaylists() {
         return pDAO.getAllPlaylists();
     }
 
-    private void checkForSongsSomewhere()
-    {
-
-        if (player == null)
-        {
-            if (!songQueue.isEmpty())
-            {
+    private void checkForSongsSomewhere() {
+        if (player == null) {
+            if (!songQueue.isEmpty()) {
                 player = new Player(songQueue);
                 player.changevolume(volumeFromDB);
-                System.out.println("Er det her?");
                 nowPlaying.addAll(player.getNowPlaying());
                 getSongName.addAll(player.getNowPlayingTitle());
                 player.makeSliderForPlayback(sliderPlayback);
@@ -80,32 +65,25 @@ public class PlayerManager
         }
     }
 
-    public ObservableList<Song> getQueuedSongs()
-    {
+    public ObservableList<Song> getQueuedSongs() {
         return songQueue;
     }
 
     /*
         returner den sang som spiller lige nu
      */
-    public ObservableList<String> getNowPlaying()
-    {
-        if (player == null)
-        {
+    public ObservableList<String> getNowPlaying() {
+        if (player == null) {
             return nowPlaying;
-        } else
-        {
+        } else {
             return player.getNowPlaying();
         }
     }
 
-    public ObservableList<String> getNowPlaylingTitle()
-    {
-        if (player == null)
-        {
+    public ObservableList<String> getNowPlaylingTitle() {
+        if (player == null) {
             return getSongName;
-        } else
-        {
+        } else {
             return player.getNowPlayingTitle();
         }
     }
@@ -113,12 +91,8 @@ public class PlayerManager
     /*
         Tilføjer den valgte sang til queuedsongs
      */
-    public void addSongToQue(List<Song> songs)
-    {
-        System.out.println("hejlle");
-        if (player != null)
-        {
-
+    public void addSongToQue(List<Song> songs) {
+        if (player != null) {
             player.addSongsToQueue(songs);
         }
         songQueue.addAll(songs);
@@ -128,22 +102,17 @@ public class PlayerManager
     /*
         fjerner den valgte sang fra Queuen
      */
-    public void removeSongFromQue(List<Song> toRemove)
-    {
-        //Var nødt til at fjerne baglæns ellers gik der ged i det
-        for (int i = toRemove.size() - 1; i >= 0; i--)
-        {
+    public void removeSongFromQue(List<Song> toRemove) {
+        for (int i = toRemove.size() - 1; i >= 0; i--) {
             songQueue.remove(toRemove.get(i));
         }
         player.removeSongsFromQueue(songQueue);
-
     }
 
     /*
         giver muligheden for at ændrer opsætningen af ens playlist
      */
-    public void queMisc()
-    {
+    public void queMisc() {
         comboBoxMisc.setItems(FXCollections.observableArrayList("reverseList", "randomiseList", "sortByTitle"));
         comboBoxMisc.setVisibleRowCount(3);
     }
@@ -152,51 +121,30 @@ public class PlayerManager
     /*
     Henter alle playlister ned
      */
-    public List<Playlist> getAllPlaylists()
-    {
+    public List<Playlist> getAllPlaylists() {
         return playlists;
     }
 
     /*
     Henter alle sange ned
      */
-    public List<Song> getAllSongs()
-    {
-        if (sdao.getAllSongsFromDB() != null)
-        {
+    public List<Song> getAllSongs() {
+        if (sdao.getAllSongsFromDB() != null) {
             return sdao.getAllSongsFromDB();
-        } else
-        {
+        } else {
             return null;
         }
     }
 
-    public void updateSong(Song song)
-    {
+    public void updateSong(Song song) {
         sdao.updateSong(song);
     }
 
-//    public void getSongInfo()
-//    {
-////        System.out.println("in getSongInfo");
-////        if(player != null)
-////        {
-////        if (!player.nowPlaying().isEmpty())
-////        {
-////            System.out.println("futher in getsonginfo");
-////        //Song song = player.nowPlaying().get(0);
-////        nowPlaying.addAll(getMetaData(player.nowPlaying().get(0)));
-////        }
-////        }
-//        return nowPlaying;
-//    }
     /*
     Afspiller en sang, hvis en sang ikke spilles.
      */
-    public void playSong()
-    {
-        if (player != null)
-        {
+    public void playSong() {
+        if (player != null) {
             player.playSong();
         }
     }
@@ -204,10 +152,8 @@ public class PlayerManager
     /*
     Sætter den sang der spiller på pause
      */
-    public void pauseSong()
-    {
-        if (player != null)
-        {
+    public void pauseSong() {
+        if (player != null) {
             player.pauseSong();
         }
     }
@@ -215,26 +161,19 @@ public class PlayerManager
     /*
     ændrer volumen på lyden er sat på ved brug af en slider
      */
-    public void changeVolume(double vol)
-    {
-        if (player != null)
-        {
+    public void changeVolume(double vol) {
+        if (player != null) {
             player.changevolume(vol);
-        } else
-        {
-
+        } else {
             volumeFromDB = vol * 100;
-            System.out.println("saved volume from db " + volumeFromDB);
         }
     }
 
     /*
     går 1 sang tilbage og afspiller den igen
      */
-    public void playPrevSong()
-    {
-        if (player != null)
-        {
+    public void playPrevSong() {
+        if (player != null) {
             player.playPrevSong();
         }
     }
@@ -242,10 +181,8 @@ public class PlayerManager
     /*
     Går videre til næste sang og afspiller den
      */
-    public void playNextSong()
-    {
-        if (player != null)
-        {
+    public void playNextSong() {
+        if (player != null) {
             player.playNextSong();
         }
     }
@@ -253,10 +190,8 @@ public class PlayerManager
     /*
     Får den nuværende sang til at afspille igen
      */
-    public void repeatHandler()
-    {
-        if (player != null)
-        {
+    public void repeatHandler() {
+        if (player != null) {
             player.repeatHandler();
         }
     }
@@ -265,82 +200,44 @@ public class PlayerManager
     Kalder Shuffle metoden, som gør at playlisten bliver randomised ved sang
     skift
      */
-    public void shuffleHandler()
-    {
-        if (player != null)
-        {
+    public void shuffleHandler() {
+        if (player != null) {
             player.shuffleHandler();
         }
     }
 
     /*
-    en tester ????????
-     */
-    public void tmpTester()
-    {
-        System.out.println("test");
-        songQueue.addAll(sdao.getAllSongsFromDB());
-        checkForSongsSomewhere();
-    }
-
-    /*
     kalder slideren der viser hvor langt sangens spilletid er nået
      */
-    public void makeSliderForPlayBack(Slider sliderPlayback)
-    {
+    public void makeSliderForPlayBack(Slider sliderPlayback) {
         this.sliderPlayback = sliderPlayback;
     }
 
-    public void playlistToDB(Playlist plist, List<Song> selectedSongs)
-    {
+    public void playlistToDB(Playlist plist, List<Song> selectedSongs) {
         pDAO.addSelection(selectedSongs, plist);
     }
 
-    public void playIncomingSong(Song song)
-    {
-        System.out.println("Error?");
-//        if (songQueue.size() == 0)
-//        {
-//            songQueue.add(song);
-//        }
-//        checkForSongsSomewhere();
-        if (player == null)
-        {
+    public void playIncomingSong(Song song) {
+        if (player == null) {
             player = new Player(song);
             player.makeSliderForPlayback(sliderPlayback);
         }
-
-        System.out.println("Er det her?");
-//        nowPlaying.addAll(player.getNowPlaying());
-//        getSongName.addAll(player.getNowPlayingTitle());
-
         player.playIncomingSong(song);
     }
 
-    public void changeToThisSong(Song song)
-    {
+    public void changeToThisSong(Song song) {
         player.changeToThisSong(song);
-
     }
 
-    public ObservableList<String> getSongName()
-    {
-        return getSongName;
-    }
-
-    public void renamePlaylist(String title, String newTitle) throws IOException, SQLException
-    {
+    public void renamePlaylist(String title, String newTitle) throws IOException, SQLException {
         pDAO.renamePlaylist(title, newTitle);
     }
 
-    public void createPlaylist(Playlist plist) throws IOException
-    {
+    public void createPlaylist(Playlist plist) throws IOException {
         pDAO.createPlaylist(plist);
     }
 
-    public void removePlaylist(Playlist plist) throws IOException, SQLException
-    {
+    public void removePlaylist(Playlist plist) throws IOException, SQLException {
         pDAO.deletePlaylist(plist.getTitle());
-
     }
 }
