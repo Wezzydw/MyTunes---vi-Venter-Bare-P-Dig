@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane id="BorderPane" fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.MyTunesMainViewController">
+<BorderPane id="BorderPane" fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.MyTunesMainViewController">
 
    <left>
       <VBox prefHeight="375.0" prefWidth="285.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
@@ -73,7 +73,7 @@
                   <ColorAdjust />
                </effect>
             </HBox>
-            <ListView fx:id="listViewLibrary" onMouseClicked="#PlaylistsMouseClick" prefHeight="347.0" prefWidth="285.0">
+            <ListView fx:id="listViewLibrary" onKeyPressed="#playlistLookForDeleteKey" onMouseClicked="#PlaylistsMouseClick" prefHeight="347.0" prefWidth="285.0">
                <effect>
                   <ColorAdjust />
                </effect>
@@ -152,7 +152,7 @@
                </image>
             </ImageView>
 
-            <ListView fx:id="listViewAllSongs" onMouseClicked="#allSongsMouseClicked" prefHeight="265.0" prefWidth="476.0" />
+            <ListView fx:id="listViewAllSongs" onKeyPressed="#allSongsLookForDeleteKey" onMouseClicked="#allSongsMouseClicked" prefHeight="265.0" prefWidth="476.0" />
            
 
 

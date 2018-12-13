@@ -194,12 +194,30 @@ public class Model
         songs.add(song);
     }
 
-    public void removeSong(Song song) throws IOException
+    public void removeSongs(List<Song> song, Playlist playlist) throws IOException
     {
+        if(playlist == null)
+        {
+            System.out.println("2213");
+            playlist = playlists.get(0);
+        }
+        //List<Song> tmpHolder = new ArrayList();
         System.out.println("er det her delete ligger");
-        pDAO.deleteSongFromAllPlaylists(song);
-        sDAO.deleteSong(song);
-        songs.remove(song);
+        //pDAO.deleteSongFromAllPlaylists(song);
+        //sDAO.deleteSong(song);
+        //tmpHolder.addAll(songs);
+        //tmpHolder.removeAll(song);
+        for(Playlist p : playlists)
+        {
+            if(p.equals(playlist))
+            {
+                System.out.println("tester");
+                p.deleteSongs(song);
+                songs.setAll(p.getSongsInPlaylist());
+                return;
+            }
+        }
+        
     }
 
     public void editSong()
