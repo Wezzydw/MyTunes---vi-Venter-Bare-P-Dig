@@ -9,14 +9,25 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import static java.util.Collections.list;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import mytunes.be.Playlist;
 import mytunes.bll.PlayerManager;
 import mytunes.be.Song;
@@ -32,7 +43,6 @@ import mytunes.dal.SongDAO;
  */
 public class Model
 {
-
     private SongDAO sDAO;
     private PlaylistDAO pDAO;
     private ObservableList<Song> songs;
@@ -46,6 +56,8 @@ public class Model
     private List<Song> empty;
     private List<Playlist> addPlaylist;
     private SettingsDAO setDAO;
+    private double volume;
+    private Long lastTime;
 
     public Model() throws IOException
     {
@@ -57,66 +69,51 @@ public class Model
         sDAO = new SongDAO();
         pDAO = new PlaylistDAO();
         empty = new ArrayList();
-        //songinfo = FXCollections.observableArrayList(playerManager.getSongInfo());
-        //songs = FXCollections.observableArrayList(playerManager.getAllSongs());
-//        playlists = FXCollections.observableArrayList(playerManager.getAllPlaylists());
         playlists.setAll(playerManager.getAllPlaylists());
         addPlaylist = new ArrayList();
         setDAO = new SettingsDAO();
         playlistInitFilling();
-        System.out.println(setDAO.lastSetVolume());
-//        playlists.get(0).addSongSelection(playerManager.getAllSongs());
-//        songs = FXCollections.observableArrayList(playlists.get(0).getSongsInPlaylist());
+        volume = 0;
+        lastTime = 0L;
+    }
+
+    public void onProgramClose(Stage stage)
+    {
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>()
+        {
+            @Override
+            public void handle(WindowEvent event)
+            {
+                UpdateVolume(volume);
+            }
+        });
     }
 
     private void playlistInitFilling()
     {
-//        Playlist tester = new Playlist("TesterAllSogns");
-//        System.out.println("Size of getallsongs " + playerManager.getAllSongs().size());
-//        playlists.add(tester);
-//        tester.addSongSelection(playerManager.getAllSongs());
         playlists.add(0, new Playlist("All Songs"));
-//        playlists.add(new Playlist("tester"));
         playlists.get(0).addSongSelection(playerManager.getAllSongs());
-        System.out.println(playlists.size());
         for (int i = 1; i < playlists.size(); i++)
         {
-            System.out.println(playlists.get(i).getTitle());
             playlists.get(i).getSongsInPlaylist();
-
             playerManager.getPlaylist(playlists.get(i));
-            System.out.println("vores playlister" +  "mængde af sange i playlisten ");
         }
-        System.out.println(playlists.size());
         songs = FXCollections.observableArrayList(playlists.get(0).getSongsInPlaylist());
-
     }
 
     public void librarySelection(Playlist selectedPlaylist)
     {
         songs.setAll(selectedPlaylist.getSongsInPlaylist());
-        System.out.println("songs size : " + songs.size());
     }
 
     /**
      *
      */
-    public ObservableList<String> getSongInfo()
-    {
-        //return playerManager.getSongInfo();
-        return null;
-    }
-
+    
     public void createPlaylist(Playlist plist) throws IOException
     {
-        System.out.println("222");
         playlists.add(new Playlist(plist.getTitle()));
         playerManager.createPlaylist(plist);
-    }
-
-    public void playlistDump()
-    {
-        //playerManager.createPlaylist(plist);
     }
 
     public ObservableList<Playlist> getPlayLists()
@@ -131,12 +128,6 @@ public class Model
 
     public ObservableList<Song> getSongs()
     {
-
-        for (Song s : sDAO.getAllSongsFromDB())
-        {
-            System.out.println(s.getTitle());
-            //songs.add(s);
-        }
         return songs;
     }
 
@@ -145,9 +136,6 @@ public class Model
         return playerManager.getNowPlaying();
     }
 
-    /*
-    Alle vores Knapper
-     */
     public void playSong()
     {
         playerManager.playSong();
@@ -160,7 +148,7 @@ public class Model
 
     public void changeVolume(double vol)
     {
-        //System.out.println("model change volume " + vol);
+        volume = vol / 100;
         playerManager.changeVolume(vol / 100);
     }
 
@@ -204,31 +192,27 @@ public class Model
         songs.add(song);
     }
 
-
     public void removeSongs(List<Song> song, Playlist playlist) throws IOException
 
     {
-        if(playlist == null)
+        if (playlist == null)
         {
-            System.out.println("2213");
             playlist = playlists.get(0);
         }
-        
-        if(playlist.getTitle().equals(playlists.get(0).getTitle()))
+
+        if (playlist.getTitle().equals(playlists.get(0).getTitle()))
         {
             sDAO.deleteSongs(song);
             pDAO.deleteSongsFromAllPlaylists(song);
-        }
-        else
+        } else
         {
             pDAO.deleteSongsFromPlaylist(song, playlist);
         }
-        
-        for(Playlist p : playlists)
+
+        for (Playlist p : playlists)
         {
-            if(p.equals(playlist))
+            if (p.equals(playlist))
             {
-                System.out.println("tester");
                 p.deleteSongs(song);
                 songs.setAll(p.getSongsInPlaylist());
                 return;
@@ -236,19 +220,9 @@ public class Model
         }
     }
 
-    public void editSong()
-    {
-
-    }
-
     public void addSongToQue(ObservableList<Song> toAdd) throws IOException
     {
         playerManager.addSongToQue(toAdd);
-        //queues.addAll(songs);
-        //player.addSongsToQueue(getSongs());
-//       queues.addAll(getSongs());
-//        System.out.println("Queue size out here " + queues.size());
-//       player.addSongsToQueue(queues);
     }
 
     public void removeSongsFromQue(List<Song> toRemove)
@@ -259,19 +233,14 @@ public class Model
     public void queComboBox()
     {
         playerManager.queMisc();
-
     }
 
     public void SelectFolder(Stage stage) throws IOException, InterruptedException
     {
-
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File selectedDirectory = directoryChooser.showDialog(stage);
 
-        if (selectedDirectory == null)
-        {
-            //No Directory selected
-        } else
+        if (selectedDirectory != null)
         {
             String path = selectedDirectory.getAbsolutePath();
             File file = new File(path);
@@ -279,40 +248,34 @@ public class Model
 
             Thread t = new Thread(new Runnable()
             {
-
-                /*
-            ???++
-                 */
                 @Override
                 public void run()
                 {
-                    while (sDAO.getNumberOfUnReadySongs() != 0)
+                    boolean done = false;
+                    while (done == false)
                     {
-                        sDAO.getNumberOfUnReadySongs();
-                        //doNothing();
-                        System.out.println("Retard");
+                        if (sDAO.getNumberOfUnReadySongs() == 0)
+                        {
+                            done = true;
+                        }
+                        else
+                        {
+                            try
+                            {
+                                Thread.sleep(50);
+                            } catch (InterruptedException ex)
+                            {
+                                Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
                     }
                     songs.addAll(toBeRenamed);
                 }
             });
             t.start();
-
-            //sdao.writeChanges();
         }
-
-        playerManager.getAllSongs();
-        for (Song s : playerManager.getAllSongs())
-        {
-            System.out.println(s.getTitle());
-        }
-
-        //Do something with view here
     }
 
-    public void doNothing()
-    {
-        
-    }
     public void sendSliderForPlayback(Slider sliderPlayback)
     {
         playerManager.makeSliderForPlayBack(sliderPlayback);
@@ -320,31 +283,21 @@ public class Model
 
     public void updateSong(Song song)
     {
-        //songs.clear();
         playerManager.updateSong(song);
-        //songs.clear();
-
-        System.out.println("playlist size here" + playlists.size());
         for (Playlist p : playlists)
         {
-
             for (Song s : p.getSongsInPlaylist())
             {
                 if (s.getId() == song.getId())
                 {
-                    System.out.println("We are in here" + songs.size());
                     s.setAlbum(song.getAlbum());
                     s.setAuthor(song.getAuthor());
                     s.setCategori(song.getCategori());
                     s.setReleaseYear(song.getReleaseYear());
                     s.setTitle(song.getTitle());
-                    System.out.println(s.getTitle());
-//                
-//                songs.clear();
                     songs.setAll(p.getSongsInPlaylist());
                     return;
                 }
-//        playerManager.updateSong(song);
             }
         }
     }
@@ -376,7 +329,6 @@ public class Model
     }
 
     public ObservableList<String> getSongName()
-
     {
         return playerManager.getNowPlaylingTitle();
     }
@@ -388,43 +340,134 @@ public class Model
             playlists.remove(plist);
             playerManager.removePlaylist(plist);
         }
-        
-
     }
 
     public void renamePlaylist(String title, String newTitle) throws IOException, SQLException
     {
         if (playlists.get(0).getTitle() != title)
         {
-
-        
-        playerManager.renamePlaylist(title, newTitle);
-        //songs.clear();
-
-        System.out.println("er vi der snart" + playlists.size());
-
-        //playlists.get(3).setTitle("Spasser");
-        for (Playlist p : playlists)
-        {
-            System.out.println("1: " + p.getTitle() + "2: " + title);
-            if (p.getTitle().equals(title))
+            playerManager.renamePlaylist(title, newTitle);
+            
+            for (Playlist p : playlists)
             {
-                System.out.println(p.getTitle());
+                if (p.getTitle().equals(title))
+                {
 
-                p.setTitle(newTitle);
-                System.out.println("check" + p.getTitle());
-                List<Playlist> t = new ArrayList();
-                t.addAll(playlists);
-                playlists.setAll(t);
-                return;
+                    p.setTitle(newTitle);
+                    List<Playlist> t = new ArrayList();
+                    t.addAll(playlists);
+                    playlists.setAll(t);
+                    return;
+                }
             }
-
-        }
         }
     }
-    public void updateAll()
+
+    public void songEdit(Song s) throws IOException
     {
-//        UpdateVolume(Slider.);
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/mytunes/gui/view/editSongView.fxml"));
+        loader.load();
+        EditSongViewController display = loader.getController();
+        display.setSong(s);
+        display.setModel(this);
+        Parent p = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(p));
+        stage.showAndWait();
     }
 
+    public void playlistEdit(Playlist p) throws IOException
+    {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/mytunes/gui/view/EditPlaylistView.fxml"));
+        loader.load();
+        EditPlaylistViewController display = loader.getController();
+        display.setPlistTitle(p);
+        display.setModel(this);
+        Parent pa = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(pa));
+        stage.showAndWait();
+    }
+
+    public void playlistClicks(Playlist playlist)
+    {
+        long timeDiff = 0;
+        long currentTime = System.currentTimeMillis();
+        if (lastTime != 0 && currentTime != 0)
+        {
+            timeDiff = currentTime - lastTime;
+            if (timeDiff <= 215)
+            {
+                librarySelection(playlist);
+            }
+        }
+        lastTime = currentTime;
+    }
+
+    public void queueClicks(Song song)
+    {
+        long timeDiff = 0;
+        long currentTime = System.currentTimeMillis();
+
+        if (lastTime != 0 && currentTime != 0)
+        {
+            timeDiff = currentTime - lastTime;
+            if (timeDiff <= 215)
+            {
+                changeToThisSong(song);
+            }
+        }
+        lastTime = currentTime;
+    }
+
+    public void songListClicks(Song song)
+    {
+        long timeDiff = 0;
+        long currentTime = System.currentTimeMillis();
+
+        if (lastTime != 0 && currentTime != 0)
+        {
+            timeDiff = currentTime - lastTime;
+            if (timeDiff <= 215)
+            {
+                playNowSelectedSong(song);
+            }
+        }
+        lastTime = currentTime;
+    }
+
+    public void tryCreatePlaylist()
+    {
+        TextField txtTitle = new TextField();
+        txtTitle.setText("Playlist name");
+        Button btn = new Button();
+        btn.setText("Create playlist");
+        StackPane root = new StackPane();
+        root.setAlignment(txtTitle, Pos.TOP_CENTER);
+        root.setAlignment(btn, Pos.BOTTOM_CENTER);
+        root.getChildren().addAll(txtTitle, btn);
+        Scene scene = new Scene(root, 200, 50);
+        Stage stage = new Stage();
+        stage.setTitle("create playlist");
+        stage.setScene(scene);
+        stage.show();
+        btn.setOnAction(new EventHandler<ActionEvent>()
+        {
+            @Override
+            public void handle(ActionEvent event)
+            {
+                try
+                {
+                    createPlaylist(new Playlist(txtTitle.getText()));
+                } catch (IOException ex)
+                {
+                    System.out.println("fejl 1111111");
+                }
+                Stage stage = (Stage) txtTitle.getScene().getWindow();
+                stage.close();
+            }
+        });
+    }
 }

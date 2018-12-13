@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
-import mytunes.bll.Player;
 
 /**
  *
@@ -22,11 +21,9 @@ import mytunes.bll.Player;
  */
 public class SettingsDAO
 {
-
     private DatabaseConnection conProvider;
     private SongDAO sDAO;
 
-    
     public SettingsDAO() throws IOException
     {
         conProvider = new DatabaseConnection();
@@ -41,7 +38,6 @@ public class SettingsDAO
      */
     public void updateVolume(double vol)
     {
-
         try (Connection con = conProvider.getConnection())
         {
             PreparedStatement pstmt = con.prepareStatement("UPDATE Settings SET Volume = (?)");
@@ -52,7 +48,6 @@ public class SettingsDAO
             
         } catch (SQLException ex)
         {
-
             ex.printStackTrace();
         }
     }
@@ -70,9 +65,7 @@ public class SettingsDAO
             ResultSet rs = pstmt.executeQuery();
             while (rs.next())
             {
-
                 vol = rs.getDouble("Volume");
-
             }
         } catch (SQLException ex)
         {
@@ -105,14 +98,6 @@ public class SettingsDAO
         return songId;
     }
     
-    /**
-     * 
-     * @returnerer den sidst valgte playliste.
-     */
-    public Playlist lastPlayedPlaylist()
-    {
-        return null;
-    }
     
     /**
      * 
@@ -129,8 +114,6 @@ public class SettingsDAO
             while (rs.next())
             {
                 queueList = rs.getString("lastQueue");
-//                queueList = pstmt.getResultSet().getString("lastQueue");
-                
             }
         } catch (SQLException ex)
         {
@@ -145,18 +128,9 @@ public class SettingsDAO
      */
     public List<Song> queueList()
     {
-        //tilføj String str som en parameter inde i metoden queueList, som tager denne String quelist
-        //og laver den om til en liste af sange
-//        String[] a = str.split(",");
-        //Tænker vel bare at det her er fra database, og ikke fra metode input
-        //Btw alle comments her er for at undgå redLines
         List<Song> queSongs = new ArrayList();
         List<Song> allSongs = sDAO.getAllSongsFromDB();
         List<Integer> tempId = new ArrayList();
-//        for (String string : a)
-//        {
-//            tempId.add(Integer.valueOf(string));
-//        }
 
         for (Song song : allSongs)
         {

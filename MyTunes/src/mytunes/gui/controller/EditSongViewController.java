@@ -125,7 +125,7 @@ public class EditSongViewController implements Initializable {
         System.out.println("album =" + album + ", artist=" + author + ", title=" + title + ", year=" + year + ", length=" + length + ", id=" +id);
         
     }
-    public void setSong(Song song, int songIndex)
+    public void setSong(Song song)
     {
         selectedSong = song;
         txtEditArtist.setText(selectedSong.getAuthor());
