@@ -212,13 +212,17 @@ public class Model
             System.out.println("2213");
             playlist = playlists.get(0);
         }
-        //List<Song> tmpHolder = new ArrayList();
-        System.out.println("er det her delete ligger");
-
-        pDAO.deleteSongFromAllPlaylists(song);
-        sDAO.deleteSongs(song);
-        //tmpHolder.addAll(songs);
-        //tmpHolder.removeAll(song);
+        
+        if(playlist.getTitle().equals(playlists.get(0).getTitle()))
+        {
+            sDAO.deleteSongs(song);
+            pDAO.deleteSongsFromAllPlaylists(song);
+        }
+        else
+        {
+            pDAO.deleteSongsFromPlaylist(song, playlist);
+        }
+        
         for(Playlist p : playlists)
         {
             if(p.equals(playlist))

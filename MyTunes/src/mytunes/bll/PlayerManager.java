@@ -248,11 +248,12 @@ public class PlayerManager {
         {
             ids += "," + s.getId();
         }
+        setdao.updateCurrentQueue(ids);
     }
     
     public void currentQueueIndex()
     {
-        player.currentQueueIndex();
+        setdao.updateLastPlayedSongIndex(player.currentQueueIndex());
     }
     public Playlist getPlaylist(Playlist plist)
     {

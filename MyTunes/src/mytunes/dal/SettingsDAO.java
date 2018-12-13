@@ -170,5 +170,15 @@ public class SettingsDAO
         }
         return queSongs;
     }
+    
+    public void updateCurrentQueue(String string)
+    {
+        
+    }
+    
+    public void updateLastPlayedSongIndex(int index)
+    {
+        
+    }
 
 }
