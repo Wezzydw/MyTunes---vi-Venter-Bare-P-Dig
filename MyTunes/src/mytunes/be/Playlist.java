@@ -55,9 +55,9 @@ public class Playlist
         playlist.addAll(songs);
     }
 
-    public void deleteSong(Song song)
+    public void deleteSongs(List<Song> songs)
     {
-        playlist.remove(song);
+        playlist.removeAll(songs);
     }
 
     public Song getSong(int i)
