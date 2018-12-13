@@ -60,7 +60,6 @@ public class Player {
     public void playSong() {
         if (mp.getStatus() != Status.PLAYING && queue.queueSize() > 0) {
             mp.play();
-            //mp.setVolume(volume);
             nowPlaying();
 
             mp.setOnReady(new Runnable() {
@@ -131,7 +130,6 @@ public class Player {
      * @param vol Skifter volumen i mediaplayeren
      */
     public void changevolume(double vol) {
-        //volume = vol;
         mp.setVolume(vol);
     }
 
@@ -224,17 +222,17 @@ public class Player {
      */
     public void nowPlaying() {
         if (queue != null) {
-            nowPlaying.clear();
+            //nowPlaying.clear();
             nowPlaying.addAll(getMetaData(queue.getSong(songIndex)));
-            nowPlayingTitle.clear();
+            //nowPlayingTitle.clear();
             nowPlayingTitle.addAll(getTitle(queue.getSong(songIndex)));
         }
     }
 
     public void nowPlayingFromInterrupt(Song song) {
-        nowPlaying.clear();
+        //nowPlaying.clear();
         nowPlaying.setAll(getMetaData(song));
-        nowPlayingTitle.clear();
+        //nowPlayingTitle.clear();
         nowPlayingTitle.setAll(getTitle(song));
     }
 
