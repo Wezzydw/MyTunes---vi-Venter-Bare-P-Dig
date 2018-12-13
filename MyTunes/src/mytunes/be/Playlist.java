@@ -24,11 +24,6 @@ public class Playlist
         this.title = title;
     }
 
-    
-    public List<Song> CreatePlaylist()
-    {
-            return playlist;
-    }
     public String getTitle()
     {
         return title;
@@ -60,10 +55,6 @@ public class Playlist
         playlist.removeAll(songs);
     }
 
-    public Song getSong(int i)
-    {
-        return playlist.get(i);
-    }
 
     public int getSize()
     {
