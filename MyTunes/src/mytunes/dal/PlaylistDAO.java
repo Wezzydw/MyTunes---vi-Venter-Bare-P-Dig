@@ -265,13 +265,13 @@ public class PlaylistDAO {
 
     public void deleteSongsFromPlaylist(List<Song> songs, Playlist playlist) {
         try (Connection con = conProvider.getConnection()) {
-            String a = "SELECT FROM Playlist WHERE Title = " + playlist.getTitle() + ";";
+            String a = "SELECT * FROM Playlist;";
             PreparedStatement pstmt = con.prepareStatement(a);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 for (Song song : songs) {
                     if (song.getId() == rs.getInt("SongId")) {
-                        a = "DELETE FROM Playlist WHERE SongId = " + song.getId() + ";";
+                        a = "DELETE FROM Playlist WHERE SongId = " + song.getId() + " AND Title = '" + playlist.getTitle() + "';";
                         PreparedStatement prst = con.prepareStatement(a);
                         prst.execute();
                     }

@@ -95,6 +95,7 @@ public class Model
     public void librarySelection(Playlist selectedPlaylist)
     {
         songs.setAll(selectedPlaylist.getSongsInPlaylist());
+        System.out.println("songs size : " + songs.size());
     }
 
     /**
