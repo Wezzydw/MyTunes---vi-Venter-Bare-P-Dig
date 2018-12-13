@@ -96,11 +96,12 @@ public class PlaylistDAO
     /*
         bliver connectet til databasen kan tage en liste af sange og opdatere dem i playlisten 
     */
-    public Playlist getPlaylist(String query)
+    public Playlist getPlaylist(Playlist plist)
 
     {
         List<Song> playlistSongs = new ArrayList();
         List<Song> allSongs = sDAO.getAllSongsFromDB();
+        
         List<Integer> tempId = new ArrayList();
         try (Connection con = conProvider.getConnection())
         {
@@ -109,13 +110,13 @@ public class PlaylistDAO
             ResultSet rs = pstmt.executeQuery();
             while (rs.next())
             {
-                if (rs.getString("Title") == query)
+                if (rs.getString("Title").equals(plist.getTitle()))
                 {
                     tempId.add(rs.getInt("SongId"));
                 }
             }
             for (Song song : allSongs)
-            {
+            {   
                 for (Integer integer : tempId)
                 {
                     if (integer == song.getId())
@@ -131,10 +132,10 @@ public class PlaylistDAO
         List<Playlist> allPlaylists = getAllPlaylists();
         for (Playlist allPlaylist : allPlaylists)
         {
-            if (allPlaylist.getTitle() == query)
+            if (allPlaylist.getTitle().equals(plist.getTitle()))
             {
-                allPlaylist.setPlaylist(playlistSongs);
-                return allPlaylist;
+                plist.setPlaylist(playlistSongs);
+                return plist;
             }
         }
         return null;

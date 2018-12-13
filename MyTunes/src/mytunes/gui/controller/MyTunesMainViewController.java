@@ -128,9 +128,20 @@ public class MyTunesMainViewController implements Initializable {
                 model.UpdateVolume(sliderVol.getValue());
             }
         });
-
     }
-
+    private void onProgramClose()
+    {
+        Stage stage = (Stage) borderPane.getScene().getWindow();
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                System.out.println("Stage is Closing");
+                model.UpdateVolume(sliderVol.getValue());
+               
+                //updateall
+            }
+        });
+    }
     @FXML
     private void onHandleShuffe(ActionEvent event) {
         model.shuffleHandler();
@@ -313,7 +324,7 @@ public class MyTunesMainViewController implements Initializable {
     @FXML
     private void onHandlePlaylistAdd(ActionEvent event) {
         model.addToPlaylist(listViewLibrary.getSelectionModel().getSelectedItem(), listViewAllSongs.getSelectionModel().getSelectedItems());
-        //model.addPlaylistToDB(listViewAllSongs.getSelectionModel().getSelectedItems(), listViewLibrary.getSelectionModel().getSelectedItem());
+        model.addPlaylistToDB(listViewAllSongs.getSelectionModel().getSelectedItems(), listViewLibrary.getSelectionModel().getSelectedItem());
     }
 
     @FXML
@@ -441,7 +452,7 @@ public class MyTunesMainViewController implements Initializable {
                 System.out.println("Hello World!");
                 try {
 
-                    model.createPlaylist(new Playlist(txtTitle.getText()));
+                    model.createPlaylist(new Playlist(txtTitle.getText())); //noget med update
                 } catch (IOException ex) {
                     System.out.println("fejl 1111111");
                 }

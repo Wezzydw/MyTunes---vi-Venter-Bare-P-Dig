@@ -254,4 +254,8 @@ public class PlayerManager {
     {
         player.currentQueueIndex();
     }
+    public Playlist getPlaylist(Playlist plist)
+    {
+        return pDAO.getPlaylist(plist);
+    }
 }
