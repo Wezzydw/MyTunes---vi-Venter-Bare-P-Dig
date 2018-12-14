@@ -162,16 +162,6 @@ public class PlayerManager
     }
 
     /*
-        giver muligheden for at ændrer opsætningen af ens playlist
-     */
-    public void queMisc()
-    {
-        comboBoxMisc.setItems(FXCollections.observableArrayList("reverseList", "randomiseList", "sortByTitle"));
-        comboBoxMisc.setVisibleRowCount(3);
-    }
-
-
-    /*
     Henter alle playlister ned
      */
     public List<Playlist> getAllPlaylists()
