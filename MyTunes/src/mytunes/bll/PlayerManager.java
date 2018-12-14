@@ -81,7 +81,7 @@ public class PlayerManager
             if (!songQueue.isEmpty())
             {
                 player = new Player(songQueue);
-                player.changevolume(volumeFromDB);
+                player.changevolume(setdao.lastSetVolume());
                 nowPlaying.addAll(player.getNowPlaying());
                 getSongName.addAll(player.getNowPlayingTitle());
                 player.makeSliderForPlayback(sliderPlayback);

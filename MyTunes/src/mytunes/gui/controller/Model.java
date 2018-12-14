@@ -156,13 +156,13 @@ public class Model
 
     public void changeVolume(double vol)
     {
-        volume = vol / 100;
+        volume = vol /100;
         playerManager.changeVolume(vol / 100);
     }
 
     public void UpdateVolume(double vol)
     {
-        setDAO.updateVolume(vol / 100);
+        setDAO.updateVolume(vol);
     }
 
     public double getSliderVolumeFromDB()

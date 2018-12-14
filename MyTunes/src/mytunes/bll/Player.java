@@ -66,6 +66,7 @@ public class Player
     {
         if (mp.getStatus() != Status.PLAYING && queue.queueSize() > 0)
         {
+            mp.setVolume(volume);
             mp.play();
             nowPlaying();
 
@@ -151,6 +152,7 @@ public class Player
     public void changevolume(double vol)
     {
         mp.setVolume(vol);
+        volume = vol;
     }
 
     /**
