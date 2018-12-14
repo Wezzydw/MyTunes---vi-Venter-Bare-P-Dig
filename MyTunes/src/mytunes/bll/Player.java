@@ -69,7 +69,6 @@ public class Player
             mp.setVolume(volume);
             mp.play();
             nowPlaying();
-
             mp.setOnReady(new Runnable()
             {
                 @Override
