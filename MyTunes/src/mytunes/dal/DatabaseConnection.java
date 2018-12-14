@@ -25,6 +25,9 @@ public class DatabaseConnection
     /**
      * Opretter forbindelse til databasen.
      * @throws IOException 
+     * Til Peter og Jeppe, vi har hardcoded disse værdier da i skal bruge vores -
+     * db, og om vi sender database.settings filen med, eller skriver det her, -
+     * betyder ikke det store. Begge er ikke secure uanset.
      */
     public DatabaseConnection() throws IOException
     {

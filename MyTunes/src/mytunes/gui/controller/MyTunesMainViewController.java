@@ -33,8 +33,7 @@ import mytunes.be.Song;
  *
  * @author Wezzy Laptop
  */
-public class MyTunesMainViewController implements Initializable
-{
+public class MyTunesMainViewController implements Initializable {
 
     @FXML
     private Slider sliderVol;
@@ -44,7 +43,6 @@ public class MyTunesMainViewController implements Initializable
     private ListView<String> listViewSongInfo;
     @FXML
     private ListView<Song> listViewQueue;
-    private ComboBox<String> comboBoxMisc;
     @FXML
     private TextField txtFieldSearch;
     @FXML
@@ -62,18 +60,14 @@ public class MyTunesMainViewController implements Initializable
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
-        try
-        {
+    public void initialize(URL url, ResourceBundle rb) {
+        try {
             model = new Model();
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
             Logger.getLogger(MyTunesMainViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
         listViewAllSongs.setItems(model.getSongs());
         listViewLibrary.setItems(model.getPlayLists());
-        listNowPlaying.setItems(model.getNowPlaying());
         listViewAllSongs.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         listViewQueue.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         sliderVol.setValue(model.getSliderVolumeFromDB() * 100);
@@ -81,59 +75,50 @@ public class MyTunesMainViewController implements Initializable
         model.sendSliderForPlayback(sliderPlayback);
         model.lookForQueue(sliderPlayback);
         listViewQueue.setItems(model.getQuedSongs());
-        listViewSongInfo.setItems(model.getSongName());
         listNowPlaying.setItems(model.getSongName());
         listViewSongInfo.setItems(model.getNowPlaying());
     }
 
     @FXML
-    private void onHandleSliderVol(MouseEvent event)
-    {
+    private void onHandleSliderVol(MouseEvent event) {
         model.changeVolume(sliderVol.getValue());
         Stage stage = (Stage) borderPane.getScene().getWindow();
         model.onProgramClose(stage);
     }
 
     @FXML
-    private void onHandleShuffe(ActionEvent event)
-    {
+    private void onHandleShuffe(ActionEvent event) {
         model.shuffleHandler();
     }
 
     @FXML
-    private void onHandleRepeat(ActionEvent event)
-    {
+    private void onHandleRepeat(ActionEvent event) {
         model.repeatHandler();
     }
 
     @FXML
-    private void onHandlePrev(ActionEvent event)
-    {
+    private void onHandlePrev(ActionEvent event) {
         model.playPrevSong();
     }
 
     @FXML
-    private void onHandlePlay(ActionEvent event)
-    {
+    private void onHandlePlay(ActionEvent event) {
 
         model.playSong();
     }
 
     @FXML
-    private void onHandlePause(ActionEvent event)
-    {
+    private void onHandlePause(ActionEvent event) {
         model.pauseSong();
     }
 
     @FXML
-    private void onHandleNext(ActionEvent event)
-    {
+    private void onHandleNext(ActionEvent event) {
         model.playNextSong();
     }
 
     @FXML
-    private void onHandleAdd(ActionEvent event) throws IOException
-    {
+    private void onHandleAdd(ActionEvent event) throws IOException {
         model.addSongToQue(listViewAllSongs.getSelectionModel().getSelectedItems());
         listNowPlaying.setItems(model.getSongName());
         listViewSongInfo.setItems(model.getNowPlaying());
@@ -142,120 +127,93 @@ public class MyTunesMainViewController implements Initializable
     }
 
     @FXML
-    private void onHandleRemove(ActionEvent event) throws IOException
-    {
+    private void onHandleRemove(ActionEvent event) throws IOException {
         model.removeSongsFromQue(listViewQueue.getSelectionModel().getSelectedItems());
         Stage stage = (Stage) borderPane.getScene().getWindow();
         model.onProgramClose(stage);
     }
 
-    private void onHandleMisc(ActionEvent event)
-    {
-        comboBoxMisc.setItems(FXCollections.observableArrayList("reverseList", "randomiseList", "sortByTitle"));
-        comboBoxMisc.setVisibleRowCount(3);
-    }
-
     @FXML
-    private void onHandleSearch(KeyEvent event) throws IOException
-    {
+    private void onHandleSearch(KeyEvent event) throws IOException {
         model.searcher(txtFieldSearch.getText());
     }
 
     @FXML
-    private void onHandleAddFolder(ActionEvent event) throws IOException, InterruptedException
-    {
+    private void onHandleAddFolder(ActionEvent event) throws IOException, InterruptedException {
         Stage stage = (Stage) borderPane.getScene().getWindow();
         model.SelectFolder(stage);
         model.onProgramClose(stage);
-
     }
 
     @FXML
-    private void onSongRemove(ActionEvent event)
-    {
-        try
-        {
+    private void onSongRemove(ActionEvent event) {
+        try {
             model.removeSongs(listViewAllSongs.getSelectionModel().getSelectedItems(), listViewLibrary.getSelectionModel().getSelectedItem());
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
             System.out.println("fejl 115");
         }
     }
 
     @FXML
-    private void onHandleSongEdit(ActionEvent event) throws IOException
-    {
+    private void onHandleSongEdit(ActionEvent event) throws IOException {
         model.songEdit(listViewAllSongs.getSelectionModel().getSelectedItem());
     }
 
     @FXML
-    private void onHandlePlaylistEdit(ActionEvent event) throws IOException
-    {
+    private void onHandlePlaylistEdit(ActionEvent event) throws IOException {
         model.playlistEdit(listViewLibrary.getSelectionModel().getSelectedItem());
     }
 
     @FXML
-    private void onHandlePlaylistRemove(ActionEvent event) throws IOException, SQLException
-    {
+    private void onHandlePlaylistRemove(ActionEvent event) throws IOException, SQLException {
         model.removePlaylist(listViewLibrary.getSelectionModel().getSelectedItem());
     }
 
     @FXML
-    private void onHandlePlaylistAdd(ActionEvent event)
-    {
+    private void onHandlePlaylistAdd(ActionEvent event) {
         model.addToPlaylist(listViewLibrary.getSelectionModel().getSelectedItem(), listViewAllSongs.getSelectionModel().getSelectedItems());
         model.addPlaylistToDB(listViewAllSongs.getSelectionModel().getSelectedItems(), listViewLibrary.getSelectionModel().getSelectedItem());
     }
 
     @FXML
-    private void queueLookForDeleteKey(KeyEvent event)
-    {
-        if (event.getCode().equals(KeyCode.DELETE))
-        {
+    private void queueLookForDeleteKey(KeyEvent event) {
+        if (event.getCode().equals(KeyCode.DELETE)) {
             model.removeSongsFromQue(listViewQueue.getSelectionModel().getSelectedItems());
         }
     }
 
     @FXML
-    private void PlaylistsMouseClick(MouseEvent event)
-    {
+    private void PlaylistsMouseClick(MouseEvent event) {
         model.playlistClicks(listViewLibrary.getSelectionModel().getSelectedItem());
     }
 
     @FXML
-    private void queueMouseClick(MouseEvent event)
-    {
+    private void queueMouseClick(MouseEvent event) {
         model.queueClicks(listViewQueue.getSelectionModel().getSelectedItem());
     }
 
     @FXML
-    private void allSongsMouseClicked(MouseEvent event)
-    {
+    private void allSongsMouseClicked(MouseEvent event) {
         model.songListClicks(listViewAllSongs.getSelectionModel().getSelectedItem());
         listNowPlaying.setItems(model.getSongName());
         listViewSongInfo.setItems(model.getNowPlaying());
     }
 
     @FXML
-    private void onHandlePlaylistCreate(ActionEvent event)
-    {
+    private void onHandlePlaylistCreate(ActionEvent event) {
         model.tryCreatePlaylist();
     }
 
     @FXML
-    private void playlistLookForDeleteKey(KeyEvent event) throws IOException, SQLException
-    {
-        if (event.getCode().equals(KeyCode.DELETE))
-        {
+    private void playlistLookForDeleteKey(KeyEvent event) throws IOException, SQLException {
+        if (event.getCode().equals(KeyCode.DELETE)) {
             model.removePlaylist(listViewLibrary.getSelectionModel().getSelectedItem());
         }
     }
 
     @FXML
-    private void allSongsLookForDeleteKey(KeyEvent event) throws IOException
-    {
-        if (event.getCode().equals(KeyCode.DELETE))
-        {
+    private void allSongsLookForDeleteKey(KeyEvent event) throws IOException {
+        if (event.getCode().equals(KeyCode.DELETE)) {
             model.removeSongs(listViewAllSongs.getSelectionModel().getSelectedItems(), listViewLibrary.getSelectionModel().getSelectedItem());
         }
     }

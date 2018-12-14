@@ -244,28 +244,6 @@ public class SongDAO
         return allSongs;
     }
 
-    /*
-        Henter alle sange fra et arraylist
-     */
-    public List<Song> getAllSongsFromMem()
-    {
-        return songs;
-    }
-
-    /*
-    returnere en sang fra databasen????
-     */
-    public Song getSong(Song song)
-    {
-        for (Song MetaSong : getAllSongsFromDB())
-        {
-            if (MetaSong.getId() == song.getId())
-            {
-                return song;
-            }
-        }
-        return null;
-    }
 
     /*
     

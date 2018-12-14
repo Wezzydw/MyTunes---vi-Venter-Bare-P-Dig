@@ -70,9 +70,6 @@ public class EditSongViewController implements Initializable {
         comBox.add("Pop");
         comBox.add("Andet");
         comboCategory.setItems(comBox);
-        
-        
-        
     }    
 
     @FXML
@@ -80,7 +77,6 @@ public class EditSongViewController implements Initializable {
         
         Stage stage = (Stage) btnCancel.getScene().getWindow();
         stage.close();
-        
     }
 
     @FXML

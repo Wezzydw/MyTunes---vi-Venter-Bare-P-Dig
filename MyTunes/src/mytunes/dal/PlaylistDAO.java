@@ -127,27 +127,6 @@ public class PlaylistDAO
     }
 
     /*
-        connectes til databasen og kan remove de markerede
-     */
-    public void removeSelection(List<Song> toBeRemoved)
-    {
-        try (Connection con = conProvider.getConnection())
-        {
-
-            for (Song song : toBeRemoved)
-            {
-                String a = "DELETE FROM Playlist WHERE SongId =" + song.getId() + ";";
-                PreparedStatement pstmt = con.prepareStatement(a);
-                pstmt.execute();
-                pstmt.close();
-            }
-        } catch (Exception ex)
-        {
-            ex.printStackTrace();
-        }
-    }
-
-    /*
     connectes til databasen og kan tage fat i alle playlists og laver en ny list
      */
     public List<Playlist> getAllPlaylists()
