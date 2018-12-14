@@ -57,6 +57,11 @@ public class PlayerManager
         return pDAO.getAllPlaylists();
     }
 
+    /**
+     * Kigger efter en gammel queue fra db, og sætter denne til queuen
+     * @param songs
+     * @param sliderPlayback 
+     */
     public void lookForQueue(List<Song> songs, Slider sliderPlayback)
     {
         this.sliderPlayback = sliderPlayback;
@@ -88,9 +93,12 @@ public class PlayerManager
                 player.setSongIndex(setdao.lastPlayedSong());
             }
         }
-        //checkForSongsSomewhere();
     }
 
+    /**
+     * En del af opstart for playermanager, der ligner LookForQueue
+     * men er en del af et andet program run
+     */
     private void checkForSongsSomewhere()
     {
         if (player == null && sliderPlayback != null)
@@ -311,7 +319,10 @@ public class PlayerManager
     {
         pDAO.deletePlaylist(plist.getTitle());
     }
-
+    /**
+     * Konverterer den nuværende queue til en string, som DB kan forstå og
+     * gemme
+     */
     public void currentQueueToString()
     {
         if (player != null && player.getWholeQueue().size() != 0)

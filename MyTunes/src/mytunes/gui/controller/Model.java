@@ -39,8 +39,8 @@ import mytunes.dal.SongDAO;
  *
  * @author marce
  */
-public class Model
-{
+public class Model {
+
     private SongDAO sDAO;
     private PlaylistDAO pDAO;
     private ObservableList<Song> songs;
@@ -51,8 +51,7 @@ public class Model
     private double volume;
     private Long lastTime;
 
-    public Model() throws IOException
-    {
+    public Model() throws IOException {
         playlists = FXCollections.observableArrayList();
         songs = FXCollections.observableArrayList();
         songsearcher = new Search();
@@ -65,19 +64,20 @@ public class Model
         volume = 0;
         lastTime = 0L;
     }
-    
-    public void lookForQueue(Slider sliderPlayback)
-    {
+
+    public void lookForQueue(Slider sliderPlayback) {
         playerManager.lookForQueue(songs, sliderPlayback);
     }
 
-    public void onProgramClose(Stage stage)
-    {
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>()
-        {
+    /**
+     * Sørger for at køre de sidste ting for programlukning
+     *
+     * @param stage
+     */
+    public void onProgramClose(Stage stage) {
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
-            public void handle(WindowEvent event)
-            {
+            public void handle(WindowEvent event) {
                 UpdateVolume(volume);
                 playerManager.currentQueueIndex();
                 playerManager.currentQueueToString();
@@ -85,129 +85,118 @@ public class Model
         });
     }
 
-    private void playlistInitFilling()
-    {
+    /**
+     * Fylder Playlists første index med alle sange
+     */
+    private void playlistInitFilling() {
         playlists.add(0, new Playlist("All Songs"));
         playlists.get(0).addSongSelection(playerManager.getAllSongs());
-        for (int i = 1; i < playlists.size(); i++)
-        {
+        for (int i = 1; i < playlists.size(); i++) {
             playlists.get(i).getSongsInPlaylist();
             playerManager.getPlaylist(playlists.get(i));
         }
         songs = FXCollections.observableArrayList(playlists.get(0).getSongsInPlaylist());
     }
 
-    public void librarySelection(Playlist selectedPlaylist)
-    {
+    /**
+     * Skifter AllSongsView til den valgte playliste
+     *
+     * @param selectedPlaylist
+     */
+    public void librarySelection(Playlist selectedPlaylist) {
         songs.setAll(selectedPlaylist.getSongsInPlaylist());
     }
 
     /**
      *
      */
-    
-    public void createPlaylist(Playlist plist) throws IOException
-    {
+    public void createPlaylist(Playlist plist) throws IOException {
         playlists.add(new Playlist(plist.getTitle()));
         playerManager.createPlaylist(plist);
     }
 
-    public ObservableList<Playlist> getPlayLists()
-    {
+    public ObservableList<Playlist> getPlayLists() {
         return playlists;
     }
 
-    public ObservableList<Song> getQuedSongs()
-    {
+    public ObservableList<Song> getQuedSongs() {
         return playerManager.getQueuedSongs();
     }
 
-    public ObservableList<Song> getSongs()
-    {
+    public ObservableList<Song> getSongs() {
         return songs;
     }
 
-    public ObservableList<String> getNowPlaying()
-    {
+    public ObservableList<String> getNowPlaying() {
         return playerManager.getNowPlaying();
     }
 
-    public void playSong()
-    {
+    public void playSong() {
         playerManager.playSong();
     }
 
-    public void pauseSong()
-    {
+    public void pauseSong() {
         playerManager.pauseSong();
     }
 
-    public void changeVolume(double vol)
-    {
-        volume = vol /100;
+    public void changeVolume(double vol) {
+        volume = vol / 100;
         playerManager.changeVolume(vol / 100);
     }
 
-    public void UpdateVolume(double vol)
-    {
+    public void UpdateVolume(double vol) {
         setDAO.updateVolume(vol);
     }
 
-    public double getSliderVolumeFromDB()
-    {
+    public double getSliderVolumeFromDB() {
         return setDAO.lastSetVolume();
     }
 
-    public void playPrevSong()
-    {
+    public void playPrevSong() {
         playerManager.playPrevSong();
     }
 
-    public void playNextSong()
-    {
+    public void playNextSong() {
         playerManager.playNextSong();
     }
 
-    public void repeatHandler()
-    {
+    public void repeatHandler() {
         playerManager.repeatHandler();
     }
 
-    public void shuffleHandler()
-    {
+    public void shuffleHandler() {
         playerManager.shuffleHandler();
     }
 
-    public void searcher(String query) throws IOException
-    {
+    public void searcher(String query) throws IOException {
         songs.setAll(songsearcher.searcher(query));
     }
 
-    public void addSong(Song song)
-    {
+    public void addSong(Song song) {
         songs.add(song);
     }
 
-    public void removeSongs(List<Song> song, Playlist playlist) throws IOException
-    {
-        if (playlist == null)
-        {
+    /**
+     * Fjerne de valgte sange fra den valgte playliste
+     *
+     * @param song
+     * @param playlist
+     * @throws IOException
+     */
+    public void removeSongs(List<Song> song, Playlist playlist) throws IOException {
+        if (playlist == null) {
             playlist = playlists.get(0);
         }
 
-        if (playlist.getTitle().equals(playlists.get(0).getTitle()))
-        {
+        if (playlist.getTitle().equals(playlists.get(0).getTitle())) {
             sDAO.deleteSongs(song);
             pDAO.deleteSongsFromAllPlaylists(song);
-        } else
-        {
+        } else {
             pDAO.deleteSongsFromPlaylist(song, playlist);
         }
 
-        for (Playlist p : playlists)
-        {
-            if (p.equals(playlist))
-            {
+        for (Playlist p : playlists) {
+            if (p.equals(playlist)) {
                 p.deleteSongs(song);
                 songs.setAll(p.getSongsInPlaylist());
                 return;
@@ -215,46 +204,41 @@ public class Model
         }
     }
 
-    public void addSongToQue(ObservableList<Song> toAdd) throws IOException
-    {
+    public void addSongToQue(ObservableList<Song> toAdd) throws IOException {
         playerManager.addSongToQue(toAdd);
     }
 
-    public void removeSongsFromQue(List<Song> toRemove)
-    {
+    public void removeSongsFromQue(List<Song> toRemove) {
         playerManager.removeSongFromQue(toRemove);
     }
 
-    public void SelectFolder(Stage stage) throws IOException, InterruptedException
-    {
+    /**
+     * Vælger Folder og sørger for en opdatering af view når det er klar
+     *
+     * @param stage
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    public void SelectFolder(Stage stage) throws IOException, InterruptedException {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File selectedDirectory = directoryChooser.showDialog(stage);
 
-        if (selectedDirectory != null)
-        {
+        if (selectedDirectory != null) {
             String path = selectedDirectory.getAbsolutePath();
             File file = new File(path);
             List<Song> toBeRenamed = sDAO.addFolder(file);
 
-            Thread t = new Thread(new Runnable()
-            {
+            Thread t = new Thread(new Runnable() {
                 @Override
-                public void run()
-                {
+                public void run() {
                     boolean done = false;
-                    while (done == false)
-                    {
-                        if (sDAO.getNumberOfUnReadySongs() == 0)
-                        {
+                    while (done == false) {
+                        if (sDAO.getNumberOfUnReadySongs() == 0) {
                             done = true;
-                        }
-                        else
-                        {
-                            try
-                            {
+                        } else {
+                            try {
                                 Thread.sleep(50);
-                            } catch (InterruptedException ex)
-                            {
+                            } catch (InterruptedException ex) {
                                 Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
@@ -266,20 +250,20 @@ public class Model
         }
     }
 
-    public void sendSliderForPlayback(Slider sliderPlayback)
-    {
+    public void sendSliderForPlayback(Slider sliderPlayback) {
         playerManager.makeSliderForPlayBack(sliderPlayback);
     }
 
-    public void updateSong(Song song)
-    {
+    /**
+     * Opdaterer den valgte sang
+     *
+     * @param song
+     */
+    public void updateSong(Song song) {
         playerManager.updateSong(song);
-        for (Playlist p : playlists)
-        {
-            for (Song s : p.getSongsInPlaylist())
-            {
-                if (s.getId() == song.getId())
-                {
+        for (Playlist p : playlists) {
+            for (Song s : p.getSongsInPlaylist()) {
+                if (s.getId() == song.getId()) {
                     s.setAlbum(song.getAlbum());
                     s.setAuthor(song.getAuthor());
                     s.setCategori(song.getCategori());
@@ -292,57 +276,58 @@ public class Model
         }
     }
 
-    public void addToPlaylist(Playlist selectedPlaylist, List<Song> songSelection)
-    {
-        for (Playlist playlist : playlists)
-        {
-            if (playlist.equals(selectedPlaylist))
-            {
+    /**
+     * Tilføjer de valgte sange til den valgte playliste
+     *
+     * @param selectedPlaylist
+     * @param songSelection
+     */
+    public void addToPlaylist(Playlist selectedPlaylist, List<Song> songSelection) {
+        for (Playlist playlist : playlists) {
+            if (playlist.equals(selectedPlaylist)) {
                 playlist.addSongSelection(songSelection);
             }
         }
     }
 
-    public void addPlaylistToDB(List<Song> selectedSongs, Playlist plist)
-    {
+    public void addPlaylistToDB(List<Song> selectedSongs, Playlist plist) {
         playerManager.playlistToDB(plist, selectedSongs);
     }
 
-    public void playNowSelectedSong(Song song)
-    {
+    public void playNowSelectedSong(Song song) {
         playerManager.playIncomingSong(song);
     }
 
-    public void changeToThisSong(Song song)
-    {
+    public void changeToThisSong(Song song) {
         playerManager.changeToThisSong(song);
     }
 
-    public ObservableList<String> getSongName()
-    {
+    public ObservableList<String> getSongName() {
         return playerManager.getNowPlaylingTitle();
     }
 
-    public void removePlaylist(Playlist plist) throws IOException, SQLException
-    {
-        if (playlists.get(0).getTitle() != plist.getTitle())
-        {
+    public void removePlaylist(Playlist plist) throws IOException, SQLException {
+        if (playlists.get(0).getTitle() != plist.getTitle()) {
             playlists.remove(plist);
             playerManager.removePlaylist(plist);
         }
     }
 
-    public void renamePlaylist(String title, String newTitle) throws IOException, SQLException
-    {
-        if (playlists.get(0).getTitle() != title)
-        {
+    /**
+     * Omdøber den valgte playliste og tjekker at det ikke er den første
+     * playliste som er All Songs, da den altid skal være der
+     *
+     * @param title
+     * @param newTitle
+     * @throws IOException
+     * @throws SQLException
+     */
+    public void renamePlaylist(String title, String newTitle) throws IOException, SQLException {
+        if (playlists.get(0).getTitle() != title) {
             playerManager.renamePlaylist(title, newTitle);
-            
-            for (Playlist p : playlists)
-            {
-                if (p.getTitle().equals(title))
-                {
 
+            for (Playlist p : playlists) {
+                if (p.getTitle().equals(title)) {
                     p.setTitle(newTitle);
                     List<Playlist> t = new ArrayList();
                     t.addAll(playlists);
@@ -353,8 +338,7 @@ public class Model
         }
     }
 
-    public void songEdit(Song s) throws IOException
-    {
+    public void songEdit(Song s) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/mytunes/gui/view/editSongView.fxml"));
         loader.load();
@@ -367,8 +351,7 @@ public class Model
         stage.showAndWait();
     }
 
-    public void playlistEdit(Playlist p) throws IOException
-    {
+    public void playlistEdit(Playlist p) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/mytunes/gui/view/EditPlaylistView.fxml"));
         loader.load();
@@ -381,55 +364,63 @@ public class Model
         stage.showAndWait();
     }
 
-    public void playlistClicks(Playlist playlist)
-    {
+    /**
+     * Tjekker for doubleklik, som skifter til den playliste der klikkes på
+     *
+     * @param playlist
+     */
+    public void playlistClicks(Playlist playlist) {
         long timeDiff = 0;
         long currentTime = System.currentTimeMillis();
-        if (lastTime != 0 && currentTime != 0)
-        {
+        if (lastTime != 0 && currentTime != 0) {
             timeDiff = currentTime - lastTime;
-            if (timeDiff <= 215)
-            {
+            if (timeDiff <= 215) {
                 librarySelection(playlist);
             }
         }
         lastTime = currentTime;
     }
 
-    public void queueClicks(Song song)
-    {
+    /**
+     * Tjekker for doubleklik, og skifter til den valgte sang
+     *
+     * @param song
+     */
+    public void queueClicks(Song song) {
         long timeDiff = 0;
         long currentTime = System.currentTimeMillis();
 
-        if (lastTime != 0 && currentTime != 0)
-        {
+        if (lastTime != 0 && currentTime != 0) {
             timeDiff = currentTime - lastTime;
-            if (timeDiff <= 215)
-            {
+            if (timeDiff <= 215) {
                 changeToThisSong(song);
             }
         }
         lastTime = currentTime;
     }
 
-    public void songListClicks(Song song)
-    {
+    /**
+     * Tjekker for doubleklik, og skifter til den valgte sang
+     *
+     * @param song
+     */
+    public void songListClicks(Song song) {
         long timeDiff = 0;
         long currentTime = System.currentTimeMillis();
 
-        if (lastTime != 0 && currentTime != 0)
-        {
+        if (lastTime != 0 && currentTime != 0) {
             timeDiff = currentTime - lastTime;
-            if (timeDiff <= 215)
-            {
+            if (timeDiff <= 215) {
                 playNowSelectedSong(song);
             }
         }
         lastTime = currentTime;
     }
 
-    public void tryCreatePlaylist()
-    {
+    /**
+     * Prøver at lave en playliste
+     */
+    public void tryCreatePlaylist() {
         TextField txtTitle = new TextField();
         txtTitle.setText("Playlist name");
         Button btn = new Button();
@@ -443,16 +434,12 @@ public class Model
         stage.setTitle("create playlist");
         stage.setScene(scene);
         stage.show();
-        btn.setOnAction(new EventHandler<ActionEvent>()
-        {
+        btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event)
-            {
-                try
-                {
+            public void handle(ActionEvent event) {
+                try {
                     createPlaylist(new Playlist(txtTitle.getText()));
-                } catch (IOException ex)
-                {
+                } catch (IOException ex) {
                     System.out.println("fejl 1111111");
                 }
                 Stage stage = (Stage) txtTitle.getScene().getWindow();

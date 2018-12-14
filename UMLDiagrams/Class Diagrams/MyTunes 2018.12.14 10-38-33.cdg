@@ -1,0 +1,721 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="MyTunes">
+  <ClassDiagramComponents>
+    <Class name="Playlist" package="mytunes.be" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Fields>
+        <Field name="title" type="String" visibility="package"/>
+        <Field name="playlist" type="List&lt;Song&gt;" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="title"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getTitle" returnType="String" visibility="public"/>
+        <Method name="setTitle" returnType="void" visibility="public">
+          <Argument type="String" name="title"/>
+        </Method>
+        <Method name="getSongsInPlaylist" returnType="List&lt;Song&gt;" visibility="public"/>
+        <Method name="setPlaylist" returnType="void" visibility="public">
+          <Argument type="List&lt;Song&gt;" name="playlist"/>
+        </Method>
+        <Method name="addSongSelection" returnType="void" visibility="public">
+          <Argument type="List&lt;Song&gt;" name="songs"/>
+        </Method>
+        <Method name="deleteSongs" returnType="void" visibility="public">
+          <Argument type="List&lt;Song&gt;" name="songs"/>
+        </Method>
+        <Method name="getSize" returnType="int" visibility="public"/>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Queue" package="mytunes.be" visibility="public" xPosition="320.0" yPosition="20.0">
+      <Fields>
+        <Field name="queue" type="List&lt;Media&gt;" visibility="package"/>
+        <Field name="songs" type="List&lt;Song&gt;" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="List&lt;Song&gt;" name="songsToAdd"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="addSelection" returnType="void" visibility="public">
+          <Argument type="List&lt;Song&gt;" name="songs"/>
+        </Method>
+        <Method name="getMedia" returnType="Media" visibility="public">
+          <Argument type="int" name="index"/>
+        </Method>
+        <Method name="getSong" returnType="Song" visibility="public">
+          <Argument type="int" name="index"/>
+        </Method>
+        <Method name="endOfQueue" returnType="boolean" visibility="public">
+          <Argument type="int" name="index"/>
+        </Method>
+        <Method name="queueSize" returnType="int" visibility="public"/>
+        <Method name="setNewQueue" returnType="void" visibility="public">
+          <Argument type="List&lt;Song&gt;" name="songsToSet"/>
+        </Method>
+        <Method name="getIndex" returnType="int" visibility="public">
+          <Argument type="Song" name="song"/>
+        </Method>
+        <Method name="getWholeQueue" returnType="List&lt;Song&gt;" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Song" package="mytunes.be" visibility="public" xPosition="620.0" yPosition="20.0">
+      <Fields>
+        <Field name="title" type="String" visibility="package"/>
+        <Field name="author" type="String" visibility="package"/>
+        <Field name="album" type="String" visibility="package"/>
+        <Field name="length" type="String" visibility="package"/>
+        <Field name="releaseYear" type="String" visibility="package"/>
+        <Field name="categori" type="String" visibility="package"/>
+        <Field name="filePath" type="String" visibility="package"/>
+        <Field name="id" type="int" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="title"/>
+          <Argument type="String" name="author"/>
+          <Argument type="String" name="length"/>
+          <Argument type="String" name="releaseYear"/>
+          <Argument type="String" name="categori"/>
+          <Argument type="String" name="filePath"/>
+          <Argument type="String" name="album"/>
+          <Argument type="int" name="id"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="String" name="title"/>
+          <Argument type="String" name="filePath"/>
+          <Argument type="int" name="id"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getReleaseYear" returnType="String" visibility="public"/>
+        <Method name="setReleaseYear" returnType="void" visibility="public">
+          <Argument type="String" name="releaseYear"/>
+        </Method>
+        <Method name="getAlbum" returnType="String" visibility="public"/>
+        <Method name="setAlbum" returnType="void" visibility="public">
+          <Argument type="String" name="album"/>
+        </Method>
+        <Method name="getTitle" returnType="String" visibility="public"/>
+        <Method name="setTitle" returnType="void" visibility="public">
+          <Argument type="String" name="title"/>
+        </Method>
+        <Method name="getAuthor" returnType="String" visibility="public"/>
+        <Method name="setAuthor" returnType="void" visibility="public">
+          <Argument type="String" name="author"/>
+        </Method>
+        <Method name="getLength" returnType="String" visibility="public"/>
+        <Method name="setLength" returnType="void" visibility="public">
+          <Argument type="String" name="length"/>
+        </Method>
+        <Method name="getCategori" returnType="String" visibility="public"/>
+        <Method name="setCategori" returnType="void" visibility="public">
+          <Argument type="String" name="categori"/>
+        </Method>
+        <Method name="getFilePath" returnType="String" visibility="public"/>
+        <Method name="getId" returnType="int" visibility="public"/>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Player" package="mytunes.bll" visibility="public" xPosition="920.0" yPosition="20.0">
+      <Fields>
+        <Field name="mp" type="MediaPlayer" visibility="private"/>
+        <Field name="queue" type="Queue" visibility="private"/>
+        <Field name="songIndex" type="int" visibility="private"/>
+        <Field name="onRepeat" type="boolean" visibility="private"/>
+        <Field name="volume" type="double" visibility="private"/>
+        <Field name="shuffle" type="boolean" visibility="private"/>
+        <Field name="nowPlaying" type="ObservableList&lt;String&gt;" visibility="private"/>
+        <Field name="sliderPlayback" type="Slider" visibility="private"/>
+        <Field name="nowPlayingTitle" type="ObservableList&lt;String&gt;" visibility="private"/>
+        <Field name="listViewQueue" type="ListView&lt;Song&gt;" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="List&lt;Song&gt;" name="songs"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="Song" name="song"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="playSong" returnType="void" visibility="public"/>
+        <Method name="pauseSong" returnType="void" visibility="public"/>
+        <Method name="nextSong" returnType="MediaPlayer" visibility="private"/>
+        <Method name="changevolume" returnType="void" visibility="public">
+          <Argument type="double" name="vol"/>
+        </Method>
+        <Method name="playPrevSong" returnType="void" visibility="public"/>
+        <Method name="playNextSong" returnType="void" visibility="public"/>
+        <Method name="playOnRepeat" returnType="void" visibility="private"/>
+        <Method name="repeatHandler" returnType="void" visibility="public"/>
+        <Method name="shuffleHandler" returnType="void" visibility="public"/>
+        <Method name="getRandom" returnType="int" visibility="private"/>
+        <Method name="addSongsToQueue" returnType="void" visibility="public">
+          <Argument type="List&lt;Song&gt;" name="songs"/>
+        </Method>
+        <Method name="nowPlaying" returnType="void" visibility="public"/>
+        <Method name="nowPlayingFromInterrupt" returnType="void" visibility="public">
+          <Argument type="Song" name="song"/>
+        </Method>
+        <Method name="getTitle" returnType="List&lt;String&gt;" visibility="public">
+          <Argument type="Song" name="titleSong"/>
+        </Method>
+        <Method name="getMetaData" returnType="List&lt;String&gt;" visibility="public">
+          <Argument type="Song" name="son"/>
+        </Method>
+        <Method name="getNowPlaying" returnType="ObservableList&lt;String&gt;" visibility="public"/>
+        <Method name="getNowPlayingTitle" returnType="ObservableList&lt;String&gt;" visibility="public"/>
+        <Method name="makeSliderForPlayback" returnType="void" visibility="public">
+          <Argument type="Slider" name="sliderPlayback"/>
+        </Method>
+        <Method name="removeSongsFromQueue" returnType="void" visibility="public">
+          <Argument type="List&lt;Song&gt;" name="songsToBeRemoved"/>
+        </Method>
+        <Method name="playIncomingSong" returnType="void" visibility="public">
+          <Argument type="Song" name="song"/>
+        </Method>
+        <Method name="changeToThisSong" returnType="void" visibility="public">
+          <Argument type="Song" name="song"/>
+        </Method>
+        <Method name="getWholeQueue" returnType="List&lt;Song&gt;" visibility="public"/>
+        <Method name="currentQueueIndex" returnType="int" visibility="public"/>
+        <Method name="setSongIndex" returnType="void" visibility="public">
+          <Argument type="int" name="index"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="PlayerManager" package="mytunes.bll" visibility="public" xPosition="1220.0" yPosition="20.0">
+      <Fields>
+        <Field name="songQueue" type="ObservableList&lt;Song&gt;" visibility="private"/>
+        <Field name="nowPlaying" type="ObservableList&lt;String&gt;" visibility="private"/>
+        <Field name="playlists" type="ObservableList&lt;Playlist&gt;" visibility="private"/>
+        <Field name="getSongName" type="ObservableList&lt;String&gt;" visibility="private"/>
+        <Field name="comboBoxMisc" type="ComboBox&lt;String&gt;" visibility="private"/>
+        <Field name="sdao" type="SongDAO" visibility="private"/>
+        <Field name="pDAO" type="PlaylistDAO" visibility="private"/>
+        <Field name="player" type="Player" visibility="private"/>
+        <Field name="setdao" type="SettingsDAO" visibility="private"/>
+        <Field name="volumeFromDB" type="double" visibility="private"/>
+        <Field name="sliderPlayback" type="Slider" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getSavedPlaylists" returnType="List&lt;Playlist&gt;" visibility="public"/>
+        <Method name="lookForQueue" returnType="void" visibility="public">
+          <Argument type="List&lt;Song&gt;" name="songs"/>
+          <Argument type="Slider" name="sliderPlayback"/>
+        </Method>
+        <Method name="checkForSongsSomewhere" returnType="void" visibility="private"/>
+        <Method name="getQueuedSongs" returnType="ObservableList&lt;Song&gt;" visibility="public"/>
+        <Method name="getNowPlaying" returnType="ObservableList&lt;String&gt;" visibility="public"/>
+        <Method name="getNowPlaylingTitle" returnType="ObservableList&lt;String&gt;" visibility="public"/>
+        <Method name="addSongToQue" returnType="void" visibility="public">
+          <Argument type="List&lt;Song&gt;" name="songs"/>
+        </Method>
+        <Method name="removeSongFromQue" returnType="void" visibility="public">
+          <Argument type="List&lt;Song&gt;" name="toRemove"/>
+        </Method>
+        <Method name="getAllPlaylists" returnType="List&lt;Playlist&gt;" visibility="public"/>
+        <Method name="getAllSongs" returnType="List&lt;Song&gt;" visibility="public"/>
+        <Method name="updateSong" returnType="void" visibility="public">
+          <Argument type="Song" name="song"/>
+        </Method>
+        <Method name="playSong" returnType="void" visibility="public"/>
+        <Method name="pauseSong" returnType="void" visibility="public"/>
+        <Method name="changeVolume" returnType="void" visibility="public">
+          <Argument type="double" name="vol"/>
+        </Method>
+        <Method name="playPrevSong" returnType="void" visibility="public"/>
+        <Method name="playNextSong" returnType="void" visibility="public"/>
+        <Method name="repeatHandler" returnType="void" visibility="public"/>
+        <Method name="shuffleHandler" returnType="void" visibility="public"/>
+        <Method name="makeSliderForPlayBack" returnType="void" visibility="public">
+          <Argument type="Slider" name="sliderPlayback"/>
+        </Method>
+        <Method name="playlistToDB" returnType="void" visibility="public">
+          <Argument type="Playlist" name="plist"/>
+          <Argument type="List&lt;Song&gt;" name="selectedSongs"/>
+        </Method>
+        <Method name="playIncomingSong" returnType="void" visibility="public">
+          <Argument type="Song" name="song"/>
+        </Method>
+        <Method name="changeToThisSong" returnType="void" visibility="public">
+          <Argument type="Song" name="song"/>
+        </Method>
+        <Method name="renamePlaylist" returnType="void" visibility="public">
+          <Argument type="String" name="title"/>
+          <Argument type="String" name="newTitle"/>
+        </Method>
+        <Method name="createPlaylist" returnType="void" visibility="public">
+          <Argument type="Playlist" name="plist"/>
+        </Method>
+        <Method name="removePlaylist" returnType="void" visibility="public">
+          <Argument type="Playlist" name="plist"/>
+        </Method>
+        <Method name="currentQueueToString" returnType="void" visibility="public"/>
+        <Method name="currentQueueIndex" returnType="void" visibility="public"/>
+        <Method name="getPlaylist" returnType="Playlist" visibility="public">
+          <Argument type="Playlist" name="plist"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Search" package="mytunes.bll" visibility="public" xPosition="1520.0" yPosition="20.0">
+      <Fields>
+        <Field name="sdao" type="SongDAO" visibility="private"/>
+        <Field name="song" type="List&lt;Song&gt;" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="searcher" returnType="List&lt;Song&gt;" visibility="public">
+          <Argument type="String" name="query"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="DatabaseConnection" package="mytunes.dal" visibility="public" xPosition="1820.0" yPosition="20.0">
+      <Fields>
+        <Field name="ds" type="SQLServerDataSource" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getConnection" returnType="Connection" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="PlaylistDAO" package="mytunes.dal" visibility="public" xPosition="2120.0" yPosition="20.0">
+      <Fields>
+        <Field name="conProvider" type="DatabaseConnection" visibility="package"/>
+        <Field name="sDAO" type="SongDAO" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="addSelection" returnType="Playlist" visibility="public">
+          <Argument type="List&lt;Song&gt;" name="songs"/>
+          <Argument type="Playlist" name="playlist"/>
+        </Method>
+        <Method name="addPlaylist" returnType="void" visibility="public">
+          <Argument type="Playlist" name="plist"/>
+        </Method>
+        <Method name="getPlaylist" returnType="Playlist" visibility="public">
+          <Argument type="Playlist" name="plist"/>
+        </Method>
+        <Method name="getAllPlaylists" returnType="List&lt;Playlist&gt;" visibility="public"/>
+        <Method name="deletePlaylist" returnType="void" visibility="public">
+          <Argument type="String" name="title"/>
+        </Method>
+        <Method name="renamePlaylist" returnType="void" visibility="public">
+          <Argument type="String" name="title"/>
+          <Argument type="String" name="newTitle"/>
+        </Method>
+        <Method name="createPlaylist" returnType="void" visibility="public">
+          <Argument type="Playlist" name="plist"/>
+        </Method>
+        <Method name="deleteSongsFromAllPlaylists" returnType="void" visibility="public">
+          <Argument type="List&lt;Song&gt;" name="selectedSongs"/>
+        </Method>
+        <Method name="deleteSongsFromPlaylist" returnType="void" visibility="public">
+          <Argument type="List&lt;Song&gt;" name="songs"/>
+          <Argument type="Playlist" name="playlist"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="SettingsDAO" package="mytunes.dal" visibility="public" xPosition="20.0" yPosition="420.0">
+      <Fields>
+        <Field name="conProvider" type="DatabaseConnection" visibility="private"/>
+        <Field name="sDAO" type="SongDAO" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="updateVolume" returnType="void" visibility="public">
+          <Argument type="double" name="vol"/>
+        </Method>
+        <Method name="lastSetVolume" returnType="double" visibility="public"/>
+        <Method name="lastPlayedSong" returnType="int" visibility="public"/>
+        <Method name="lastPlayedQueue" returnType="String" visibility="public"/>
+        <Method name="queueList" returnType="List&lt;Song&gt;" visibility="public"/>
+        <Method name="updateCurrentQueue" returnType="void" visibility="public">
+          <Argument type="String" name="string"/>
+        </Method>
+        <Method name="updateLastPlayedSongIndex" returnType="void" visibility="public">
+          <Argument type="int" name="index"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="SongDAO" package="mytunes.dal" visibility="public" xPosition="320.0" yPosition="420.0">
+      <Fields>
+        <Field name="nonReadySongs" type="int" visibility="package"/>
+        <Field name="conProvider" type="DatabaseConnection" visibility="package"/>
+        <Field name="songs" type="List&lt;Song&gt;" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="addFolder" returnType="List&lt;Song&gt;" visibility="public">
+          <Argument type="File" name="folderPath"/>
+        </Method>
+        <Method name="getNumberOfUnReadySongs" returnType="int" visibility="public"/>
+        <Method name="getMediaSong" returnType="Song" visibility="public">
+          <Argument type="Media" name="m"/>
+        </Method>
+        <Method name="listFilesForFolder" returnType="List&lt;String&gt;" visibility="public">
+          <Argument type="File" name="folder"/>
+        </Method>
+        <Method name="deleteSongs" returnType="void" visibility="public">
+          <Argument type="List&lt;Song&gt;" name="selectedSongs"/>
+        </Method>
+        <Method name="updateSong" returnType="void" visibility="public">
+          <Argument type="Song" name="song"/>
+        </Method>
+        <Method name="getAllSongsFromDB" returnType="List&lt;Song&gt;" visibility="public"/>
+        <Method name="writeChanges" returnType="void" visibility="public">
+          <Argument type="List&lt;Song&gt;" name="allSongs"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="EditPlaylistViewController" package="mytunes.gui.controller" visibility="public" xPosition="620.0" yPosition="420.0">
+      <Fields>
+        <Field name="txtTitle" type="TextField" visibility="private"/>
+        <Field name="lblTitle" type="Label" visibility="private"/>
+        <Field name="model" type="Model" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="initialize" returnType="void" visibility="public">
+          <Argument type="URL" name="url"/>
+          <Argument type="ResourceBundle" name="rb"/>
+        </Method>
+        <Method name="onHandleSave" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="onHandleCancel" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="setPlistTitle" returnType="void" visibility="public">
+          <Argument type="Playlist" name="plist"/>
+        </Method>
+        <Method name="setModel" returnType="void" visibility="public">
+          <Argument type="Model" name="model"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="EditSongViewController" package="mytunes.gui.controller" visibility="public" xPosition="920.0" yPosition="420.0">
+      <Fields>
+        <Field name="txtEditArtist" type="TextField" visibility="private"/>
+        <Field name="txtEditAlbum" type="TextField" visibility="private"/>
+        <Field name="txtEditTitle" type="TextField" visibility="private"/>
+        <Field name="txtEditYear" type="TextField" visibility="private"/>
+        <Field name="comboCategory" type="ComboBox&lt;String&gt;" visibility="private"/>
+        <Field name="lblFilepath" type="Label" visibility="private"/>
+        <Field name="btnCancel" type="Button" visibility="private"/>
+        <Field name="btnSave" type="Button" visibility="private"/>
+        <Field name="model" type="Model" visibility="package"/>
+        <Field name="selectedSong" type="Song" visibility="private"/>
+        <Field name="d2" type="String" visibility="private"/>
+        <Field name="Id" type="int" visibility="private"/>
+        <Field name="songIndex" type="int" visibility="private"/>
+        <Field name="comBox" type="ObservableList&lt;String&gt;" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="initialize" returnType="void" visibility="public">
+          <Argument type="URL" name="url"/>
+          <Argument type="ResourceBundle" name="rb"/>
+        </Method>
+        <Method name="onHandleCancelEdit" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="onHandleSaveEdit" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="setSong" returnType="void" visibility="public">
+          <Argument type="Song" name="song"/>
+        </Method>
+        <Method name="setModel" returnType="void" visibility="public">
+          <Argument type="Model" name="model"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Model" package="mytunes.gui.controller" visibility="public" xPosition="1220.0" yPosition="420.0">
+      <Fields>
+        <Field name="sDAO" type="SongDAO" visibility="private"/>
+        <Field name="pDAO" type="PlaylistDAO" visibility="private"/>
+        <Field name="songs" type="ObservableList&lt;Song&gt;" visibility="private"/>
+        <Field name="playlists" type="ObservableList&lt;Playlist&gt;" visibility="private"/>
+        <Field name="playerManager" type="PlayerManager" visibility="private"/>
+        <Field name="songsearcher" type="Search" visibility="private"/>
+        <Field name="setDAO" type="SettingsDAO" visibility="private"/>
+        <Field name="volume" type="double" visibility="private"/>
+        <Field name="lastTime" type="Long" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="lookForQueue" returnType="void" visibility="public">
+          <Argument type="Slider" name="sliderPlayback"/>
+        </Method>
+        <Method name="onProgramClose" returnType="void" visibility="public">
+          <Argument type="Stage" name="stage"/>
+        </Method>
+        <Method name="playlistInitFilling" returnType="void" visibility="private"/>
+        <Method name="librarySelection" returnType="void" visibility="public">
+          <Argument type="Playlist" name="selectedPlaylist"/>
+        </Method>
+        <Method name="createPlaylist" returnType="void" visibility="public">
+          <Argument type="Playlist" name="plist"/>
+        </Method>
+        <Method name="getPlayLists" returnType="ObservableList&lt;Playlist&gt;" visibility="public"/>
+        <Method name="getQuedSongs" returnType="ObservableList&lt;Song&gt;" visibility="public"/>
+        <Method name="getSongs" returnType="ObservableList&lt;Song&gt;" visibility="public"/>
+        <Method name="getNowPlaying" returnType="ObservableList&lt;String&gt;" visibility="public"/>
+        <Method name="playSong" returnType="void" visibility="public"/>
+        <Method name="pauseSong" returnType="void" visibility="public"/>
+        <Method name="changeVolume" returnType="void" visibility="public">
+          <Argument type="double" name="vol"/>
+        </Method>
+        <Method name="UpdateVolume" returnType="void" visibility="public">
+          <Argument type="double" name="vol"/>
+        </Method>
+        <Method name="getSliderVolumeFromDB" returnType="double" visibility="public"/>
+        <Method name="playPrevSong" returnType="void" visibility="public"/>
+        <Method name="playNextSong" returnType="void" visibility="public"/>
+        <Method name="repeatHandler" returnType="void" visibility="public"/>
+        <Method name="shuffleHandler" returnType="void" visibility="public"/>
+        <Method name="searcher" returnType="void" visibility="public">
+          <Argument type="String" name="query"/>
+        </Method>
+        <Method name="addSong" returnType="void" visibility="public">
+          <Argument type="Song" name="song"/>
+        </Method>
+        <Method name="removeSongs" returnType="void" visibility="public">
+          <Argument type="List&lt;Song&gt;" name="song"/>
+          <Argument type="Playlist" name="playlist"/>
+        </Method>
+        <Method name="addSongToQue" returnType="void" visibility="public">
+          <Argument type="ObservableList&lt;Song&gt;" name="toAdd"/>
+        </Method>
+        <Method name="removeSongsFromQue" returnType="void" visibility="public">
+          <Argument type="List&lt;Song&gt;" name="toRemove"/>
+        </Method>
+        <Method name="SelectFolder" returnType="void" visibility="public">
+          <Argument type="Stage" name="stage"/>
+        </Method>
+        <Method name="sendSliderForPlayback" returnType="void" visibility="public">
+          <Argument type="Slider" name="sliderPlayback"/>
+        </Method>
+        <Method name="updateSong" returnType="void" visibility="public">
+          <Argument type="Song" name="song"/>
+        </Method>
+        <Method name="addToPlaylist" returnType="void" visibility="public">
+          <Argument type="Playlist" name="selectedPlaylist"/>
+          <Argument type="List&lt;Song&gt;" name="songSelection"/>
+        </Method>
+        <Method name="addPlaylistToDB" returnType="void" visibility="public">
+          <Argument type="List&lt;Song&gt;" name="selectedSongs"/>
+          <Argument type="Playlist" name="plist"/>
+        </Method>
+        <Method name="playNowSelectedSong" returnType="void" visibility="public">
+          <Argument type="Song" name="song"/>
+        </Method>
+        <Method name="changeToThisSong" returnType="void" visibility="public">
+          <Argument type="Song" name="song"/>
+        </Method>
+        <Method name="getSongName" returnType="ObservableList&lt;String&gt;" visibility="public"/>
+        <Method name="removePlaylist" returnType="void" visibility="public">
+          <Argument type="Playlist" name="plist"/>
+        </Method>
+        <Method name="renamePlaylist" returnType="void" visibility="public">
+          <Argument type="String" name="title"/>
+          <Argument type="String" name="newTitle"/>
+        </Method>
+        <Method name="songEdit" returnType="void" visibility="public">
+          <Argument type="Song" name="s"/>
+        </Method>
+        <Method name="playlistEdit" returnType="void" visibility="public">
+          <Argument type="Playlist" name="p"/>
+        </Method>
+        <Method name="playlistClicks" returnType="void" visibility="public">
+          <Argument type="Playlist" name="playlist"/>
+        </Method>
+        <Method name="queueClicks" returnType="void" visibility="public">
+          <Argument type="Song" name="song"/>
+        </Method>
+        <Method name="songListClicks" returnType="void" visibility="public">
+          <Argument type="Song" name="song"/>
+        </Method>
+        <Method name="tryCreatePlaylist" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="MyTunesMainViewController" package="mytunes.gui.controller" visibility="public" xPosition="1520.0" yPosition="420.0">
+      <Fields>
+        <Field name="sliderVol" type="Slider" visibility="private"/>
+        <Field name="listViewLibrary" type="ListView&lt;Playlist&gt;" visibility="private"/>
+        <Field name="listViewSongInfo" type="ListView&lt;String&gt;" visibility="private"/>
+        <Field name="listViewQueue" type="ListView&lt;Song&gt;" visibility="private"/>
+        <Field name="txtFieldSearch" type="TextField" visibility="private"/>
+        <Field name="listViewAllSongs" type="ListView&lt;Song&gt;" visibility="private"/>
+        <Field name="borderPane" type="BorderPane" visibility="private"/>
+        <Field name="listNowPlaying" type="ListView&lt;String&gt;" visibility="private"/>
+        <Field name="sliderPlayback" type="Slider" visibility="private"/>
+        <Field name="model" type="Model" visibility="package"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="initialize" returnType="void" visibility="public">
+          <Argument type="URL" name="url"/>
+          <Argument type="ResourceBundle" name="rb"/>
+        </Method>
+        <Method name="onHandleSliderVol" returnType="void" visibility="private">
+          <Argument type="MouseEvent" name="event"/>
+        </Method>
+        <Method name="onHandleShuffe" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="onHandleRepeat" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="onHandlePrev" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="onHandlePlay" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="onHandlePause" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="onHandleNext" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="onHandleAdd" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="onHandleRemove" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="onHandleSearch" returnType="void" visibility="private">
+          <Argument type="KeyEvent" name="event"/>
+        </Method>
+        <Method name="onHandleAddFolder" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="onSongRemove" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="onHandleSongEdit" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="onHandlePlaylistEdit" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="onHandlePlaylistRemove" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="onHandlePlaylistAdd" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="queueLookForDeleteKey" returnType="void" visibility="private">
+          <Argument type="KeyEvent" name="event"/>
+        </Method>
+        <Method name="PlaylistsMouseClick" returnType="void" visibility="private">
+          <Argument type="MouseEvent" name="event"/>
+        </Method>
+        <Method name="queueMouseClick" returnType="void" visibility="private">
+          <Argument type="MouseEvent" name="event"/>
+        </Method>
+        <Method name="allSongsMouseClicked" returnType="void" visibility="private">
+          <Argument type="MouseEvent" name="event"/>
+        </Method>
+        <Method name="onHandlePlaylistCreate" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="playlistLookForDeleteKey" returnType="void" visibility="private">
+          <Argument type="KeyEvent" name="event"/>
+        </Method>
+        <Method name="allSongsLookForDeleteKey" returnType="void" visibility="private">
+          <Argument type="KeyEvent" name="event"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="MyTunes" package="mytunes" visibility="public" xPosition="1820.0" yPosition="420.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="start" returnType="void" visibility="public">
+          <Argument type="Stage" name="stage"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="sdao" source="mytunes.bll.Search" target="mytunes.dal.SongDAO" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="mytunes.bll.PlayerManager" target="mytunes.be.Song" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="mytunes.bll.Search" target="mytunes.be.Song" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="model" source="mytunes.gui.controller.EditSongViewController" target="mytunes.gui.controller.Model" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="playlists" source="mytunes.gui.controller.Model" target="mytunes.be.Playlist" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ObservableList&lt;Playlist&gt;"/>
+    <HasRelation name="songsearcher" source="mytunes.gui.controller.Model" target="mytunes.bll.Search" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="sDAO" source="mytunes.gui.controller.Model" target="mytunes.dal.SongDAO" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="mytunes.gui.controller.Model" target="mytunes.be.Song" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="sdao" source="mytunes.bll.PlayerManager" target="mytunes.dal.SongDAO" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="listViewQueue" source="mytunes.bll.Player" target="mytunes.be.Song" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ListView&lt;Song&gt;"/>
+    <HasRelation name="playerManager" source="mytunes.gui.controller.Model" target="mytunes.bll.PlayerManager" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="mytunes.dal.SettingsDAO" target="mytunes.be.Song" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="player" source="mytunes.bll.PlayerManager" target="mytunes.bll.Player" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="mytunes.be.Playlist" target="mytunes.be.Song" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="song" source="mytunes.bll.Search" target="mytunes.be.Song" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;Song&gt;"/>
+    <HasRelation name="setdao" source="mytunes.bll.PlayerManager" target="mytunes.dal.SettingsDAO" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="SettingsDAO"/>
+    <HasRelation name="conProvider" source="mytunes.dal.PlaylistDAO" target="mytunes.dal.DatabaseConnection" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="songs" source="mytunes.be.Queue" target="mytunes.be.Song" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;Song&gt;"/>
+    <HasRelation name="sDAO" source="mytunes.dal.SettingsDAO" target="mytunes.dal.SongDAO" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="setDAO" source="mytunes.gui.controller.Model" target="mytunes.dal.SettingsDAO" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="SettingsDAO"/>
+    <HasRelation name="queue" source="mytunes.bll.Player" target="mytunes.be.Queue" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="Queue"/>
+    <UseRelation source="mytunes.gui.controller.Model" target="mytunes.be.Playlist" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="mytunes.dal.PlaylistDAO" target="mytunes.be.Playlist" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="mytunes.gui.controller.EditPlaylistViewController" target="mytunes.gui.controller.Model" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="pDAO" source="mytunes.gui.controller.Model" target="mytunes.dal.PlaylistDAO" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="mytunes.bll.Player" target="mytunes.be.Song" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="songs" source="mytunes.dal.SongDAO" target="mytunes.be.Song" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;Song&gt;"/>
+    <UseRelation source="mytunes.gui.controller.EditSongViewController" target="mytunes.be.Song" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="sDAO" source="mytunes.dal.PlaylistDAO" target="mytunes.dal.SongDAO" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="songQueue" source="mytunes.bll.PlayerManager" target="mytunes.be.Song" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ObservableList&lt;Song&gt;"/>
+    <HasRelation name="conProvider" source="mytunes.dal.SongDAO" target="mytunes.dal.DatabaseConnection" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="playlist" source="mytunes.be.Playlist" target="mytunes.be.Song" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;Song&gt;"/>
+    <HasRelation name="conProvider" source="mytunes.dal.SettingsDAO" target="mytunes.dal.DatabaseConnection" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="songs" source="mytunes.gui.controller.Model" target="mytunes.be.Song" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ObservableList&lt;Song&gt;"/>
+    <HasRelation name="model" source="mytunes.gui.controller.EditPlaylistViewController" target="mytunes.gui.controller.Model" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="selectedSong" source="mytunes.gui.controller.EditSongViewController" target="mytunes.be.Song" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="listViewAllSongs" source="mytunes.gui.controller.MyTunesMainViewController" target="mytunes.be.Song" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ListView&lt;Song&gt;"/>
+    <UseRelation source="mytunes.be.Queue" target="mytunes.be.Song" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="mytunes.gui.controller.EditPlaylistViewController" target="mytunes.be.Playlist" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="mytunes.bll.Player" target="mytunes.bll.Player" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="mytunes.dal.PlaylistDAO" target="mytunes.be.Song" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="mytunes.dal.SongDAO" target="mytunes.be.Song" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="mytunes.gui.controller.EditSongViewController" target="mytunes.gui.controller.Model" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="pDAO" source="mytunes.bll.PlayerManager" target="mytunes.dal.PlaylistDAO" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="listViewLibrary" source="mytunes.gui.controller.MyTunesMainViewController" target="mytunes.be.Playlist" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ListView&lt;Playlist&gt;"/>
+    <UseRelation source="mytunes.bll.PlayerManager" target="mytunes.be.Playlist" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="playlists" source="mytunes.bll.PlayerManager" target="mytunes.be.Playlist" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ObservableList&lt;Playlist&gt;"/>
+    <HasRelation name="listViewQueue" source="mytunes.gui.controller.MyTunesMainViewController" target="mytunes.be.Song" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ListView&lt;Song&gt;"/>
+    <HasRelation name="model" source="mytunes.gui.controller.MyTunesMainViewController" target="mytunes.gui.controller.Model" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>

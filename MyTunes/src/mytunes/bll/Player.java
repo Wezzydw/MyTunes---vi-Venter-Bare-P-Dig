@@ -344,7 +344,10 @@ public class Player
     {
         this.sliderPlayback = sliderPlayback;
     }
-
+/**
+ * Fjerner sange fra queuen
+ * @param songsToBeRemoved 
+ */
     public void removeSongsFromQueue(List<Song> songsToBeRemoved)
     {
         queue.setNewQueue(songsToBeRemoved);
@@ -354,7 +357,10 @@ public class Player
             mp = new MediaPlayer(queue.getMedia(songIndex));
         }
     }
-
+/**
+ * afbryder den nuværende afspilning og afspiller den valgte sang
+ * @param song 
+ */
     public void playIncomingSong(Song song)
     {
         mp.stop();
@@ -394,7 +400,10 @@ public class Player
             }
         });
     }
-
+/**
+ * Afbryder og skifter til denne sang
+ * @param song 
+ */
     public void changeToThisSong(Song song)
     {
         if (mp.getStatus() == Status.PLAYING)
@@ -427,7 +436,10 @@ public class Player
     {
         return songIndex;
     }
-
+/**
+ * returnerer det nuværende index
+ * @param index 
+ */
     public void setSongIndex(int index)
     {
         if (index < queue.queueSize())

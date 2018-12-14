@@ -29,7 +29,7 @@
                         <ColorAdjust />
                      </effect>
                   </Slider>
-                  <Button mnemonicParsing="false" onAction="#onHandleShuffe" style="-fx-background-color: black; -fx-border-color: green; -fx-effect: serif;" text="Shuffle" textFill="#00ff0d">
+                  <Button mnemonicParsing="false" onAction="#onHandleShuffe" style="-fx-background-color: black; -fx-border-color: green;" text="Shuffle" textFill="#00ff0d">
                      <effect>
                         <ColorAdjust />
                      </effect>
