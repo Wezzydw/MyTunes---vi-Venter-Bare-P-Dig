@@ -331,7 +331,6 @@ public class PlayerManager
             {
                 ids += s.getId() + ",";
             }
-            System.out.println("Test");
             setdao.updateCurrentQueue(ids);
         }
     }

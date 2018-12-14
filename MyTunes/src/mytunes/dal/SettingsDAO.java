@@ -43,7 +43,6 @@ public class SettingsDAO
             pstmt.setDouble(1, vol);
             pstmt.execute();
             pstmt.close();
-            System.out.println("Diller found - and updated!");
 
         } catch (SQLException ex)
         {
@@ -151,7 +150,6 @@ public class SettingsDAO
             pstmt.setString(1, string);
             pstmt.execute();
             pstmt.close();
-            System.out.println("Diller found - and updated!");
 
         } catch (SQLException ex)
         {
@@ -167,7 +165,6 @@ public class SettingsDAO
             pstmt.setInt(1, index);
             pstmt.execute();
             pstmt.close();
-            System.out.println("Diller found - and updated!");
 
         } catch (SQLException ex)
         {

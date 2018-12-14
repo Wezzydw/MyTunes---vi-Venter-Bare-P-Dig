@@ -63,11 +63,8 @@ public class EditSongViewController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(EditSongViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //ObservableList<Song> allSongs = model.getSongs();
-        System.out.println("nu er vi inde i edit" );
+
         comBox = FXCollections.observableArrayList();
-        //txtEditAlbum.setText(model.getSongs().get(0).getAlbum());//get(0) skal peje på den sang du redigerer
-       
         comBox.add("Rock");
         comBox.add("Hardstyle");
         comBox.add("Pop");
@@ -89,8 +86,6 @@ public class EditSongViewController implements Initializable {
     @FXML
     private void onHandleSaveEdit(ActionEvent event) {
         
-        
-        System.out.println("save data" );
         String album = txtEditAlbum.getText();
         String author = txtEditArtist.getText();
         String title = txtEditTitle.getText();
@@ -100,7 +95,7 @@ public class EditSongViewController implements Initializable {
         int id = Id;
         String filepath = lblFilepath.getText();
         Song s = new Song(title, author, length, year, categori, filepath, album, id);
-        model.updateSong(s); //update song
+        model.updateSong(s);
         
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/mytunes/gui/view/MyTunesMainView.fxml"));
@@ -114,13 +109,11 @@ public class EditSongViewController implements Initializable {
         }
         
         MyTunesMainViewController display = loader.getController();
-        //model = display.getThisModel();
-        //display.updateView(s, songIndex);
         display.model.updateSong(s);
-//        display.updateView(s, songIndex);
+
         Stage stage = (Stage) btnSave.getScene().getWindow();
         stage.close();
-        System.out.println("album =" + album + ", artist=" + author + ", title=" + title + ", year=" + year + ", length=" + length + ", id=" +id);
+
         
     }
     public void setSong(Song song)
@@ -132,14 +125,12 @@ public class EditSongViewController implements Initializable {
         txtEditYear.setText(selectedSong.getReleaseYear());
         lblFilepath.setText(selectedSong.getFilePath());
         this.d2 = selectedSong.getLength();
-        System.out.println(d2);
         this.Id = selectedSong.getId();
         this.songIndex = songIndex;
+        
     }
     public void setModel(Model model)
     {
-        
-        System.out.println("øhm");
         this.model = model;
     }
     

@@ -89,7 +89,6 @@ public class Model
             @Override
             public void handle(WindowEvent event)
             {
-                System.out.println("Ahm");
                 UpdateVolume(volume);
                 playerManager.currentQueueIndex();
                 playerManager.currentQueueToString();
