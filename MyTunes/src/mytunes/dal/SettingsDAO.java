@@ -142,6 +142,11 @@ public class SettingsDAO
         return queSongs;
     }
 
+    /**
+     * Opdaterer nuværende queue til databasen.
+     * @param string 
+     */
+    
     public void updateCurrentQueue(String string)
     {
         try (Connection con = conProvider.getConnection())
@@ -156,7 +161,11 @@ public class SettingsDAO
             ex.printStackTrace();
         }
     }
-
+    
+    /**
+     * Skriver indexet ned til databasen for den sidst afspillede sang.
+     * @param index 
+     */
     public void updateLastPlayedSongIndex(int index)
     {
         try (Connection con = conProvider.getConnection())
