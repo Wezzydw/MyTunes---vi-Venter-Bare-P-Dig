@@ -85,19 +85,14 @@ public class MyTunesMainViewController implements Initializable
         listViewSongInfo.setItems(model.getSongName());
         listNowPlaying.setItems(model.getSongName());
         listViewSongInfo.setItems(model.getNowPlaying());
-        //onProgramClose();
     }
 
     @FXML
     private void onHandleSliderVol(MouseEvent event)
     {
         model.changeVolume(sliderVol.getValue());
-    }
-
-    private void onProgramClose()
-    {
         Stage stage = (Stage) borderPane.getScene().getWindow();
-        //model.onProgramClose(stage);
+        model.onProgramClose(stage);
     }
 
     @FXML
@@ -143,12 +138,16 @@ public class MyTunesMainViewController implements Initializable
         model.addSongToQue(listViewAllSongs.getSelectionModel().getSelectedItems());
         listNowPlaying.setItems(model.getSongName());
         listViewSongInfo.setItems(model.getNowPlaying());
+        Stage stage = (Stage) borderPane.getScene().getWindow();
+        model.onProgramClose(stage);
     }
 
     @FXML
     private void onHandleRemove(ActionEvent event) throws IOException
     {
         model.removeSongsFromQue(listViewQueue.getSelectionModel().getSelectedItems());
+        Stage stage = (Stage) borderPane.getScene().getWindow();
+        model.onProgramClose(stage);
     }
 
     @FXML
