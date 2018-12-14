@@ -148,8 +148,12 @@ public class SongDAO
         return null;
     }
 
-    /*
-    
+    /**
+     * Returnerer filstier i en liste af Strings.
+     * Filerne i angiven mappe loopes igennem, der søges efter filer der slutter på ".mp3".
+     * @param folder
+     * @return filesPaths
+     * @throws IOException 
      */
     public List<String> listFilesForFolder(File folder) throws IOException
     {
@@ -251,8 +255,10 @@ public class SongDAO
     }
 
 
-    /*
-    
+    /**
+     * Skriver ændringer i filnavne ned til databasen.
+     * @param allSongs
+     * @throws IOException 
      */
     public void writeChanges(List<Song> allSongs) throws IOException
     {
