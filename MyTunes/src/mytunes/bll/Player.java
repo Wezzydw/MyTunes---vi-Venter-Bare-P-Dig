@@ -10,6 +10,7 @@ import java.util.List;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
@@ -23,7 +24,8 @@ import mytunes.be.Song;
  *
  * @author Wezzy Laptop
  */
-public class Player {
+public class Player
+{
 
     private MediaPlayer mp;
     private Queue queue;
@@ -34,8 +36,10 @@ public class Player {
     private ObservableList<String> nowPlaying;
     private Slider sliderPlayback;
     private ObservableList<String> nowPlayingTitle;
+    private ListView<Song> listViewQueue;
 
-    public Player(List<Song> songs) {
+    public Player(List<Song> songs)
+    {
         queue = new Queue(songs);
         mp = new MediaPlayer(queue.getMedia(songIndex));
         nowPlaying = FXCollections.observableArrayList();
@@ -43,7 +47,8 @@ public class Player {
         nowPlaying();
     }
 
-    public Player(Song song) {
+    public Player(Song song)
+    {
         mp = new MediaPlayer(new Media(new File(song.getFilePath()).toURI().toString()));
         nowPlaying = FXCollections.observableArrayList();
         nowPlayingTitle = FXCollections.observableArrayList();
@@ -57,44 +62,55 @@ public class Player {
      * tjekkes om en sang er færdig, hvis den er, afspilles den næste
      * automatisk, hvis ikke shuffle eller repeat er aktiveret.
      */
-    public void playSong() {
-        if (mp.getStatus() != Status.PLAYING && queue.queueSize() > 0) {
+    public void playSong()
+    {
+        if (mp.getStatus() != Status.PLAYING && queue.queueSize() > 0)
+        {
             mp.play();
             nowPlaying();
 
-            mp.setOnReady(new Runnable() {
+            mp.setOnReady(new Runnable()
+            {
                 @Override
-                public void run() {
+                public void run()
+                {
                     sliderPlayback.setMax(mp.getTotalDuration().toSeconds());
                     sliderPlayback.setBlockIncrement(mp.getTotalDuration().toSeconds());
                 }
             });
 
             sliderPlayback.setOnMouseClicked((MouseEvent event)
-                    -> {
+                    ->
+            {
                 mp.seek(Duration.seconds(sliderPlayback.getValue()));
 
             });
-            
+
             mp.currentTimeProperty().addListener((ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue)
-                    -> {
+                    ->
+            {
                 sliderPlayback.setValue(newValue.toSeconds());
             });
 
-            mp.setOnEndOfMedia(new Runnable() {
+            mp.setOnEndOfMedia(new Runnable()
+            {
                 @Override
 
-                public void run() {
-               
-                    if (onRepeat) {
+                public void run()
+                {
+
+                    if (onRepeat)
+                    {
                         playOnRepeat();
                         playSong();
 
-                    } else if (shuffle) {
+                    } else if (shuffle)
+                    {
                         songIndex = getRandom();
                         playSong();
 
-                    } else {
+                    } else
+                    {
                         nextSong();
                         playSong();
                     }
@@ -106,18 +122,22 @@ public class Player {
     /**
      * Sætter mediaplayeren på pause.
      */
-    public void pauseSong() {
+    public void pauseSong()
+    {
         mp.pause();
     }
 
     /**
      * Går til element i næste index, og fylder i mediaplayeren.
      */
-    private MediaPlayer nextSong() {
+    private MediaPlayer nextSong()
+    {
 
-        if (queue.endOfQueue(songIndex)) {
+        if (queue.endOfQueue(songIndex))
+        {
             songIndex = 0;
-        } else {
+        } else
+        {
             songIndex++;
         }
         mp = new MediaPlayer(queue.getMedia(songIndex));
@@ -128,7 +148,8 @@ public class Player {
     /**
      * @param vol Skifter volumen i mediaplayeren
      */
-    public void changevolume(double vol) {
+    public void changevolume(double vol)
+    {
         mp.setVolume(vol);
     }
 
@@ -137,16 +158,22 @@ public class Player {
      * ikke, går den en plads tilbage i listen og afspiller elementet på denne
      * plads.
      */
-    public void playPrevSong() {
-        if (queue.queueSize() > 0) {
-            if (!shuffle) {
-                if (songIndex == 0) {
+    public void playPrevSong()
+    {
+        if (queue.queueSize() > 0)
+        {
+            if (!shuffle)
+            {
+                if (songIndex == 0)
+                {
 
                     songIndex = queue.queueSize() - 1;
-                } else {
+                } else
+                {
                     songIndex--;
                 }
-            } else {
+            } else
+            {
                 songIndex = getRandom();
             }
             mp.stop();
@@ -161,17 +188,23 @@ public class Player {
      * næste index.
      *
      */
-    public void playNextSong() {
+    public void playNextSong()
+    {
 
-        if (queue.queueSize() > 0) {
-            if (!shuffle) {
-                if (songIndex == queue.queueSize() - 1) {
+        if (queue.queueSize() > 0)
+        {
+            if (!shuffle)
+            {
+                if (songIndex == queue.queueSize() - 1)
+                {
 
                     songIndex = 0;
-                } else {
+                } else
+                {
                     songIndex++;
                 }
-            } else {
+            } else
+            {
                 songIndex = getRandom();
             }
             mp.stop();
@@ -184,43 +217,50 @@ public class Player {
      * Sætter mediaplayeren til at afspille samme element i det index den er
      * nået.
      */
-    private void playOnRepeat() {
+    private void playOnRepeat()
+    {
         mp = new MediaPlayer(queue.getMedia(songIndex));
     }
 
     /**
      * Toggle repeat.
      */
-    public void repeatHandler() {
+    public void repeatHandler()
+    {
         onRepeat = !onRepeat;
     }
 
     /**
      * Toggle shuffle.
      */
-    public void shuffleHandler() {
+    public void shuffleHandler()
+    {
         shuffle = !shuffle;
     }
 
     /**
      * @returnerer en tilfældig sang fra queue listen.
      */
-    private int getRandom() {
+    private int getRandom()
+    {
         return (int) (Math.random() * queue.queueSize());
     }
 
     /**
      * @param songs Tilføjer en, eller valgte sange til queue-listen.
      */
-    public void addSongsToQueue(List<Song> songs) {
+    public void addSongsToQueue(List<Song> songs)
+    {
         queue.addSelection(songs);
     }
 
     /**
      * Viser metadata fra igangværende sang.
      */
-    public void nowPlaying() {
-        if (queue != null) {
+    public void nowPlaying()
+    {
+        if (queue != null)
+        {
             nowPlaying.clear();
             nowPlaying.addAll(getMetaData(queue.getSong(songIndex)));
             nowPlayingTitle.clear();
@@ -228,16 +268,19 @@ public class Player {
         }
     }
 
-    public void nowPlayingFromInterrupt(Song song) {
+    public void nowPlayingFromInterrupt(Song song)
+    {
         nowPlaying.clear();
         nowPlaying.setAll(getMetaData(song));
         nowPlayingTitle.clear();
         nowPlayingTitle.setAll(getTitle(song));
     }
 
-    public List<String> getTitle(Song titleSong) {
+    public List<String> getTitle(Song titleSong)
+    {
         List<String> MetaList = FXCollections.observableArrayList();
-        if (titleSong.getTitle() != null) {
+        if (titleSong.getTitle() != null)
+        {
             MetaList.add(titleSong.getTitle());
         }
         return MetaList;
@@ -249,24 +292,31 @@ public class Player {
      * album og length ikke er null. Hvis disse ikke er null, tilføjes de
      * metalisten.
      */
-    public List<String> getMetaData(Song son) {
+    public List<String> getMetaData(Song son)
+    {
         List<String> MetaList = FXCollections.observableArrayList();
-        if (son.getTitle() != null) {
+        if (son.getTitle() != null)
+        {
             MetaList.add(son.getTitle());
         }
-        if (son.getAuthor() != null) {
+        if (son.getAuthor() != null)
+        {
             MetaList.add(son.getAuthor());
         }
-        if (son.getCategori() != null) {
+        if (son.getCategori() != null)
+        {
             MetaList.add(son.getCategori());
         }
-        if (son.getReleaseYear() != null) {
+        if (son.getReleaseYear() != null)
+        {
             MetaList.add(son.getReleaseYear());
         }
-        if (son.getAlbum() != null) {
+        if (son.getAlbum() != null)
+        {
             MetaList.add(son.getAlbum());
         }
-        if (son.getLength() != null) {
+        if (son.getLength() != null)
+        {
             MetaList.add(son.getLength());
         }
         return MetaList;
@@ -275,11 +325,13 @@ public class Player {
     /**
      * @returnerer index 0.
      */
-    public ObservableList<String> getNowPlaying() {
+    public ObservableList<String> getNowPlaying()
+    {
         return nowPlaying;
     }
 
-    public ObservableList<String> getNowPlayingTitle() {
+    public ObservableList<String> getNowPlayingTitle()
+    {
         return nowPlayingTitle;
     }
 
@@ -287,43 +339,53 @@ public class Player {
      * @param sliderPlayback = progress bar så brugeren kan se hvor lang, og
      * tilbageværende tid af mediet.
      */
-    public void makeSliderForPlayback(Slider sliderPlayback) {
+    public void makeSliderForPlayback(Slider sliderPlayback)
+    {
         this.sliderPlayback = sliderPlayback;
     }
 
-    public void removeSongsFromQueue(List<Song> songsToBeRemoved) {
+    public void removeSongsFromQueue(List<Song> songsToBeRemoved)
+    {
         queue.setNewQueue(songsToBeRemoved);
-        if (songIndex > queue.queueSize()) {
+        if (songIndex > queue.queueSize())
+        {
             songIndex = 0;
             mp = new MediaPlayer(queue.getMedia(songIndex));
         }
     }
 
-    public void playIncomingSong(Song song) {
+    public void playIncomingSong(Song song)
+    {
         mp.stop();
         mp = new MediaPlayer(new Media(new File(song.getFilePath()).toURI().toString()));
-        mp.setOnReady(new Runnable() {
+        mp.setOnReady(new Runnable()
+        {
 
             @Override
-            public void run() {
+            public void run()
+            {
                 nowPlayingFromInterrupt(song);
                 mp.play();
                 sliderPlayback.setMax(mp.getTotalDuration().toSeconds());
                 sliderPlayback.setBlockIncrement(mp.getTotalDuration().toSeconds());
                 sliderPlayback.setOnMouseClicked((MouseEvent event)
-                        -> {
+                        ->
+                {
                     mp.seek(Duration.seconds(sliderPlayback.getValue()));
 
                 });
                 mp.currentTimeProperty().addListener((ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue)
-                        -> {
+                        ->
+                {
                     sliderPlayback.setValue(newValue.toSeconds());
                 });
 
-                mp.setOnEndOfMedia(new Runnable() {
+                mp.setOnEndOfMedia(new Runnable()
+                {
                     @Override
 
-                    public void run() {
+                    public void run()
+                    {
                         mp = new MediaPlayer(queue.getMedia(songIndex));
                         playSong();
                     }
@@ -332,31 +394,46 @@ public class Player {
         });
     }
 
-    public void changeToThisSong(Song song) {
-        if (mp.getStatus() == Status.PLAYING) {
+    public void changeToThisSong(Song song)
+    {
+        if (mp.getStatus() == Status.PLAYING)
+        {
             mp.stop();
-            mp.setOnStopped(new Runnable() {
+            mp.setOnStopped(new Runnable()
+            {
                 @Override
-                public void run() {
+                public void run()
+                {
                     mp = new MediaPlayer(new Media(new File(song.getFilePath()).toURI().toString()));
                     songIndex = queue.getIndex(song);
                     playSong();
                 }
             });;
-        } else {
+        } else
+        {
             mp = new MediaPlayer(new Media(new File(song.getFilePath()).toURI().toString()));
             songIndex = queue.getIndex(song);
             playSong();
         }
     }
-    
+
     public List<Song> getWholeQueue()
     {
         return queue.getWholeQueue();
     }
 
-    public int currentQueueIndex() {
+    public int currentQueueIndex()
+    {
         return songIndex;
     }
 
+    public void setSongIndex(int index)
+    {
+        if (index < queue.queueSize())
+        {
+            songIndex = index;
+            nowPlaying();
+            mp = new MediaPlayer(queue.getMedia(songIndex));
+        }
+    }
 }

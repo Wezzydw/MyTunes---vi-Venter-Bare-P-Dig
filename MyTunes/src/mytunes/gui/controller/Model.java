@@ -21,6 +21,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -51,7 +52,6 @@ public class Model
     private ObservableList<Playlist> playlists;
     private PlayerManager playerManager;
     private Search songsearcher;
-    private Player player;
     private BorderPane borderPane;
     private List<Song> empty;
     private List<Playlist> addPlaylist;
@@ -76,6 +76,11 @@ public class Model
         volume = 0;
         lastTime = 0L;
     }
+    
+    public void lookForQueue(Slider sliderPlayback)
+    {
+        playerManager.lookForQueue(songs, sliderPlayback);
+    }
 
     public void onProgramClose(Stage stage)
     {
@@ -84,7 +89,10 @@ public class Model
             @Override
             public void handle(WindowEvent event)
             {
+                System.out.println("Ahm");
                 UpdateVolume(volume);
+                playerManager.currentQueueIndex();
+                playerManager.currentQueueToString();
             }
         });
     }

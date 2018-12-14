@@ -20,6 +20,7 @@ import mytunes.be.Song;
  */
 public class SettingsDAO
 {
+
     private DatabaseConnection conProvider;
     private SongDAO sDAO;
 
@@ -28,12 +29,11 @@ public class SettingsDAO
         conProvider = new DatabaseConnection();
         sDAO = new SongDAO();
     }
-    
+
     /**
-     * 
-     * @param vol 
-     * Opdatere volumen til databasen, i settingstabellen, 
-     * så denne huskes hvis programmet lukkes.
+     *
+     * @param vol Opdatere volumen til databasen, i settingstabellen, så denne
+     * huskes hvis programmet lukkes.
      */
     public void updateVolume(double vol)
     {
@@ -44,13 +44,13 @@ public class SettingsDAO
             pstmt.execute();
             pstmt.close();
             System.out.println("Diller found - and updated!");
-            
+
         } catch (SQLException ex)
         {
             ex.printStackTrace();
         }
     }
-    
+
     /**
      * Henter sidste værdi for volumen i settingstabellen fra databasen.
      */
@@ -72,11 +72,11 @@ public class SettingsDAO
         }
         return vol;
     }
-    
+
     /**
-     * 
-     * @returnerer songId, for den sidstafspillede sang, hentet fra settingstabellen,
-     * i databasen.
+     *
+     * @returnerer songId, for den sidstafspillede sang, hentet fra
+     * settingstabellen, i databasen.
      */
     public int lastPlayedSong()
     {
@@ -96,10 +96,9 @@ public class SettingsDAO
         }
         return songId;
     }
-    
-    
+
     /**
-     * 
+     *
      * @returnerer queue-listen fra den sidste queue, hentet fra databasen.
      */
     public String lastPlayedQueue()
@@ -122,7 +121,7 @@ public class SettingsDAO
     }
 
     /**
-     * 
+     *
      * @returnerer en liste af sange fra queuen.
      */
     public List<Song> queueList()
@@ -143,15 +142,37 @@ public class SettingsDAO
         }
         return queSongs;
     }
-    
+
     public void updateCurrentQueue(String string)
     {
-        
+        try (Connection con = conProvider.getConnection())
+        {
+            PreparedStatement pstmt = con.prepareStatement("UPDATE Settings SET lastQueue = (?)");
+            pstmt.setString(1, string);
+            pstmt.execute();
+            pstmt.close();
+            System.out.println("Diller found - and updated!");
+
+        } catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
     }
-    
+
     public void updateLastPlayedSongIndex(int index)
     {
-        
+        try (Connection con = conProvider.getConnection())
+        {
+            PreparedStatement pstmt = con.prepareStatement("UPDATE Settings SET lastSong = (?)");
+            pstmt.setInt(1, index);
+            pstmt.execute();
+            pstmt.close();
+            System.out.println("Diller found - and updated!");
+
+        } catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
     }
 
 }

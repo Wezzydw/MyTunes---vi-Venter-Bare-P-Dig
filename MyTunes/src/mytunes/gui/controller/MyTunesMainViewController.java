@@ -35,6 +35,7 @@ import mytunes.be.Song;
  */
 public class MyTunesMainViewController implements Initializable
 {
+
     @FXML
     private Slider sliderVol;
     @FXML
@@ -55,7 +56,7 @@ public class MyTunesMainViewController implements Initializable
     private ListView<String> listNowPlaying;
     @FXML
     private Slider sliderPlayback;
-    
+
     Model model;
 
     /**
@@ -72,16 +73,19 @@ public class MyTunesMainViewController implements Initializable
             Logger.getLogger(MyTunesMainViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
         listViewAllSongs.setItems(model.getSongs());
-        listViewQueue.setItems(model.getQuedSongs());
         listViewLibrary.setItems(model.getPlayLists());
         listNowPlaying.setItems(model.getNowPlaying());
-        listViewSongInfo.setItems(model.getSongName());
-
         listViewAllSongs.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         listViewQueue.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         sliderVol.setValue(model.getSliderVolumeFromDB() * 100);
         model.changeVolume(model.getSliderVolumeFromDB());
         model.sendSliderForPlayback(sliderPlayback);
+        model.lookForQueue(sliderPlayback);
+        listViewQueue.setItems(model.getQuedSongs());
+        listViewSongInfo.setItems(model.getSongName());
+        listNowPlaying.setItems(model.getSongName());
+        listViewSongInfo.setItems(model.getNowPlaying());
+        //onProgramClose();
     }
 
     @FXML
@@ -93,7 +97,7 @@ public class MyTunesMainViewController implements Initializable
     private void onProgramClose()
     {
         Stage stage = (Stage) borderPane.getScene().getWindow();
-        model.onProgramClose(stage);
+        //model.onProgramClose(stage);
     }
 
     @FXML
@@ -165,6 +169,7 @@ public class MyTunesMainViewController implements Initializable
     {
         Stage stage = (Stage) borderPane.getScene().getWindow();
         model.SelectFolder(stage);
+        model.onProgramClose(stage);
 
     }
 
