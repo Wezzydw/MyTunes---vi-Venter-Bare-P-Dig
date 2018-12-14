@@ -35,7 +35,16 @@ public class SongDAO
         conProvider = new DatabaseConnection();
         songs = new ArrayList();
     }
-
+    
+    /** 
+     * Returnerer en liste af sange. Som den loader i threads når medier er klar
+     * for at opnår hurtigere loadingtider. Denne metode kalder writeChanges(). 
+     * Hvis der ikke er metadata for titel, laves der automatisk en titel ud fra filnavnet.
+     * @param folderPath
+     * @return songs
+     * @throws IOException
+     * @throws InterruptedException 
+     */
     public List<Song> addFolder(File folderPath) throws IOException, InterruptedException
     {
         listFilesForFolder(folderPath);
@@ -54,9 +63,6 @@ public class SongDAO
             MediaPlayer mp = new MediaPlayer(me);
             mp.setOnReady(new Runnable()
             {
-                /*
-                Metoden angiver længden af sangen
-                 */
                 @Override
                 public void run()
                 {
@@ -142,8 +148,12 @@ public class SongDAO
         return null;
     }
 
-    /*
-    
+    /**
+     * Returnerer filstier i en liste af Strings.
+     * Filerne i angiven mappe loopes igennem, der søges efter filer der slutter på ".mp3".
+     * @param folder
+     * @return filesPaths
+     * @throws IOException 
      */
     public List<String> listFilesForFolder(File folder) throws IOException
     {
@@ -245,8 +255,10 @@ public class SongDAO
     }
 
 
-    /*
-    
+    /**
+     * Skriver ændringer i filnavne ned til databasen.
+     * @param allSongs
+     * @throws IOException 
      */
     public void writeChanges(List<Song> allSongs) throws IOException
     {
