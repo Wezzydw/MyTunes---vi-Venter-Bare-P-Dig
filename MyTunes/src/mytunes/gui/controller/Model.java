@@ -236,11 +236,6 @@ public class Model
         playerManager.removeSongFromQue(toRemove);
     }
 
-    public void queComboBox()
-    {
-        playerManager.queMisc();
-    }
-
     public void SelectFolder(Stage stage) throws IOException, InterruptedException
     {
         DirectoryChooser directoryChooser = new DirectoryChooser();

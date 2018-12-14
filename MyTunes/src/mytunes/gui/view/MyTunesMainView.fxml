@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
@@ -126,16 +125,11 @@
                                     <Font name="System Bold" size="15.0" />
                                  </font>
                               </Button>
-                              <Button mnemonicParsing="false" onAction="#onHandleRemove" prefWidth="65.0" style="-fx-background-color: black; -fx-border-color: green;" text="Remove" textFill="#00ff1d">
+                              <Button mnemonicParsing="false" onAction="#onHandleRemove" prefHeight="33.0" prefWidth="86.0" style="-fx-background-color: black; -fx-border-color: green;" text="Remove" textFill="#00ff1d">
                                  <font>
                                     <Font name="System Bold" size="15.0" />
                                  </font>
                               </Button>
-                              <ComboBox fx:id="comboBoxMisc" onAction="#onHandleMisc" prefHeight="34.0" prefWidth="150.0" promptText="Misc" style="-fx-border-color: green;">
-                                 <effect>
-                                    <ColorAdjust />
-                                 </effect>
-                              </ComboBox>
                            </children>
                         </HBox>
                      </children>

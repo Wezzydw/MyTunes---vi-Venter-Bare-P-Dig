@@ -44,7 +44,6 @@ public class MyTunesMainViewController implements Initializable
     private ListView<String> listViewSongInfo;
     @FXML
     private ListView<Song> listViewQueue;
-    @FXML
     private ComboBox<String> comboBoxMisc;
     @FXML
     private TextField txtFieldSearch;
@@ -150,7 +149,6 @@ public class MyTunesMainViewController implements Initializable
         model.onProgramClose(stage);
     }
 
-    @FXML
     private void onHandleMisc(ActionEvent event)
     {
         comboBoxMisc.setItems(FXCollections.observableArrayList("reverseList", "randomiseList", "sortByTitle"));
@@ -261,5 +259,4 @@ public class MyTunesMainViewController implements Initializable
             model.removeSongs(listViewAllSongs.getSelectionModel().getSelectedItems(), listViewLibrary.getSelectionModel().getSelectedItem());
         }
     }
-
 }
